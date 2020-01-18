@@ -97,7 +97,6 @@ public class ProjectionManipulator : ApplicationElement
 
         posTarget.position = raycast.position;
         GameObject instance = Instantiate(prefab, rotTarget.position, raycast.rotation);
-        instance.transform.SetParent(rotTarget);
         instance.transform.localScale = Vector3.one;
 
         // Shoudn't be done in runtime
@@ -107,6 +106,22 @@ public class ProjectionManipulator : ApplicationElement
         if (instanceMesh != null)
             meshList.Add(instanceMesh);
 
+        Bounds boundingBox = new Bounds(rotTarget.position, Vector3.zero);
+
+        for (int i = 0; i < meshList.Count; i++)
+            boundingBox.Encapsulate(meshList[i].bounds.max);
+
+        float maxDim = boundingBox.size.x;
+
+        if (boundingBox.size.y > maxDim)
+            maxDim = boundingBox.size.y;
+        if (boundingBox.size.z > maxDim)
+            maxDim = boundingBox.size.z;
+
+        instance.transform.SetParent(rotTarget);
+        instance.transform.localScale = Vector3.one;
+        SetScale(0.35f / maxDim);
+
         float minY = meshList[0].bounds.min.y;
         foreach (MeshRenderer mesh in meshList)
             if (mesh.bounds.min.y < minY)
@@ -114,23 +129,6 @@ public class ProjectionManipulator : ApplicationElement
 
         float offset = rotTarget.transform.position.y - minY + 0.001f;
         instance.transform.position = instance.transform.position + Vector3.up * offset;
-
-        Vector3 minBounds = new Vector3(
-            meshList.Min(m => m.bounds.min.x),
-            meshList.Min(m => m.bounds.min.y),
-            meshList.Min(m => m.bounds.min.z)
-        );
-
-        Vector3 maxBounds = new Vector3(
-            meshList.Max(m => m.bounds.max.x),
-            meshList.Max(m => m.bounds.max.y),
-            meshList.Max(m => m.bounds.max.z)
-        );
-
-        Vector3 bounds = maxBounds - minBounds;
-
-        float volume = bounds.x * bounds.y * bounds.z;
-        Debug.Log(volume);
         return instance;
     }
 
@@ -143,6 +141,19 @@ public class ProjectionManipulator : ApplicationElement
             sessionOrigin.MakeContentAppearAt(target, raycast.position);
         else
             target.position = Vector3.Lerp(target.position, raycast.position, Time.deltaTime * projectionModel.TranslateSpeed);
+    }
+
+    private void SetScale(float scale)
+    {
+        snapedScale = Mathf.Clamp(scale, projectionModel.MinScale, projectionModel.MaxScale);
+        scaleBuffer = snapedScale;
+
+        if (projectionModel.ARMode)
+        {
+            sessionOrigin.transform.localScale = new Vector3(1.0f / snapedScale, 1.0f / snapedScale, 1.0f / snapedScale);
+        }
+        else
+            projectionModel.ModelContainer.localScale = new Vector3(snapedScale, snapedScale, snapedScale);
     }
 
     public void UpdateScale(float pinchAmount, Transform target, bool isAR)

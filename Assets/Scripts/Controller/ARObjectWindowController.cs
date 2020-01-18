@@ -43,23 +43,22 @@ public class ARObjectWindowController : ApplicationElement
         AssetBundle bundle = AssetBundle.LoadFromFile(tempModel.bundlePath);
         GameObject asset = bundle.LoadAsset(tempModel.addr) as GameObject;
         ARObejctModel loadModel = asset.GetComponent<ARObejctModel>();
-        if (loadModel.ARImage)
+        if (loadModel.ARImage && FindObjectOfType<ProjectionModel>().ARMode)
         {
             try
             {
 
                 FindObjectOfType<ARTrackedImageManager>().referenceLibrary = loadModel.referenceImageLibrary;
                 FindObjectOfType<ARTrackedImageManager>().trackedImagePrefab = loadModel.ARPrefab;
+                FindObjectOfType<ARTrackedImageManager>().enabled = true;
             }
             catch (Exception e)
             {
                 Debug.Log(e.ToString());
             }
-            FindObjectOfType<ARTrackedImageManager>().enabled = true;
         }
         else
             MainApp.inventoryModel.ChangeProjection(loadModel.ARPrefab);
-
 
         WindowComponent[] windows = FindObjectsOfType<WindowComponent>();
         foreach (WindowComponent window in windows)

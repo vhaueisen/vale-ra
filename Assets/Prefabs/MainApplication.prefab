@@ -1,5 +1,80 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &427455729
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 427455730}
+  - component: {fileID: 427455732}
+  - component: {fileID: 2393871467652300586}
+  m_Layer: 5
+  m_Name: GridAlignedContent
+  m_TagString: InventoryContent
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &427455730
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 427455729}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1960003164014513029}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: -25, y: 0}
+  m_Pivot: {x: 0, y: 1}
+--- !u!114 &427455732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 427455729}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 0
+  m_VerticalFit: 2
+--- !u!114 &2393871467652300586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 427455729}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 0
+  m_StartCorner: 0
+  m_StartAxis: 0
+  m_CellSize: {x: 465, y: 465}
+  m_Spacing: {x: 30, y: 30}
+  m_Constraint: 1
+  m_ConstraintCount: 2
 --- !u!1 &56455144504693485
 GameObject:
   m_ObjectHideFlags: 0
@@ -898,9 +973,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1960003162995325246}
   - component: {fileID: 1960003162995325244}
-  - component: {fileID: 1960003162995325245}
+  - component: {fileID: 9694478}
   m_Layer: 5
-  m_Name: Content
+  m_Name: VerticalAlignedContent
   m_TagString: InventoryContent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -922,8 +997,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.00048828125}
-  m_SizeDelta: {x: -25, y: -1451.6406}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: -25, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1960003162995325244
 MonoBehaviour:
@@ -939,7 +1014,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 0
   m_VerticalFit: 2
---- !u!114 &1960003162995325245
+--- !u!114 &9694478
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -948,21 +1023,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 1960003162995325247}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
+  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
     m_Left: 0
     m_Right: 0
-    m_Top: 0
+    m_Top: 100
     m_Bottom: 0
   m_ChildAlignment: 0
-  m_StartCorner: 0
-  m_StartAxis: 0
-  m_CellSize: {x: 465, y: 465}
-  m_Spacing: {x: 30, y: 30}
-  m_Constraint: 1
-  m_ConstraintCount: 2
+  m_Spacing: 130
+  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandHeight: 1
+  m_ChildControlWidth: 1
+  m_ChildControlHeight: 1
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 1
 --- !u!1 &1960003163027602496
 GameObject:
   m_ObjectHideFlags: 0
@@ -1804,6 +1880,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1960003162995325246}
+  - {fileID: 427455730}
   m_Father: {fileID: 1960003163088488355}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3209,7 +3286,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Nome
+  m_Text: Bucket
 --- !u!1 &2044288162123341633
 GameObject:
   m_ObjectHideFlags: 0
@@ -4392,10 +4469,10 @@ RectTransform:
   m_Father: {fileID: 5444195551527290484}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 200}
-  m_SizeDelta: {x: 350, y: 75}
+  m_SizeDelta: {x: -200, y: 75}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3474462033905265180
 CanvasRenderer:
@@ -4420,6 +4497,7 @@ MonoBehaviour:
   content: {fileID: 3474462033623915111}
   background: {fileID: 3474462033623915113}
   contentText: {fileID: 3474462034754379959}
+  rect: {fileID: 3474462033905265178}
 --- !u!1 &3474462034754379957
 GameObject:
   m_ObjectHideFlags: 0
@@ -4493,7 +4571,7 @@ MonoBehaviour:
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
+    m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 'Escala: 100%'
@@ -5317,9 +5395,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventoryItem: {fileID: 4352030377326683173, guid: 7c9876782b9a1ef4ebbafc2ab2da04b4,
     type: 3}
-  inventoryContent: {fileID: 1960003162995325246}
+  inventoryContainer: {fileID: 694687506818013022, guid: 346531c1f9cfb6942a84c287e92b9b42,
+    type: 3}
+  containerList: []
+  VerticalAlignedContent: {fileID: 1960003162995325246}
+  GridAlignedContent: {fileID: 427455730}
+  ScrollRect: {fileID: 1960003163088488354}
   ARObjectNames: []
   ARObjectAreas: []
+  ARObjectBuckets: []
   ARObjectThumbnails: []
   ProjectionPrefab: {fileID: 0}
 --- !u!114 &5444195550977002356

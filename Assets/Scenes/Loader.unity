@@ -120,12 +120,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!224 &1624042338 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 3474462033905265178, guid: e5a44b30d9777984ea2073c842c9c35a,
-    type: 3}
-  m_PrefabInstance: {fileID: 4072226346353309621}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4072226346353309621
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -133,51 +127,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3474462033623915111, guid: e5a44b30d9777984ea2073c842c9c35a,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3474462033623915113, guid: e5a44b30d9777984ea2073c842c9c35a,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3474462033905265178, guid: e5a44b30d9777984ea2073c842c9c35a,
-        type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3474462033905265178, guid: e5a44b30d9777984ea2073c842c9c35a,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3474462033905265178, guid: e5a44b30d9777984ea2073c842c9c35a,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: -200
-      objectReference: {fileID: 0}
-    - target: {fileID: 3474462033905265178, guid: e5a44b30d9777984ea2073c842c9c35a,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3474462033905265181, guid: e5a44b30d9777984ea2073c842c9c35a,
-        type: 3}
-      propertyPath: rect
-      value: 
-      objectReference: {fileID: 1624042338}
-    - target: {fileID: 3474462034754379959, guid: e5a44b30d9777984ea2073c842c9c35a,
-        type: 3}
-      propertyPath: m_Text
-      value: 'Escala: 100%'
-      objectReference: {fileID: 0}
-    - target: {fileID: 3474462034754379959, guid: e5a44b30d9777984ea2073c842c9c35a,
-        type: 3}
-      propertyPath: m_FontData.m_HorizontalOverflow
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4064625506464395035, guid: e5a44b30d9777984ea2073c842c9c35a,
         type: 3}
       propertyPath: m_AnchorMin.y

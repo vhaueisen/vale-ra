@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using System;
+using UnityEngine.UI;
 
 public class InventoryEventArgs : EventArgs
 {
@@ -31,10 +32,16 @@ public class InventoryModel : ApplicationElement
     private static string bundleFolder = @"Bundles";
     private static string bundlePath;
     public GameObject inventoryItem;
-    public Transform inventoryContent;
+    public GameObject inventoryContainer;
+    public GameObject[] containerList;
+    public Transform VerticalAlignedContent;
+    public Transform GridAlignedContent;
+    public ScrollRect ScrollRect;
     public List<ARObjectScript> ARObjectModels = new List<ARObjectScript>();
     public List<string> ARObjectNames = new List<string>();
     public List<string> ARObjectAreas = new List<string>();
+    public List<string> ARObjectBuckets = new List<string>();
+
     public List<Sprite> ARObjectThumbnails = new List<Sprite>();
     public event EventHandler<InventoryEventArgs> InventoryStateMachine;
     public GameObject ProjectionPrefab;
@@ -133,6 +140,7 @@ public class InventoryModel : ApplicationElement
         ARObjectModels.Add(model);
         ARObjectNames.Add(model.Name);
         ARObjectAreas.Add(model.Area);
+        ARObjectBuckets.Add(model.Bucket);
         ARObjectThumbnails.Add(model.Image);
     }
 
@@ -141,5 +149,6 @@ public class InventoryModel : ApplicationElement
         ARObjectModels = ARObjectModels.Distinct().ToList();
         ARObjectNames = ARObjectNames.Distinct().ToList();
         ARObjectAreas = ARObjectAreas.Distinct().ToList();
+        ARObjectBuckets = ARObjectBuckets.Distinct().ToList();
     }
 }
