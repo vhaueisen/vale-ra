@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-public class BundleManagerModel : MonoBehaviour
+public class BundleManagerModel : ApplicationElement
 {
 
 }

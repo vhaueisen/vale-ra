@@ -5,7 +5,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SceneLoaderModel : MonoBehaviour
+public class SceneLoaderModel : ApplicationElement
 {
     // Static fields naming each scene
     public static GameScene LoaderScene = new GameScene("Carregando", 0);

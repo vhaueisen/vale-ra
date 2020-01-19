@@ -17,6 +17,8 @@ public class MainApplication : MonoBehaviour
     public TouchModel touchModel;
     public InventoryModel inventoryModel;
     public FooterModel footerModel;
+    public CoreDataModel coreDataModel;
+
     // View
     public TouchView touchView;
     public FooterView footerView;

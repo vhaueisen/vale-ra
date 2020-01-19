@@ -5,7 +5,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class FooterModel : MonoBehaviour
+public class FooterModel : ApplicationElement
 {
     public Button[] ButtonArray;
 }

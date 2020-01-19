@@ -5360,6 +5360,7 @@ GameObject:
   - component: {fileID: 5444195550977002357}
   - component: {fileID: 5444195550977002355}
   - component: {fileID: 5444195550977002354}
+  - component: {fileID: 8013255327920131478}
   m_Layer: 0
   m_Name: Model
   m_TagString: Untagged
@@ -5464,6 +5465,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ff3873685c95b941b3bd4f7f478a2da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8013255327920131478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5444195550977002361}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56e8e8a0c9f36a34082cec41184b7eca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ScaleSpeed: 0.00025
+  TranslateSpeed: 4
+  RotateSpeed: 2
+  ElevateSpeed: 0.0001
 --- !u!1 &5444195551156360362
 GameObject:
   m_ObjectHideFlags: 0
@@ -5597,6 +5614,7 @@ MonoBehaviour:
   touchModel: {fileID: 5444195550977002356}
   inventoryModel: {fileID: 5444195550977002359}
   footerModel: {fileID: 5444195550977002357}
+  coreDataModel: {fileID: 8013255327920131478}
   touchView: {fileID: 5444195550705611851}
   footerView: {fileID: 5444195550705611848}
   sceneLoaderController: {fileID: 5444195551156360359}

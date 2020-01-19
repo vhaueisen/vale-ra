@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.ARSubsystems;
 
-public class ARObejctModel : MonoBehaviour
+public class ARObejctModel : ApplicationElement
 {
     public string Name;
     public string Description;

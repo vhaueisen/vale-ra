@@ -19,7 +19,11 @@ public class InventoryController : ApplicationElement
     }
     private bool initiated = false;
     private List<ItemBucket> bucketList = new List<ItemBucket>();
-
+    private readonly byte SortByName = 0;
+    private readonly byte SortByArea = 1;
+    private readonly byte SortByBucket = 2;
+    private readonly byte GridLayout = 0;
+    private readonly byte VerticalLayout = 1;
 
     private void Start()
     {
@@ -69,12 +73,6 @@ public class InventoryController : ApplicationElement
 
         return containerList;
     }
-
-    private readonly byte SortByName = 0;
-    private readonly byte SortByArea = 1;
-    private readonly byte SortByBucket = 2;
-    private readonly byte GridLayout = 0;
-    private readonly byte VerticalLayout = 1;
 
     private void ChangeOrder(byte mode, bool reverse = false)
     {
