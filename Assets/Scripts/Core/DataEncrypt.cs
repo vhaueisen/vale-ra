@@ -8,7 +8,7 @@ public static class DataEncrypt
     private static readonly int passwordIterations = 1000;
     private static readonly int keySize = 256;
 
-    public static byte[] Encrypt(byte[] plainBytes, string p, string s = "ValeSAlt")
+    public static byte[] Encrypt(byte[] plainBytes, string p, string s)
     {
         byte[] saltBytes = Encoding.ASCII.GetBytes(s);
         PasswordDeriveBytes derivedPassword = new PasswordDeriveBytes(p, saltBytes, hashAlgorithm, passwordIterations);
@@ -36,7 +36,7 @@ public static class DataEncrypt
         return cipherBytes;
     }
 
-    public static byte[] Decrypt(byte[] cipherBytes, string p, string s = "ValeSAlt")
+    public static byte[] Decrypt(byte[] cipherBytes, string p, string s)
     {
         byte[] saltBytes = Encoding.ASCII.GetBytes(s);
 

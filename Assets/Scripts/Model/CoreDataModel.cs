@@ -20,9 +20,9 @@ public class CoreDataModel : ApplicationElement
         byte[] outputBytes;
 
         Debug.Log(inputText);
-        encBytes = DataEncrypt.Encrypt(inputBytes, "AUAHSUAHSUHAUSHUA");
+        encBytes = DataEncrypt.Encrypt(inputBytes, "AUAHSUAHSUHAUSHUA", "tdDf97UOFICUiu");
         Debug.Log(Encoding.ASCII.GetString(encBytes));
-        outputBytes = DataEncrypt.Decrypt(encBytes, "AUAHSUAHSUHAUSHUA");
+        outputBytes = DataEncrypt.Decrypt(encBytes, "AUAHSUAHSUHAUSHUA", "tdDf97UOFICUiu");
         Debug.Log(Encoding.ASCII.GetString(outputBytes));
     }
 }
