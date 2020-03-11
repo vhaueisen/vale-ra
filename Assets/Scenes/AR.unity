@@ -795,9 +795,6 @@ MonoBehaviour:
   RotateComponent: {fileID: 1768589934}
   ARMode: 1
   CurrentInstance: {fileID: 0}
-  ScaleSpeed: 0.00025
-  TranslateSpeed: 4
-  RotateSpeed: 2
 --- !u!1 &1953858279
 GameObject:
   m_ObjectHideFlags: 0

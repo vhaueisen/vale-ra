@@ -14,9 +14,7 @@ public class ProjectionController : ProjectionManipulator
     public void OnTouchStateChange(object sender, TouchEventArgs eventArgs)
     {
         currentState = eventArgs.currentState;
-#if UNITY_EDITOR
-        return;
-#else
+#if !(UNITY_EDITOR || UNITY_EDITOR_WIN)
         if (currentState == TouchModel.LongPressing)
             Handheld.Vibrate();
 #endif

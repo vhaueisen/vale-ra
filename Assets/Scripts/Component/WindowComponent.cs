@@ -69,13 +69,11 @@ public class WindowComponent : MonoBehaviour
 
     public void Enter()
     {
-        StopAllCoroutines();
-        StartCoroutine("EnterAnimation");
+        content.SetActive(true);
     }
 
     public void Exit()
     {
-        StopAllCoroutines();
-        StartCoroutine("ExitAnimation");
+        content.SetActive(false);
     }
 }
