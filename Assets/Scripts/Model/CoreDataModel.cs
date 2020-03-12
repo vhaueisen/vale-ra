@@ -3,89 +3,63 @@
 #pragma warning disable 0414
 
 using UnityEngine;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 
 [System.Serializable]
-public class DataModel
-{
-    public object data;
-
-    public string DataName
-    {
-        get
-        {
-            return DataName;
-        }
-        set
-        {
-            DataName = Application.persistentDataPath + "/" + value;
-        }
-    }
-
-    private protected bool Save()
-    {
-        try
-        {
-            BinaryFormatter binaryFormatter = new BinaryFormatter();
-            FileStream fileStream = new FileStream(DataName, FileMode.Create);
-            binaryFormatter.Serialize(fileStream, data);
-            fileStream.Close();
-            return true;
-        }
-        catch
-        {
-            return false;
-        }
-    }
-
-    private protected bool Load()
-    {
-        try
-        {
-            BinaryFormatter binaryFormatter = new BinaryFormatter();
-            FileStream fileStream = new FileStream(DataName, FileMode.Open);
-            data = binaryFormatter.Deserialize(fileStream) as byte[];
-            fileStream.Close();
-            return true;
-        }
-        catch
-        {
-            return false;
-        }
-    }
-}
-
-
 public class UserSettings : DataModel
 {
-    public float ScaleSpeed;
-    public float TranslateSpeed;
-    public float RotateSpeed;
-    public float ElevateSpeed;
-    public bool IsOcclusion;
-    public UserSettings(float scaleSpeed, float translateSpeed,
-        float rotateSpeed, float elevateSpeed, bool isOcclusion)
+    [System.Serializable]
+    public struct CoreData
     {
-        ScaleSpeed = scaleSpeed;
-        TranslateSpeed = translateSpeed;
-        RotateSpeed = rotateSpeed;
-        ElevateSpeed = elevateSpeed;
-        IsOcclusion = isOcclusion;
+        public float ScaleSpeed;
+        public float TranslateSpeed;
+        public float RotateSpeed;
+        public float ElevateSpeed;
+        public bool IsOcclusion;
+    }
+    public CoreData Core = new CoreData();
+
+    public UserSettings(string name)
+    {
+        DataName = name;
     }
 
-    new public bool Save()
+    public void Load()
     {
-        Load();
-        return true;
+        if (p_Load() && data != null)
+        {
+            Core = (CoreData)data;
+            IsLoaded = true;
+        }
+    }
+
+    public void OnSettingsEvent(object sender, DataEventArgs dataEventArgs)
+    {
+        Debug.Log("Event Fired!");
+        if (dataEventArgs.EventType == DataEventArgs.LoadEvent)
+        {
+            Load();
+        }
+        else if (dataEventArgs.EventType == DataEventArgs.SaveEvent)
+        {
+            p_Save();
+        }
+        else
+        {
+            p_Update(dataEventArgs.DataChunk);
+        }
     }
 }
 
 
 public class CoreDataModel : ApplicationElement
 {
+    public UserSettings Settings;
+
     void Start()
     {
+        Settings = new UserSettings(Application.persistentDataPath + "/" + "data.001");
+        Settings.DataEvent += Settings.OnSettingsEvent;
 
+        Settings.Load();
     }
 }

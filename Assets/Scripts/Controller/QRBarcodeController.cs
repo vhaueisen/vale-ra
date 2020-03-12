@@ -115,7 +115,7 @@ public class QRBarcodeController : MonoBehaviour
         W = camTexture.width;
         H = camTexture.height;
         float ratio = (float)W / (float)H;
-        cameraFrame.GetComponent<AspectRatioFitter>().aspectRatio = ratio;
+        cameraFrame.transform.parent.GetComponent<AspectRatioFitter>().aspectRatio = ratio;
         float scaleY = camTexture.videoVerticallyMirrored ? -1f : 1f;
 
         cameraBuffer.rectTransform.localScale = new Vector3(1f, scaleY, 1f);

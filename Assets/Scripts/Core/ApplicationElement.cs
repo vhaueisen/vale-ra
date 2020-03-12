@@ -33,10 +33,19 @@ public class ApplicationElement : MonoBehaviour
         }
     }
 
+    public SettingsApplication SettingsApp
+    {
+        get
+        {
+            return FindObjectOfType<SettingsApplication>();
+        }
+    }
+
+
     private MainApplication mainApplication;
     private HomeApplication homeApplication;
     private ARApplication arApplication;
-
+    private SettingsApplication settingsApp;
     void Awake()
     {
         mainApplication = GameObject.FindObjectOfType<MainApplication>();

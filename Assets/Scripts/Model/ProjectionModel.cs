@@ -14,6 +14,10 @@ public class ProjectionModel : ApplicationElement
     public Transform RotateComponent;
     public bool ARMode = false;
     public GameObject CurrentInstance = null;
+    public readonly float ScaleSpeed = 0.25e-3f;
+    public readonly float TranslateSpeed = 4.0f;
+    public readonly float RotateSpeed = 2.0f;
+    public readonly float ElevateSpeed = 0.0001f;
     public readonly float MinScale = 0.1f;
     public readonly float MaxScale = 1.0f;
     public readonly float MaxElevation = 10.0f;
