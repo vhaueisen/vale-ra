@@ -13,12 +13,12 @@ public class DataModel
 {
     public bool IsLoaded;
     public object data;
-
     public string DataName;
-    private readonly int debounceTime = 5000;
+    private readonly int debounceTime = 1250;
     private Thread dataCleaner;
     [ThreadStatic]
-    public static volatile bool IsDirty = false;
+    public volatile bool IsDirty = false;
+
     public class DataEventArgs : EventArgs
     {
         public DataEventArgs(byte eventType, object dataChunk)
@@ -42,21 +42,39 @@ public class DataModel
             DataEvent(this, dataEventArgs);
         }
     }
+    public virtual void Load()
+    {
+
+    }
+
+    public void OnSettingsEvent(object sender, DataEventArgs dataEventArgs)
+    {
+        if (dataEventArgs.EventType == DataEventArgs.LoadEvent)
+        {
+            Load();
+        }
+        else if (dataEventArgs.EventType == DataEventArgs.SaveEvent)
+        {
+            p_Save();
+        }
+        else
+        {
+            p_Update(dataEventArgs.DataChunk);
+        }
+    }
+
     private protected bool p_Save()
     {
         try
         {
-            System.Console.WriteLine("Saving...");
             BinaryFormatter binaryFormatter = new BinaryFormatter();
             FileStream fileStream = new FileStream(DataName, FileMode.Create);
             binaryFormatter.Serialize(fileStream, data);
             fileStream.Close();
-            Debug.Log(DataName);
             return true;
         }
         catch (Exception e)
         {
-            Debug.Log(e.ToString());
             return false;
         }
     }
@@ -68,13 +86,11 @@ public class DataModel
             BinaryFormatter binaryFormatter = new BinaryFormatter();
             FileStream fileStream = new FileStream(DataName, FileMode.Open);
             data = binaryFormatter.Deserialize(fileStream);
-            Debug.Log(string.Format("Loading data back..." + data.ToString()));
             fileStream.Close();
             return true;
         }
         catch (Exception e)
         {
-            Debug.Log(e.ToString());
             return false;
         }
     }
@@ -82,7 +98,6 @@ public class DataModel
     private protected void p_Update(object dataChunk)
     {
         data = dataChunk;
-        Debug.Log("Updating data...");
         DataChanged();
     }
 
@@ -101,12 +116,12 @@ public class DataModel
         do
         {
             IsDirty = false;
-            Debug.Log("Looping...");
             Thread.Sleep(debounceTime);
         }
         while (IsDirty);
 
         p_Save();
+        Debug.Log("Saved!");
         dataCleaner = null;
     }
 }

@@ -3,7 +3,7 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR.ARFoundation;
-
+using static DataModel;
 public class ARObjectWindowController : ApplicationElement
 {
     public Text tittle;
@@ -27,21 +27,47 @@ public class ARObjectWindowController : ApplicationElement
         header.sprite = model.Image;
     }
 
+    private void UpdateVars()
+    {
+        InventorySettings.InventoryData core = new InventorySettings.InventoryData();
+        core.Addr = tempModel.addr;
+        core.BundlePath = tempModel.bundlePath;
+        core.Id = tempModel.id;
+        DataEventArgs eventArgs = new DataEventArgs(DataEventArgs.UpdateEvent, core);
+        MainApp.coreDataModel.Inventory.OnSettingsEvent(this, eventArgs);
+    }
     public void ViewObject()
     {
-        window.Exit();
-        AssetBundle.UnloadAllAssetBundles(true);
-        string parentDir = Directory.GetParent(tempModel.bundlePath).ToString();
-        AssetBundle assetBundle = AssetBundle.LoadFromFile(Path.Combine(parentDir, new DirectoryInfo(parentDir).Name));
-        AssetBundleManifest manifest = assetBundle.LoadAsset<AssetBundleManifest>("AssetBundleManifest");
-        string[] dependencies = manifest.GetAllDependencies(tempModel.id);
-        foreach (string dependency in dependencies)
+        string BundlePath;
+        string BundleAddress;
+        string BundleId;
+
+        if (tempModel == null && MainApp.coreDataModel.Inventory.IsLoaded)
         {
-            AssetBundle.LoadFromFile(Path.Combine(Directory.GetParent(tempModel.bundlePath).ToString(), dependency));
+            InventorySettings.InventoryData Core = MainApp.coreDataModel.Inventory.Core;
+            BundlePath = Core.BundlePath;
+            BundleAddress = Core.Addr;
+            BundleId = Core.Id;
+        }
+        else
+        {
+            BundlePath = tempModel.bundlePath;
+            BundleAddress = tempModel.addr;
+            BundleId = tempModel.id;
         }
 
-        AssetBundle bundle = AssetBundle.LoadFromFile(tempModel.bundlePath);
-        GameObject asset = bundle.LoadAsset(tempModel.addr) as GameObject;
+        AssetBundle.UnloadAllAssetBundles(true);
+        string parentDir = Directory.GetParent(BundlePath).ToString();
+        AssetBundle assetBundle = AssetBundle.LoadFromFile(Path.Combine(parentDir, new DirectoryInfo(parentDir).Name));
+        AssetBundleManifest manifest = assetBundle.LoadAsset<AssetBundleManifest>("AssetBundleManifest");
+        string[] dependencies = manifest.GetAllDependencies(BundleId);
+        foreach (string dependency in dependencies)
+        {
+            AssetBundle.LoadFromFile(Path.Combine(Directory.GetParent(BundlePath).ToString(), dependency));
+        }
+
+        AssetBundle bundle = AssetBundle.LoadFromFile(BundlePath);
+        GameObject asset = bundle.LoadAsset(BundleAddress) as GameObject;
         ARObejctModel loadModel = asset.GetComponent<ARObejctModel>();
         if (loadModel.ARImage && FindObjectOfType<ProjectionModel>().ARMode)
         {
@@ -64,5 +90,6 @@ public class ARObjectWindowController : ApplicationElement
         foreach (WindowComponent window in windows)
             window.Exit();
         FindObjectOfType<ToastNotificationComponent>().Notify("Pressione e segure no local de ancoragem do objeto");
+        UpdateVars();
     }
 }

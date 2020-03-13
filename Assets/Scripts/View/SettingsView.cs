@@ -18,7 +18,7 @@ public class SettingsView : ApplicationElement
 
     public void UpdateVars()
     {
-        UserSettings.CoreData core = new UserSettings.CoreData();
+        UserSettings.UserData core = new UserSettings.UserData();
         core.ScaleSpeed = ScaleSlider.value;
         core.TranslateSpeed = TranslationSlider.value;
         core.RotateSpeed = RotationSlider.value;
@@ -32,7 +32,7 @@ public class SettingsView : ApplicationElement
     {
         if (MainApp.coreDataModel.Settings.IsLoaded)
         {
-            UserSettings.CoreData core = MainApp.coreDataModel.Settings.Core;
+            UserSettings.UserData core = MainApp.coreDataModel.Settings.Core;
             ScaleSlider.value = core.ScaleSpeed;
             TranslationSlider.value = core.TranslateSpeed;
             RotationSlider.value = core.RotateSpeed;
