@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
@@ -140,7 +139,7 @@ public class ProjectionManipulator : ApplicationElement
         if (isAR)
             sessionOrigin.MakeContentAppearAt(target, raycast.position);
         else
-            target.position = Vector3.Lerp(target.position, raycast.position, Time.deltaTime * projectionModel.TranslateSpeed);
+            target.position = Vector3.Lerp(target.position, raycast.position, Time.deltaTime * projectionModel.TranslateSpeed * MainApp.coreDataModel.Settings.Core.TranslateSpeed);
     }
 
     private void SetScale(float scale)
@@ -158,7 +157,7 @@ public class ProjectionManipulator : ApplicationElement
 
     public void UpdateScale(float pinchAmount, Transform target, bool isAR)
     {
-        pinchAmount = pinchAmount * projectionModel.ScaleSpeed;
+        pinchAmount = pinchAmount * projectionModel.ScaleSpeed * MainApp.coreDataModel.Settings.Core.ScaleSpeed;
 
         scaleBuffer = scaleBuffer * (pinchAmount + 1);
 
@@ -171,25 +170,25 @@ public class ProjectionManipulator : ApplicationElement
             sessionOrigin.transform.localScale = new Vector3(1.0f / snapedScale, 1.0f / snapedScale, 1.0f / snapedScale);
         }
         else
-            target.localScale = new Vector3(snapedScale, snapedScale, snapedScale); ;
+            target.localScale = new Vector3(snapedScale, snapedScale, snapedScale);
         FindObjectOfType<ToastNotificationComponent>().Notify(string.Format("Escala: {0}%", Mathf.RoundToInt(snapedScale * 100)));
     }
 
 
     public void UpdateRotation(float desiredRotation, Transform target, bool isAR)
     {
-        target.Rotate(Vector3.up * desiredRotation * Time.deltaTime * projectionModel.RotateSpeed);
+        target.Rotate(Vector3.up * desiredRotation * Time.deltaTime * projectionModel.RotateSpeed * MainApp.coreDataModel.Settings.Core.RotateSpeed);
     }
 
     private float elevationOffset = 0.0f;
     public void Elevate(Transform target, float amount)
     {
-        elevationOffset = projectionModel.ElevateSpeed * amount + elevationOffset;
+        elevationOffset = projectionModel.ElevateSpeed * amount * MainApp.coreDataModel.Settings.Core.ElevateSpeed + elevationOffset;
         elevationOffset = Mathf.Clamp(elevationOffset, 0.0f, projectionModel.MaxElevation);
         Vector3 targetPos = new Vector3(target.transform.localPosition.x,
             elevationOffset / snapedScale,
             target.transform.localPosition.z);
-        target.transform.localPosition = Vector3.Lerp(target.localPosition, targetPos, Time.deltaTime * projectionModel.TranslateSpeed);
+        target.transform.localPosition = Vector3.Lerp(target.localPosition, targetPos, Time.deltaTime * projectionModel.TranslateSpeed * MainApp.coreDataModel.Settings.Core.TranslateSpeed);
         FindObjectOfType<ToastNotificationComponent>().Notify(string.Format("Elevacão: {0:0.00}m", elevationOffset));
     }
 }

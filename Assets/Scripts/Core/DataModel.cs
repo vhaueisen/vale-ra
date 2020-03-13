@@ -14,7 +14,7 @@ public class DataModel
     public bool IsLoaded;
     public object data;
     public string DataName;
-    private readonly int debounceTime = 1250;
+    private readonly int debounceTime = 750;
     private Thread dataCleaner;
     [ThreadStatic]
     public volatile bool IsDirty = false;
@@ -71,6 +71,7 @@ public class DataModel
             FileStream fileStream = new FileStream(DataName, FileMode.Create);
             binaryFormatter.Serialize(fileStream, data);
             fileStream.Close();
+            IsLoaded = true;
             return true;
         }
         catch (Exception e)
@@ -94,11 +95,15 @@ public class DataModel
             return false;
         }
     }
+    public virtual void Update()
+    {
 
+    }
     private protected void p_Update(object dataChunk)
     {
         data = dataChunk;
         DataChanged();
+        Update();
     }
 
     private void DataChanged()

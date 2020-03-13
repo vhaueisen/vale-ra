@@ -6,6 +6,8 @@ using System.IO;
 using UnityEngine;
 using System;
 using UnityEngine.XR.ARFoundation;
+using System.Collections;
+using static ProjectionManipulator;
 
 [System.Serializable]
 public class UserSettings : DataModel
@@ -24,9 +26,14 @@ public class UserSettings : DataModel
     {
         if (p_Load() && data != null)
         {
-            Core = (UserData)data;
+            Update();
             IsLoaded = true;
         }
+    }
+
+    public override void Update()
+    {
+        Core = (UserData)data;
     }
 }
 
@@ -46,9 +53,14 @@ public class InventorySettings : DataModel
     {
         if (p_Load() && data != null)
         {
-            Core = (InventoryData)data;
+            Update();
             IsLoaded = true;
         }
+    }
+
+    public override void Update()
+    {
+        Core = (InventoryData)data;
     }
 }
 
@@ -70,48 +82,48 @@ public class CoreDataModel : ApplicationElement
         Inventory.Load();
 
         if (Inventory.IsLoaded)
+            StartCoroutine("loadAsync");
+    }
+
+    private IEnumerator loadAsync()
+    {
+        yield return new WaitForEndOfFrame();
+        string BundlePath;
+        string BundleAddress;
+        string BundleId;
+        BundlePath = Inventory.Core.BundlePath;
+        BundleAddress = Inventory.Core.Addr;
+        BundleId = Inventory.Core.Id;
+
+        yield return new WaitForEndOfFrame();
+        string parentDir = Directory.GetParent(BundlePath).ToString();
+        AssetBundle assetBundle = AssetBundle.LoadFromFile(Path.Combine(parentDir, new DirectoryInfo(parentDir).Name));
+        AssetBundleManifest manifest = assetBundle.LoadAsset<AssetBundleManifest>("AssetBundleManifest");
+        string[] dependencies = manifest.GetAllDependencies(BundleId);
+        foreach (string dependency in dependencies)
+            AssetBundle.LoadFromFile(Path.Combine(Directory.GetParent(BundlePath).ToString(), dependency));
+
+        AssetBundle bundle = AssetBundle.LoadFromFile(BundlePath);
+        GameObject asset = bundle.LoadAsset(BundleAddress) as GameObject;
+        ARObejctModel loadModel = asset.GetComponent<ARObejctModel>();
+        if (loadModel.ARImage && FindObjectOfType<ProjectionModel>().ARMode)
         {
-            string BundlePath;
-            string BundleAddress;
-            string BundleId;
-            BundlePath = Inventory.Core.BundlePath;
-            BundleAddress = Inventory.Core.Addr;
-            BundleId = Inventory.Core.Id;
-
-            AssetBundle.UnloadAllAssetBundles(true);
-            string parentDir = Directory.GetParent(BundlePath).ToString();
-            AssetBundle assetBundle = AssetBundle.LoadFromFile(Path.Combine(parentDir, new DirectoryInfo(parentDir).Name));
-            AssetBundleManifest manifest = assetBundle.LoadAsset<AssetBundleManifest>("AssetBundleManifest");
-            string[] dependencies = manifest.GetAllDependencies(BundleId);
-            foreach (string dependency in dependencies)
+            try
             {
-                AssetBundle.LoadFromFile(Path.Combine(Directory.GetParent(BundlePath).ToString(), dependency));
-            }
 
-            AssetBundle bundle = AssetBundle.LoadFromFile(BundlePath);
-            GameObject asset = bundle.LoadAsset(BundleAddress) as GameObject;
-            ARObejctModel loadModel = asset.GetComponent<ARObejctModel>();
-            if (loadModel.ARImage && FindObjectOfType<ProjectionModel>().ARMode)
+                FindObjectOfType<ARTrackedImageManager>().referenceLibrary = loadModel.referenceImageLibrary;
+                FindObjectOfType<ARTrackedImageManager>().trackedImagePrefab = loadModel.ARPrefab;
+                FindObjectOfType<ARTrackedImageManager>().enabled = true;
+            }
+            catch (Exception e)
             {
-                try
-                {
-
-                    FindObjectOfType<ARTrackedImageManager>().referenceLibrary = loadModel.referenceImageLibrary;
-                    FindObjectOfType<ARTrackedImageManager>().trackedImagePrefab = loadModel.ARPrefab;
-                    FindObjectOfType<ARTrackedImageManager>().enabled = true;
-                }
-                catch (Exception e)
-                {
-                    Debug.Log(e.ToString());
-                }
+                Debug.Log(e.ToString());
             }
-            else
-                MainApp.inventoryModel.ChangeProjection(loadModel.ARPrefab);
-
-            WindowComponent[] windows = FindObjectsOfType<WindowComponent>();
-            foreach (WindowComponent window in windows)
-                window.Exit();
-            FindObjectOfType<ToastNotificationComponent>().Notify("Pressione e segure no local de ancoragem do objeto");
         }
+        else
+            MainApp.inventoryModel.ChangeProjection(loadModel.ARPrefab);
+
+        FindObjectOfType<ProjectionController>().Initiate();
+        yield break;
     }
 }

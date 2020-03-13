@@ -59,4 +59,11 @@ public class ProjectionController : ProjectionManipulator
             }
         }
     }
+
+    public void Initiate()
+    {
+        FlexibleRaycast raycast;
+        raycast = Raycast(new Vector2(Screen.width / 2.0f, Screen.height / 2.0f), projectionModel.MainCamera);
+        projectionModel.CurrentInstance = InstantiateProjection(raycast, MainApp.inventoryModel.ProjectionPrefab, projectionModel.RotateComponent, projectionModel.ModelContainer);
+    }
 }

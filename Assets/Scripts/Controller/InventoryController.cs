@@ -27,7 +27,6 @@ public class InventoryController : ApplicationElement
 
     private void Start()
     {
-
         if (initiated)
             return;
 

@@ -36,8 +36,6 @@ public class SceneLoaderController : ApplicationElement
         GC.Collect();
 
         MainApp.sceneLoaderModel.loadingPanel.SetActive(false);
-        // if (scene.sceneIndex == SceneLoaderModel.SettingsScene.sceneIndex)
-        //     SettingsApp.settingsView.SettingsEvent += MainApp.coreDataModel.Settings.OnSettingsEvent;
         yield break;
     }
 }
