@@ -28,6 +28,17 @@ public class ProjectionManipulator : ApplicationElement
                 rotation = Quaternion.identity;
             }
         }
+
+        public FlexibleRaycast(Vector3 _position, Quaternion _rotation)
+        {
+            pose = new Pose();
+            hit = new RaycastHit();
+            position = _position;
+            rotation = _rotation;
+            isValid = true;
+            isAR = false;
+        }
+
         public Pose pose;
         public RaycastHit hit;
         public Vector3 position;
@@ -79,7 +90,7 @@ public class ProjectionManipulator : ApplicationElement
     {
         Ray cameraRay = c.ScreenPointToRay(point);
         RaycastHit hit;
-        if (Physics.Raycast(cameraRay, out hit, 3.0f))
+        if (Physics.Raycast(cameraRay, out hit, 30.0f))
         {
             if (hit.transform.name == "BackPlane")
             {
@@ -93,41 +104,13 @@ public class ProjectionManipulator : ApplicationElement
     {
         if (!raycast.isValid || prefab == null)
             return null;
-
+        SetScale(1.0f);
         posTarget.position = raycast.position;
         GameObject instance = Instantiate(prefab, rotTarget.position, raycast.rotation);
-        instance.transform.localScale = Vector3.one;
-
-        // Shoudn't be done in runtime
-        // Dirty approach to fix anchoring issues
-        List<MeshRenderer> meshList = new List<MeshRenderer>(instance.GetComponentsInChildren<MeshRenderer>());
-        MeshRenderer instanceMesh = instance.GetComponent<MeshRenderer>();
-        if (instanceMesh != null)
-            meshList.Add(instanceMesh);
-
-        Bounds boundingBox = new Bounds(rotTarget.position, Vector3.zero);
-
-        for (int i = 0; i < meshList.Count; i++)
-            boundingBox.Encapsulate(meshList[i].bounds.max);
-
-        float maxDim = boundingBox.size.x;
-
-        if (boundingBox.size.y > maxDim)
-            maxDim = boundingBox.size.y;
-        if (boundingBox.size.z > maxDim)
-            maxDim = boundingBox.size.z;
-
+        instance.transform.position = instance.transform.position + Vector3.down * MainApp.inventoryModel.CurrentModel.YOffset;
         instance.transform.SetParent(rotTarget);
         instance.transform.localScale = Vector3.one;
-        SetScale(0.35f / maxDim);
-
-        float minY = meshList[0].bounds.min.y;
-        foreach (MeshRenderer mesh in meshList)
-            if (mesh.bounds.min.y < minY)
-                minY = mesh.bounds.min.y;
-
-        float offset = rotTarget.transform.position.y - minY + 0.001f;
-        instance.transform.position = instance.transform.position + Vector3.up * offset;
+        SetScale(MainApp.inventoryModel.CurrentModel.InitialScaleFactor);
         return instance;
     }
 
@@ -144,7 +127,7 @@ public class ProjectionManipulator : ApplicationElement
 
     private void SetScale(float scale)
     {
-        snapedScale = Mathf.Clamp(scale, projectionModel.MinScale, projectionModel.MaxScale);
+        snapedScale = Mathf.Clamp(scale, MainApp.inventoryModel.CurrentModel.MinScaleFactor, MainApp.inventoryModel.CurrentModel.MaxScaleFactor);
         scaleBuffer = snapedScale;
 
         if (projectionModel.ARMode)
@@ -161,7 +144,7 @@ public class ProjectionManipulator : ApplicationElement
 
         scaleBuffer = scaleBuffer * (pinchAmount + 1);
 
-        snapedScale = Snap(Mathf.Clamp(scaleBuffer, projectionModel.MinScale, projectionModel.MaxScale),
+        snapedScale = Snap(Mathf.Clamp(scaleBuffer, MainApp.inventoryModel.CurrentModel.MinScaleFactor, MainApp.inventoryModel.CurrentModel.MaxScaleFactor),
                 projectionModel.ScaleSnapPoints,
                 projectionModel.ScaleSnapProximity);
 

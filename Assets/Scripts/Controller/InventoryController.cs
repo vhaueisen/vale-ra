@@ -30,7 +30,8 @@ public class InventoryController : ApplicationElement
         if (initiated)
             return;
 
-        MainApp.inventoryModel.containerList = GenerateContainers();
+        (MainApp.inventoryModel.containerList,
+         MainApp.inventoryModel.containerComponentList) = GenerateContainers();
 
         foreach (ARObjectScript model in MainApp.inventoryModel.ARObjectModels)
         {
@@ -54,12 +55,13 @@ public class InventoryController : ApplicationElement
         initiated = true;
     }
 
-    private GameObject[] GenerateContainers()
+    private (GameObject[], InventoryContainerComponent[]) GenerateContainers()
     {
         int containerSize = MainApp.inventoryModel.ARObjectBuckets.Count;
         containerSize = MainApp.inventoryModel.ARObjectAreas.Count < containerSize ? containerSize : MainApp.inventoryModel.ARObjectAreas.Count;
 
         GameObject[] containerList = new GameObject[containerSize];
+        InventoryContainerComponent[] componentList = new InventoryContainerComponent[containerSize];
 
         for (int i = 0; i < containerSize; i++)
         {
@@ -68,17 +70,20 @@ public class InventoryController : ApplicationElement
                 Quaternion.identity,
                 MainApp.inventoryModel.VerticalAlignedContent);
             containerList[i].SetActive(false);
+            componentList[i] = containerList[i].GetComponent<InventoryContainerComponent>();
         }
-
-        return containerList;
+        return (containerList, componentList);
     }
 
     private void ChangeOrder(byte mode, bool reverse = false)
     {
         IEnumerable<ItemBucket> sortedList;
-
         if (mode == SortByName)
+        {
             sortedList = bucketList.OrderBy(bucket => bucket.Script.Name);
+            foreach (InventoryContainerComponent component in MainApp.inventoryModel.containerComponentList)
+                component.Show();
+        }
         else if (mode == SortByArea)
             sortedList = bucketList.OrderBy(bucket => bucket.Script.Area);
         else
@@ -121,6 +126,12 @@ public class InventoryController : ApplicationElement
                 MainApp.inventoryModel.containerList[containerIndex].GetComponentInChildren<Text>().text = containerTitle;
             }
             bucket.Obj.transform.SetParent(MainApp.inventoryModel.containerList[containerIndex].transform);
+        }
+
+        if (mode != SortByName)
+        {
+            foreach (InventoryContainerComponent component in MainApp.inventoryModel.containerComponentList)
+                component.Hide();
         }
     }
 

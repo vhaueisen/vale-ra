@@ -121,9 +121,9 @@ public class CoreDataModel : ApplicationElement
             }
         }
         else
-            MainApp.inventoryModel.ChangeProjection(loadModel.ARPrefab);
+            MainApp.inventoryModel.ChangeProjection(loadModel);
 
-        FindObjectOfType<ProjectionController>().Initiate();
+        FindObjectOfType<ProjectionController>().HomeProjection();
         yield break;
     }
 }

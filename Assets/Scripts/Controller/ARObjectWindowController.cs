@@ -84,12 +84,15 @@ public class ARObjectWindowController : ApplicationElement
             }
         }
         else
-            MainApp.inventoryModel.ChangeProjection(loadModel.ARPrefab);
+            MainApp.inventoryModel.ChangeProjection(loadModel);
 
         WindowComponent[] windows = FindObjectsOfType<WindowComponent>();
         foreach (WindowComponent window in windows)
             window.Exit();
-        FindObjectOfType<ToastNotificationComponent>().Notify("Pressione e segure no local de ancoragem do objeto");
         UpdateVars();
+        if (SceneLoaderModel.CurrentScene.sceneIndex == SceneLoaderModel.ARScene.sceneIndex)
+            FindObjectOfType<ToastNotificationComponent>().Notify("Pressione e segure no local de ancoragem do objeto");
+        else
+            FindObjectOfType<ProjectionController>().HomeProjection();
     }
 }

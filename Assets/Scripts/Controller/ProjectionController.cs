@@ -8,13 +8,12 @@ public class ProjectionController : ProjectionManipulator
         MainApp.touchView.TouchStateMachine += OnTouchStateChange;
         MainApp.inventoryModel.InventoryStateMachine += OnProjectionStateChange;
         Initialize();
-        projectionModel.CurrentInstance = null;
     }
 
     public void OnTouchStateChange(object sender, TouchEventArgs eventArgs)
     {
         currentState = eventArgs.currentState;
-#if !(UNITY_EDITOR || UNITY_EDITOR_WIN)
+#if (UNITY_ANDROID || UNITY_IOS)
         if (currentState == TouchModel.LongPressing)
             Handheld.Vibrate();
 #endif
@@ -50,7 +49,10 @@ public class ProjectionController : ProjectionManipulator
                 }
                 else
                 {
-                    projectionModel.CurrentInstance = InstantiateProjection(raycast, MainApp.inventoryModel.ProjectionPrefab, projectionModel.RotateComponent, projectionModel.ModelContainer);
+                    projectionModel.CurrentInstance = InstantiateProjection(
+                        raycast, MainApp.inventoryModel.ProjectionPrefab,
+                        projectionModel.RotateComponent,
+                        projectionModel.ModelContainer);
                 }
             }
             else if (currentState == TouchModel.Elevating && projectionModel.ARMode)
@@ -60,10 +62,10 @@ public class ProjectionController : ProjectionManipulator
         }
     }
 
-    public void Initiate()
+    public void HomeProjection()
     {
-        FlexibleRaycast raycast;
-        raycast = Raycast(new Vector2(Screen.width / 2.0f, Screen.height / 2.0f), projectionModel.MainCamera);
+        FlexibleRaycast raycast = new FlexibleRaycast(HomeApp.projectionModel.HomeOrigin.transform.position,
+        HomeApp.projectionModel.HomeOrigin.transform.rotation);
         projectionModel.CurrentInstance = InstantiateProjection(raycast, MainApp.inventoryModel.ProjectionPrefab, projectionModel.RotateComponent, projectionModel.ModelContainer);
     }
 }

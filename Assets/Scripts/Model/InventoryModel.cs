@@ -21,19 +21,12 @@ public class InventoryEventArgs : EventArgs
 
 public class InventoryModel : ApplicationElement
 {
-    // ---------------------------------------------------------------------- *
-    // I shall follow the rules below:
-    // I hold the application's core data and state
-    // I Serialize deserialize and do type conversion
-    // Load and Saves data
-    // Notify controllers
-    // I DO NOT ACCESS ANY VIEW WHATSOEVER!
-    // ---------------------------------------------------------------------- *
     private static string bundleFolder = @"Bundles";
     private static string bundlePath;
     public GameObject inventoryItem;
     public GameObject inventoryContainer;
     public GameObject[] containerList;
+    public InventoryContainerComponent[] containerComponentList;
     public Transform VerticalAlignedContent;
     public Transform GridAlignedContent;
     public ScrollRect ScrollRect;
@@ -41,7 +34,7 @@ public class InventoryModel : ApplicationElement
     public List<string> ARObjectNames = new List<string>();
     public List<string> ARObjectAreas = new List<string>();
     public List<string> ARObjectBuckets = new List<string>();
-
+    public ARObejctModel CurrentModel;
     public List<Sprite> ARObjectThumbnails = new List<Sprite>();
     public event EventHandler<InventoryEventArgs> InventoryStateMachine;
     public GameObject ProjectionPrefab;
@@ -52,9 +45,10 @@ public class InventoryModel : ApplicationElement
             InventoryStateMachine(this, new InventoryEventArgs(prefab));
     }
 
-    public void ChangeProjection(GameObject prefab)
+    public void ChangeProjection(ARObejctModel currentModel)
     {
-        OnStateChange(prefab);
+        CurrentModel = currentModel;
+        OnStateChange(currentModel.ARPrefab);
     }
     void Awake()
     {

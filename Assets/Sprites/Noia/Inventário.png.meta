@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: c091dbc24ceb3294cb1bf6085e1b2069
+guid: 5582e6d9ef925ff48adbdf6b23132e4a
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -61,7 +61,7 @@ TextureImporter:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 512
-    resizeAlgorithm: 1
+    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -73,7 +73,7 @@ TextureImporter:
   - serializedVersion: 3
     buildTarget: Standalone
     maxTextureSize: 512
-    resizeAlgorithm: 1
+    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -85,7 +85,7 @@ TextureImporter:
   - serializedVersion: 3
     buildTarget: Windows Store Apps
     maxTextureSize: 512
-    resizeAlgorithm: 1
+    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -97,7 +97,7 @@ TextureImporter:
   - serializedVersion: 3
     buildTarget: iPhone
     maxTextureSize: 512
-    resizeAlgorithm: 1
+    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -109,7 +109,7 @@ TextureImporter:
   - serializedVersion: 3
     buildTarget: Android
     maxTextureSize: 512
-    resizeAlgorithm: 1
+    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -121,7 +121,7 @@ TextureImporter:
   - serializedVersion: 3
     buildTarget: WebGL
     maxTextureSize: 512
-    resizeAlgorithm: 1
+    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -145,7 +145,7 @@ TextureImporter:
     secondaryTextures: []
   spritePackingTag: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 1
+  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

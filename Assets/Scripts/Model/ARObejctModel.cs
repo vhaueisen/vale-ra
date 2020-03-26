@@ -19,7 +19,10 @@ public class ARObejctModel : ApplicationElement
     public XRReferenceImageLibrary referenceImageLibrary;
     public GameObject ARPrefab;
     public string bundlePath;
-
+    public float InitialScaleFactor;
+    public float MaxScaleFactor;
+    public float MinScaleFactor;
+    public float YOffset;
     public void Clone(ARObejctModel model)
     {
         Name = model.Name;
@@ -31,5 +34,9 @@ public class ARObejctModel : ApplicationElement
         ARImage = model.ARImage;
         referenceImageLibrary = model.referenceImageLibrary;
         ARPrefab = model.ARPrefab;
+        InitialScaleFactor = model.InitialScaleFactor;
+        MaxScaleFactor = model.MaxScaleFactor;
+        MinScaleFactor = model.MinScaleFactor;
+        YOffset = model.YOffset;
     }
 }

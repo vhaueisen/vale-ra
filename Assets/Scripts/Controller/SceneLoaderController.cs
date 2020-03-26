@@ -36,6 +36,7 @@ public class SceneLoaderController : ApplicationElement
         GC.Collect();
 
         MainApp.sceneLoaderModel.loadingPanel.SetActive(false);
+        SceneLoaderModel.CurrentScene = scene;
         yield break;
     }
 }
