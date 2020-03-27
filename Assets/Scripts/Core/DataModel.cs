@@ -126,7 +126,6 @@ public class DataModel
         while (IsDirty);
 
         p_Save();
-        Debug.Log("Saved!");
         dataCleaner = null;
     }
 }

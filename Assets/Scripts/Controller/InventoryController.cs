@@ -24,7 +24,7 @@ public class InventoryController : ApplicationElement
     private readonly byte SortByBucket = 2;
     private readonly byte GridLayout = 0;
     private readonly byte VerticalLayout = 1;
-
+    private int CurrentState = 0;
     private void Start()
     {
         if (initiated)
@@ -77,6 +77,7 @@ public class InventoryController : ApplicationElement
 
     private void ChangeOrder(byte mode, bool reverse = false)
     {
+        CurrentState = mode;
         IEnumerable<ItemBucket> sortedList;
         if (mode == SortByName)
         {
@@ -160,6 +161,7 @@ public class InventoryController : ApplicationElement
 
     public void OnOrderChange(int idx)
     {
+        CurrentState = idx;
         switch (idx)
         {
             case 0:
@@ -180,6 +182,27 @@ public class InventoryController : ApplicationElement
             case 5:
                 ChangeOrder(SortByArea, true);
                 break;
+        }
+    }
+
+    public void OnSearch(string s)
+    {
+        if (s.Length > 0)
+        {
+            ChangeOrder(SortByName);
+            foreach (ItemBucket bucket in bucketList)
+            {
+                string tags = bucket.Script.Area + bucket.Script.Bucket + bucket.Script.Name + bucket.Script.Description;
+                bucket.Obj.SetActive(tags.ToUpper().Contains(s.ToUpper()));
+            }
+        }
+        else
+        {
+            foreach (ItemBucket bucket in bucketList)
+            {
+                bucket.Obj.SetActive(true);
+                OnOrderChange(CurrentState);
+            }
         }
     }
 }

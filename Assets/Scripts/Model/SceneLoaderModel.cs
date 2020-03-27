@@ -23,6 +23,10 @@ public class SceneLoaderModel : ApplicationElement
     public GameObject inventoryPanel;
     public GameObject loadingPanel;
     public Slider progressBar;
+    public RectTransform Locomotive;
+    public Vector3 LocomotiveStartPosition;
+    public Vector3 LocomotiveTargetPosition;
+
 
     // Custom type that holds the scene index and name
     public struct GameScene
@@ -35,5 +39,11 @@ public class SceneLoaderModel : ApplicationElement
 
         public byte sceneIndex;
         public string sceneName;
+    }
+
+    void Awake()
+    {
+        LocomotiveStartPosition = Locomotive.localPosition;
+        LocomotiveTargetPosition = LocomotiveStartPosition + Vector3.right * 2e3f;
     }
 }

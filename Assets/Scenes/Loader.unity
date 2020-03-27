@@ -120,17 +120,17 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1001 &5196003696312925640
+--- !u!1001 &6232059756920130820
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1960003164715307588, guid: e5a44b30d9777984ea2073c842c9c35a,
+    - target: {fileID: 2613262485991205064, guid: e5a44b30d9777984ea2073c842c9c35a,
         type: 3}
-      propertyPath: m_Color.a
-      value: 0.78431374
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4064625506464395035, guid: e5a44b30d9777984ea2073c842c9c35a,
         type: 3}
