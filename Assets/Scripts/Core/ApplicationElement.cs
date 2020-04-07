@@ -5,10 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class ApplicationElement : MonoBehaviour
 {
-    // ---------------------------------------------------------------------- *
-    // I shall follow the rules below
-    // I Gives access to the application and all mvc instances.
-    // ---------------------------------------------------------------------- *
     public MainApplication MainApp
     {
         get
@@ -38,6 +34,14 @@ public class ApplicationElement : MonoBehaviour
         get
         {
             return FindObjectOfType<SettingsApplication>();
+        }
+    }
+
+    public ProfileApplication ProfileApp
+    {
+        get
+        {
+            return FindObjectOfType<ProfileApplication>();
         }
     }
 

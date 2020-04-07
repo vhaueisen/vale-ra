@@ -14,7 +14,7 @@ public class DataModel
     public bool IsLoaded;
     public object data;
     public string DataName;
-    private readonly int debounceTime = 750;
+    public int debounceTime = 750;
     private Thread dataCleaner;
     [ThreadStatic]
     public volatile bool IsDirty = false;

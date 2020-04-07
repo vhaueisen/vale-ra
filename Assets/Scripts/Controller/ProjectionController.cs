@@ -1,4 +1,8 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections;
+using System.IO;
+using UnityEngine;
+using UnityEngine.XR.ARFoundation;
 
 public class ProjectionController : ProjectionManipulator
 {
@@ -8,6 +12,56 @@ public class ProjectionController : ProjectionManipulator
         MainApp.touchView.TouchStateMachine += OnTouchStateChange;
         MainApp.inventoryModel.InventoryStateMachine += OnProjectionStateChange;
         Initialize();
+        StartCoroutine("loadAsync");
+    }
+
+    private IEnumerator loadAsync()
+    {
+        yield return new WaitForEndOfFrame();
+        string BundlePath;
+        string BundleAddress;
+        string BundleId;
+        BundlePath = MainApp.coreDataModel.Inventory.Core.BundlePath;
+        BundleAddress = MainApp.coreDataModel.Inventory.Core.Addr;
+        BundleId = MainApp.coreDataModel.Inventory.Core.Id;
+
+        yield return new WaitForEndOfFrame();
+        string parentDir = Directory.GetParent(BundlePath).ToString();
+        try
+        {
+            AssetBundle assetBundle = AssetBundle.LoadFromFile(Path.Combine(parentDir, new DirectoryInfo(parentDir).Name));
+            AssetBundleManifest manifest = assetBundle.LoadAsset<AssetBundleManifest>("AssetBundleManifest");
+            string[] dependencies = manifest.GetAllDependencies(BundleId);
+            foreach (string dependency in dependencies)
+                AssetBundle.LoadFromFile(Path.Combine(Directory.GetParent(BundlePath).ToString(), dependency));
+        }
+        catch
+        {
+            HomeProjection();
+            yield break;
+        }
+
+        AssetBundle bundle = AssetBundle.LoadFromFile(BundlePath);
+        GameObject asset = bundle.LoadAsset(BundleAddress) as GameObject;
+        ARObejctModel loadModel = asset.GetComponent<ARObejctModel>();
+        if (loadModel.ARImage && FindObjectOfType<ProjectionModel>().ARMode)
+        {
+            try
+            {
+
+                FindObjectOfType<ARTrackedImageManager>().referenceLibrary = loadModel.referenceImageLibrary;
+                FindObjectOfType<ARTrackedImageManager>().trackedImagePrefab = loadModel.ARPrefab;
+                FindObjectOfType<ARTrackedImageManager>().enabled = true;
+            }
+            catch (Exception e)
+            {
+                Debug.Log(e.ToString());
+            }
+        }
+        else
+            MainApp.inventoryModel.ChangeProjection(loadModel);
+        HomeProjection();
+        yield break;
     }
 
     public void OnTouchStateChange(object sender, TouchEventArgs eventArgs)

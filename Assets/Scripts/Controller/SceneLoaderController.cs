@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Android;
 using UnityEngine.SceneManagement;
 
 public class SceneLoaderController : ApplicationElement
@@ -18,6 +19,12 @@ public class SceneLoaderController : ApplicationElement
 
     private IEnumerator LoadScene(SceneLoaderModel.GameScene scene)
     {
+        bool cameraScene = scene.sceneIndex == SceneLoaderModel.ARScene.sceneIndex || scene.sceneIndex == SceneLoaderModel.QRScene.sceneIndex;
+#if UNITY_ANDROID
+        if (!Permission.HasUserAuthorizedPermission(Permission.Camera) && cameraScene)
+            Permission.RequestUserPermission(Permission.Camera);
+#endif
+
         float elapsedTime = 0.0f;
         if (scene.sceneIndex != SceneLoaderModel.HomeScene.sceneIndex
             && scene.sceneIndex != SceneLoaderModel.ARScene.sceneIndex)
@@ -39,10 +46,11 @@ public class SceneLoaderController : ApplicationElement
                 MainApp.sceneLoaderModel.LocomotiveTargetPosition,
                 elapsedTime / 5.0f);
             elapsedTime += Time.deltaTime;
-            yield return null;
+            yield return new WaitForEndOfFrame();
         }
         GC.Collect();
-
+        if (cameraScene)
+            yield return new WaitForSeconds(0.5f);
         MainApp.sceneLoaderModel.loadingPanel.SetActive(false);
         SceneLoaderModel.CurrentScene = scene;
         yield break;
