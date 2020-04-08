@@ -8,13 +8,14 @@ using UnityEngine.UI;
 public class SceneLoaderModel : ApplicationElement
 {
     // Static fields naming each scene
-    public static GameScene LoaderScene = new GameScene("Carregando", 0);
-    public static GameScene HomeScene = new GameScene("Início", 1);
-    public static GameScene QRScene = new GameScene("Leitor QR", 2);
-    public static GameScene ARScene = new GameScene("Vale RA", 3);
-    public static GameScene ProfileScene = new GameScene("Perfil", 4);
-    public static GameScene SettingsScene = new GameScene("Configurações", 5);
-    public static GameScene BundleScene = new GameScene("Bundle Manager", 6);
+    public static GameScene LoginScene = new GameScene("Login", 0);
+    public static GameScene LoaderScene = new GameScene("Carregando", 1);
+    public static GameScene HomeScene = new GameScene("Início", 2);
+    public static GameScene QRScene = new GameScene("Leitor QR", 3);
+    public static GameScene ARScene = new GameScene("Vale RA", 4);
+    public static GameScene ProfileScene = new GameScene("Perfil", 5);
+    public static GameScene SettingsScene = new GameScene("Configurações", 6);
+    public static GameScene BundleScene = new GameScene("Bundle Manager", 7);
     public static GameScene CurrentScene = LoaderScene;
     // The Header title to change every new scene
     public Text headerText;
@@ -24,8 +25,8 @@ public class SceneLoaderModel : ApplicationElement
     public GameObject loadingPanel;
     public Slider progressBar;
     public RectTransform Locomotive;
-    public Vector3 LocomotiveStartPosition;
-    public Vector3 LocomotiveTargetPosition;
+    public Vector2 LocomotiveStartPosition;
+    public Vector2 LocomotiveTargetPosition;
 
 
     // Custom type that holds the scene index and name
@@ -43,7 +44,7 @@ public class SceneLoaderModel : ApplicationElement
 
     void Awake()
     {
-        LocomotiveStartPosition = Locomotive.localPosition;
-        LocomotiveTargetPosition = LocomotiveStartPosition + Vector3.right * 2e3f;
+        LocomotiveStartPosition = Locomotive.anchoredPosition;
+        LocomotiveTargetPosition = LocomotiveStartPosition + Vector2.right * 2e3f;
     }
 }

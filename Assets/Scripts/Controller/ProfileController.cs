@@ -1,13 +1,11 @@
-﻿using UnityEngine;
-
-public class ProfileController : ApplicationElement
+﻿public class ProfileController : ApplicationElement
 {
     private ProfileModel model;
 
     private void Start()
     {
         model = ProfileApp.profileModel;
-        model.avatarScrollbarRatio = 1.0f / (float)ProfileModel.avatarCount;
+        model.avatarScrollbarRatio = 1.0f / (float)(ProfileModel.avatarCount - 1);
         LoadVariables();
         model.avatarWindow.Exit();
     }
@@ -15,7 +13,6 @@ public class ProfileController : ApplicationElement
     public void SaveVariables()
     {
         ProfileSettings.ProfileData core = new ProfileSettings.ProfileData();
-        Debug.Log(string.Format("Saved: {0}", model.currentJob));
         core.AvatarJobId = model.currentJob;
         core.AvatarGenderId = model.currentGender;
         core.AvatarSkinId = model.currentSkin;
@@ -32,6 +29,8 @@ public class ProfileController : ApplicationElement
             model.avatar = MainApp.coreDataModel.Profile.Core;
             model.profileView.RefreshPreview(model.avatar);
         }
-        Debug.Log(string.Format("Loaded: {0}", model.avatar.AvatarJobId));
+
+        if (MainApp.coreDataModel.Login.IsLoaded)
+            model.profileView.InitializePersonalInfo(MainApp.coreDataModel.Login.Core);
     }
 }

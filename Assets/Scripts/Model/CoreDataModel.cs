@@ -98,19 +98,20 @@ public class ProfileSettings : DataModel
 }
 
 [System.Serializable]
-public class AuthSettings : DataModel
+public class LoginSettings : DataModel
 {
     [System.Serializable]
     public struct AuthData
     {
-        public string AuthToken;
-        public int ExpiresDate;
-        public string TokenType;
-        public string Name;
-        public string UserName;
-        public string Location;
-        public string Email;
-        public string JobLevel;
+        public string access_token;
+        public string fullName;
+        public string userName;
+        public int expires_in;
+        public string token_type;
+        public string location;
+        public string email;
+        public string jobLevel;
+        public string lastAuth;
     }
 
     public AuthData Core = new AuthData();
@@ -134,8 +135,10 @@ public class CoreDataModel : ApplicationElement
     public UserSettings Settings;
     public InventorySettings Inventory;
     public ProfileSettings Profile;
+    public LoginSettings Login;
 
-    void Start()
+
+    public virtual void Awake()
     {
         Settings = new UserSettings();
         Settings.DataName = Application.persistentDataPath + "/" + "0x000";
@@ -152,5 +155,16 @@ public class CoreDataModel : ApplicationElement
         Profile.DataEvent += Profile.OnSettingsEvent;
         Profile.debounceTime = 0;
         Profile.Load();
+
+        LoadLogin();
+    }
+
+    public void LoadLogin()
+    {
+        Login = new LoginSettings();
+        Login.DataName = Application.persistentDataPath + "/" + "0x003";
+        Login.DataEvent += Login.OnSettingsEvent;
+        Login.debounceTime = 0;
+        Login.Load();
     }
 }

@@ -60,4 +60,13 @@ public class SettingsView : ApplicationElement
     {
         LoadVars();
     }
+
+    public void Disconnect()
+    {
+        MainApp.coreDataModel.Login.OnSettingsEvent(this, new DataModel.DataEventArgs(
+            DataModel.DataEventArgs.UpdateEvent, new LoginSettings.AuthData()));
+        MainApp.sceneLoaderController.OnSceneLoader(this, new SceneLoaderEventArgs(
+            SceneLoaderModel.LoginScene));
+        Destroy(MainApp.gameObject);
+    }
 }

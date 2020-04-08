@@ -9,6 +9,16 @@ public class ProfileView : ApplicationElement
     {
         model = ProfileApp.profileModel;
     }
+
+    public void InitializePersonalInfo(LoginSettings.AuthData personalData)
+    {
+        model.emailField.text = personalData.email;
+        model.jobIndexField.text = personalData.userName;
+        model.locationField.text = personalData.location;
+        model.nameField.text = personalData.fullName;
+        model.teamField.text = personalData.jobLevel;
+    }
+
     public void EnterSelector()
     {
         model.avatarView.SetParent(model.avatarSelectorParent);
@@ -32,7 +42,7 @@ public class ProfileView : ApplicationElement
 
     public void RefreshPreview(ProfileSettings.ProfileData core)
     {
-        RefreshPreview(core.AvatarJobId, core.AvatarGenderId, core.AvatarSkinId, core.AvatarSkinId);
+        RefreshPreview(core.AvatarJobId, core.AvatarGenderId, core.AvatarSkinId, core.AvatarHairId);
     }
 
     public void RefreshPreview(int jobId, int genderId, int skinId, int hairId)
@@ -54,7 +64,6 @@ public class ProfileView : ApplicationElement
     public void ChangeJob(int newId)
     {
         model.currentJob = (int)Mathf.Clamp(model.currentJob + newId, 0, ProfileModel.avatarCount - 1);
-        Debug.Log(string.Format("Chenged: {0}", model.currentJob));
         model.jobLabel.text = model.jobNames[model.currentJob];
         ScrollPreview(newId);
     }
