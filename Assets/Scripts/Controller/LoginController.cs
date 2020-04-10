@@ -5,6 +5,7 @@ using System;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
+using System.Globalization;
 
 public class LoginController : ApplicationElement
 {
@@ -13,9 +14,13 @@ public class LoginController : ApplicationElement
     public GameObject erroPanel;
     public GameObject pnAuth;
     public AuthLoaderController authLoader;
+    public GameObject loadingPanel;
+    public GameObject formHider;
+    public PopupComponent popup;
 
     private IEnumerator GetToken()
     {
+        loadingPanel.SetActive(true);
         LoginController loginData = FindObjectOfType<LoginController>();
         string username = loginData.username.text;
         string password = loginData.password.text;
@@ -42,24 +47,33 @@ public class LoginController : ApplicationElement
                 Connect(data);
             }
             else if (responseCode == 400)
-                loginData.UpdateWarningMessage("Credencial inválida ou senha expirada!");
+                popup.Popup("Credenciais Inválidas", "Credencial inválida ou senha expirada!");
             else
-                loginData.UpdateWarningMessage("Erro!");
+                popup.Popup("Erro", "Erro desconhecido.");
         }
         else
-        {
-            loginData.UpdateWarningMessage("Falha de conexão com a rede.");
-        }
+            popup.Popup("Erro", "Falha de conexão com a rede.");
+        loadingPanel.SetActive(false);
     }
 
     private void Start()
     {
         if (authLoader.Login.IsLoaded)
             Connect(authLoader.Login.Core);
+        formHider.SetActive(false);
     }
 
     private void UpdateLoginBinaries(LoginSettings.AuthData auth)
     {
+        if (auth.access_token != null)
+        {
+            TextInfo textInfo = new CultureInfo("pt-BR", false).TextInfo;
+            auth.fullName = textInfo.ToTitleCase(auth.fullName.ToLower());
+            auth.location = textInfo.ToTitleCase(auth.location.ToLower());
+            auth.jobLevel = textInfo.ToTitleCase(auth.jobLevel.ToLower());
+            auth.email = auth.email.ToLower();
+        }
+
         DataModel.DataEventArgs eventArgs = new DataModel.DataEventArgs(DataModel.DataEventArgs.UpdateEvent, auth);
         authLoader.Login.OnSettingsEvent(this, eventArgs);
     }
@@ -69,25 +83,13 @@ public class LoginController : ApplicationElement
         if (username.text != "")
             if (password.text != "")
                 // if (!username.text.StartsWith("C0"))
-                StartCoroutine("GetToken");
+                StartCoroutine(GetToken());
             // else
             //     UpdateWarningMessage("Contratados não podem acessar esta aplicação.");
             else
-                UpdateWarningMessage("Preencha a senha!");
+                popup.Popup("Erro", "Preencha a senha!");
         else
-            UpdateWarningMessage("Preencha o usuário!");
-    }
-
-    public void UpdateWarningMessage(string message)
-    {
-        erroPanel.GetComponent<Text>().text = message;
-        StartCoroutine(DisableErroPanel(erroPanel));
-    }
-
-    IEnumerator DisableErroPanel(GameObject panel)
-    {
-        yield return new WaitForSeconds(4);
-        erroPanel.GetComponent<Text>().text = "";
+            popup.Popup("Erro", "Preencha o usuário!");
     }
 
     public void Disconnect()
@@ -114,5 +116,11 @@ public class LoginController : ApplicationElement
     public void Exit()
     {
         Application.Quit();
+    }
+
+    public void ForgetPassword()
+    {
+        popup.Popup("Esqueci a Senha",
+            "O usuário é a sua matrícula (geralmente inicia-se com 01).\nA senha para acessar o jogo é a mesma senha utilizada para acessar o e-Dados (contracheques, férias e demais serviço de RH), VES ou CSP.\nCaso tenha dificuldades com a senha é possível recuperá-la através do Help Desk (no ramal telefônico 4001 ou 0800-022-4001) ou do IAM (no endereço eletrônico http://iam/).\nA senha será enviada ao seu superior imediato ou ao e-mail cadastrado previamente.");
     }
 }

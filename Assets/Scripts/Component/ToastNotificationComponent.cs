@@ -18,7 +18,7 @@ public class ToastNotificationComponent : MonoBehaviour
         content.SetActive(true);
         contentText.text = str;
         Resize(str.Length);
-        StartCoroutine("Exit");
+        StartCoroutine(Exit());
     }
 
     private void Resize(int textSize)

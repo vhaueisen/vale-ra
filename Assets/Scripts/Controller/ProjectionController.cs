@@ -12,7 +12,7 @@ public class ProjectionController : ProjectionManipulator
         MainApp.touchView.TouchStateMachine += OnTouchStateChange;
         MainApp.inventoryModel.InventoryStateMachine += OnProjectionStateChange;
         Initialize();
-        StartCoroutine("loadAsync");
+        StartCoroutine(loadAsync());
     }
 
     private IEnumerator loadAsync()

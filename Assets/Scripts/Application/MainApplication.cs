@@ -11,6 +11,9 @@ public class MainApplication : MonoBehaviour
     public TouchView touchView;
     public FooterView footerView;
     public SceneLoaderController sceneLoaderController;
+    public ToolboxController toolboxController;
+    public ToolboxModel toolboxModel;
+    public ToolboxView toolBoxView;
 
     void Start()
     {
