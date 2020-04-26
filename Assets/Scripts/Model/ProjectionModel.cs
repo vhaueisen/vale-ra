@@ -20,7 +20,5 @@ public class ProjectionModel : ApplicationElement
     public readonly float RotateSpeed = 2.0f;
     public readonly float ElevateSpeed = 0.0001f;
     public readonly float MaxElevation = 10.0f;
-
     public readonly float ScaleSnapProximity = 0.02f;
-    public readonly float[] ScaleSnapPoints = { 0.2f, 0.3f, 0.4f, 0.5f, 0.6f, 0.7f, 0.8f, 0.9f };
 }

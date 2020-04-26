@@ -59,8 +59,18 @@ public class LoginController : ApplicationElement
     private void Start()
     {
         if (authLoader.Login.IsLoaded)
-            Connect(authLoader.Login.Core);
+        {
+            if (!Connect(authLoader.Login.Core))
+                HideLoader();
+        }
+        else
+            HideLoader();
+    }
+
+    private void HideLoader()
+    {
         formHider.SetActive(false);
+        loadingPanel.SetActive(false);
     }
 
     private void UpdateLoginBinaries(LoginSettings.AuthData auth)
@@ -83,7 +93,7 @@ public class LoginController : ApplicationElement
         if (username.text != "")
             if (password.text != "")
                 // if (!username.text.StartsWith("C0"))
-                StartCoroutine(GetToken());
+                StartCoroutine("GetToken");
             // else
             //     UpdateWarningMessage("Contratados não podem acessar esta aplicação.");
             else
@@ -97,7 +107,7 @@ public class LoginController : ApplicationElement
         UpdateLoginBinaries(new LoginSettings.AuthData());
     }
 
-    private void Connect(LoginSettings.AuthData auth)
+    private bool Connect(LoginSettings.AuthData auth)
     {
         TimeSpan timeLeft;
         if (auth.lastAuth != "")
@@ -106,11 +116,12 @@ public class LoginController : ApplicationElement
             if ((auth.fullName != null) && (timeLeft.Days <= 7))
             {
                 SceneManager.LoadScene(1);
-                return;
+                return true;
             }
 
         }
         Disconnect();
+        return false;
     }
 
     public void Exit()

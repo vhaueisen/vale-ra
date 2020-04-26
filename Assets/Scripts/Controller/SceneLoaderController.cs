@@ -36,15 +36,11 @@ public class SceneLoaderController : ApplicationElement
         MainApp.sceneLoaderModel.loadingPanel.SetActive(true);
 
         AsyncOperation sceneLoaderOperation = SceneManager.LoadSceneAsync(scene.sceneIndex);
-        MainApp.sceneLoaderModel.Locomotive.anchoredPosition = MainApp.sceneLoaderModel.LocomotiveStartPosition;
+        MainApp.sceneLoaderModel.locomotiveAnimator.Play("TrainSlide");
         while (!sceneLoaderOperation.isDone)
         {
             float progress = Mathf.Clamp01(sceneLoaderOperation.progress / 0.9f);
             MainApp.sceneLoaderModel.progressBar.value = progress;
-            MainApp.sceneLoaderModel.Locomotive.anchoredPosition = Vector3.Lerp(
-                MainApp.sceneLoaderModel.LocomotiveStartPosition,
-                MainApp.sceneLoaderModel.LocomotiveTargetPosition,
-                elapsedTime / 5.0f);
             elapsedTime += Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }

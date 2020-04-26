@@ -1,14 +1,5 @@
 ﻿using System;
 
-public class SceneLoaderEventArgs : EventArgs
-{
-    public SceneLoaderEventArgs(SceneLoaderModel.GameScene scene)
-    {
-        Scene = scene;
-    }
-    public SceneLoaderModel.GameScene Scene;
-}
-
 public class FooterView : ApplicationElement
 {
     public event EventHandler<SceneLoaderEventArgs> SceneLoaderEvent;

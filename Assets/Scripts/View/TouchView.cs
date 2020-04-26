@@ -19,7 +19,8 @@ public class TouchView : RawTouch
     protected virtual void OnStateChange()
     {
         if (TouchStateMachine != null)
-            TouchStateMachine(this, new TouchEventArgs(MainApp.touchModel.CurrentState));
+            TouchStateMachine(this,
+                new TouchEventArgs(MainApp.touchModel.CurrentState));
     }
 
     // Main loop
@@ -40,7 +41,8 @@ public class TouchView : RawTouch
         if (MainApp.touchModel.CurrentState != previousState)
         {
             OnStateChange();
-            // FindObjectOfType<ToastNotificationComponent>().Notify(MainApp.touchModel.CurrentState.ToString());
+            // FindObjectOfType<ToastNotificationComponent>().Notify(
+            //MainApp.touchModel.CurrentState.ToString());
         }
         previousState = MainApp.touchModel.CurrentState;
     }
@@ -91,7 +93,9 @@ public class TouchView : RawTouch
                     else
                     {
                         MainApp.touchModel.CurrentState = TouchModel.Elevating;
-                        MainApp.touchModel.SwipeAmount = new Vector2(0.0f, (touches[0].deltaPosition.y + touches[1].deltaPosition.y) / 2.0f);
+                        MainApp.touchModel.SwipeAmount = new Vector2(0.0f, (
+                            touches[0].deltaPosition.y +
+                            touches[1].deltaPosition.y) / 2.0f);
                     }
                 }
                 else
@@ -103,7 +107,9 @@ public class TouchView : RawTouch
                     else
                     {
                         MainApp.touchModel.CurrentState = TouchModel.Elevating;
-                        MainApp.touchModel.SwipeAmount = new Vector2(0.0f, (touches[0].deltaPosition.y + touches[1].deltaPosition.y) / 2.0f);
+                        MainApp.touchModel.SwipeAmount = new Vector2(0.0f, (
+                            touches[0].deltaPosition.y +
+                            touches[1].deltaPosition.y) / 2.0f);
                     }
                 }
             }
@@ -115,7 +121,9 @@ public class TouchView : RawTouch
         if (Input.GetMouseButton(0) || Input.GetMouseButton(1))
         {
             MainApp.touchModel.TouchPosition = Input.mousePosition;
-            MainApp.touchModel.SwipeAmount = 100.0f * (Input.GetAxis("Mouse X") * Vector2.right + Input.GetAxis("Mouse Y") * Vector2.up);
+            MainApp.touchModel.SwipeAmount = 100.0f * (
+                Input.GetAxis("Mouse X") * Vector2.right +
+                Input.GetAxis("Mouse Y") * Vector2.up);
         }
 
         if (Input.GetMouseButton(0))
@@ -124,9 +132,11 @@ public class TouchView : RawTouch
             {
                 MainApp.touchModel.CurrentState = TouchModel.Pinching;
                 float multiplier = 10.0f;
-                if (MainApp.touchModel.SwipeAmount.x > MainApp.touchModel.SwipeAmount.y)
+                if (MainApp.touchModel.SwipeAmount.x >
+                    MainApp.touchModel.SwipeAmount.y)
                     multiplier = multiplier * -1.0f;
-                MainApp.touchModel.PinchAmount = multiplier * MainApp.touchModel.SwipeAmount.magnitude;
+                MainApp.touchModel.PinchAmount =
+                    multiplier * MainApp.touchModel.SwipeAmount.magnitude;
             }
             else
                 MainApp.touchModel.CurrentState = TouchModel.Swiping;

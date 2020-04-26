@@ -2,8 +2,18 @@
 #pragma warning disable 0219
 #pragma warning disable 0414
 
+using System;
 using UnityEngine;
 using UnityEngine.UI;
+
+public class SceneLoaderEventArgs : EventArgs
+{
+    public SceneLoaderEventArgs(SceneLoaderModel.GameScene scene)
+    {
+        Scene = scene;
+    }
+    public SceneLoaderModel.GameScene Scene;
+}
 
 public class SceneLoaderModel : ApplicationElement
 {
@@ -24,10 +34,7 @@ public class SceneLoaderModel : ApplicationElement
     public GameObject inventoryPanel;
     public GameObject loadingPanel;
     public Slider progressBar;
-    public RectTransform Locomotive;
-    public Vector2 LocomotiveStartPosition;
-    public Vector2 LocomotiveTargetPosition;
-
+    public Animator locomotiveAnimator;
 
     // Custom type that holds the scene index and name
     public struct GameScene
@@ -40,11 +47,5 @@ public class SceneLoaderModel : ApplicationElement
 
         public byte sceneIndex;
         public string sceneName;
-    }
-
-    void Awake()
-    {
-        LocomotiveStartPosition = Locomotive.anchoredPosition;
-        LocomotiveTargetPosition = LocomotiveStartPosition + Vector2.right * 2e3f;
     }
 }

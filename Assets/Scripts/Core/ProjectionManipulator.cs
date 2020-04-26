@@ -53,24 +53,6 @@ public class ProjectionManipulator : ApplicationElement
         sessionOrigin = FindObjectOfType<ARSessionOrigin>();
     }
 
-    private float Snap(float f, float[] snapPoints, float proximity)
-    {
-        float maxDist = float.PositiveInfinity;
-        int snapIndex = 0;
-        for (int i = 0; i < snapPoints.Length; i++)
-        {
-            float dist = Mathf.Abs(snapPoints[i] - f);
-            if (float.IsPositiveInfinity(maxDist) || dist < maxDist)
-            {
-                snapIndex = i;
-                maxDist = dist;
-            }
-        }
-        if (maxDist <= proximity)
-            return snapPoints[snapIndex];
-        return f;
-    }
-
     // AR Overload
     public FlexibleRaycast Raycast(Vector2 point, ARRaycastManager manager, Camera c)
     {
@@ -145,7 +127,6 @@ public class ProjectionManipulator : ApplicationElement
         scaleBuffer = scaleBuffer * (pinchAmount + 1);
 
         snapedScale = Snap(Mathf.Clamp(scaleBuffer, MainApp.inventoryModel.CurrentModel.MinScaleFactor, MainApp.inventoryModel.CurrentModel.MaxScaleFactor),
-                projectionModel.ScaleSnapPoints,
                 projectionModel.ScaleSnapProximity);
 
         if (isAR)
@@ -157,6 +138,13 @@ public class ProjectionManipulator : ApplicationElement
         FindObjectOfType<ToastNotificationComponent>().Notify(string.Format("Escala: {0}%", Mathf.RoundToInt(snapedScale * 100)));
     }
 
+    private float Snap(float f, float proximity)
+    {
+        float dist = f % 0.1f;
+        if (dist <= proximity)
+            return (f - dist);
+        return f;
+    }
 
     public void UpdateRotation(float desiredRotation, Transform target, bool isAR)
     {
