@@ -1,0 +1,195 @@
+fileFormatVersion: 2
+guid: 884664c874427a0418469dbc338ea278
+timeCreated: 1524688198
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: castanha_01
+    100002: contra_pino_apoio_flexivel_a_02_010
+    100004: contra_pino_apoio_flexivel_a_02_011
+    100006: //RootNode
+    100008: levantador_castanha_01
+    100010: mandibola_01
+    100012: martelo_01
+    100014: pino_madibola
+    100016: rotor_01_01
+    100018: rotor_02_01
+    100020: rotor_03_01
+    100022: rotor_04_01
+    100024: rotor_pino_01
+    400000: castanha_01
+    400002: contra_pino_apoio_flexivel_a_02_010
+    400004: contra_pino_apoio_flexivel_a_02_011
+    400006: //RootNode
+    400008: levantador_castanha_01
+    400010: mandibola_01
+    400012: martelo_01
+    400014: pino_madibola
+    400016: rotor_01_01
+    400018: rotor_02_01
+    400020: rotor_03_01
+    400022: rotor_04_01
+    400024: rotor_pino_01
+    2300000: castanha_01
+    2300002: contra_pino_apoio_flexivel_a_02_010
+    2300004: contra_pino_apoio_flexivel_a_02_011
+    2300006: levantador_castanha_01
+    2300008: mandibola_01
+    2300010: martelo_01
+    2300012: pino_madibola
+    2300014: rotor_01_01
+    2300016: rotor_02_01
+    2300018: rotor_03_01
+    2300020: rotor_04_01
+    2300022: rotor_pino_01
+    3300000: castanha_01
+    3300002: contra_pino_apoio_flexivel_a_02_010
+    3300004: contra_pino_apoio_flexivel_a_02_011
+    3300006: levantador_castanha_01
+    3300008: mandibola_01
+    3300010: martelo_01
+    3300012: pino_madibola
+    3300014: rotor_01_01
+    3300016: rotor_02_01
+    3300018: rotor_03_01
+    3300020: rotor_04_01
+    3300022: rotor_pino_01
+    4300000: castanha_01
+    4300002: levantador_castanha_01
+    4300004: mandibola_01
+    4300006: martelo_01
+    4300008: pino_madibola
+    4300010: rotor_01_01
+    4300012: rotor_03_01
+    4300014: rotor_04_01
+    4300016: rotor_pino_01
+    4300018: rotor_02_01
+    4300020: contra_pino_apoio_flexivel_a_02_010
+    4300022: contra_pino_apoio_flexivel_a_02_011
+    7400000: Fig73ComponentesDoEngate
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Fig73ComponentesDoEngate
+      takeName: Take 001
+      firstFrame: 0
+      lastFrame: 270
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: castanha_01
+        weight: 1
+      - path: contra_pino_apoio_flexivel_a_02_010
+        weight: 1
+      - path: contra_pino_apoio_flexivel_a_02_011
+        weight: 1
+      - path: levantador_castanha_01
+        weight: 1
+      - path: mandibola_01
+        weight: 1
+      - path: martelo_01
+        weight: 1
+      - path: pino_madibola
+        weight: 1
+      - path: rotor_01_01
+        weight: 1
+      - path: rotor_02_01
+        weight: 1
+      - path: rotor_03_01
+        weight: 1
+      - path: rotor_04_01
+        weight: 1
+      - path: rotor_pino_01
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
