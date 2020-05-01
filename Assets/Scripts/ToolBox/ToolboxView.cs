@@ -110,7 +110,7 @@ public class ToolboxView : ApplicationElement
         else
             newState = ToolBoxEventArgs.moveKey;
 
-        // toolBoxEvent(this, new ToolBoxEventArgs(newState));
+        toolBoxEvent(this, new ToolBoxEventArgs(newState));
     }
 
     private void Outsider()

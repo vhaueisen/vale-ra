@@ -6,7 +6,7 @@ using UnityEngine.XR.ARSubsystems;
 public class ProjectionManipulator : ApplicationElement
 {
     private float scaleBuffer = 1.0f;
-    private float snapedScale = 1.0f;
+    public float snapedScale = 1.0f;
     public ProjectionModel projectionModel;
     ARSessionOrigin sessionOrigin;
     public struct FlexibleRaycast
@@ -72,7 +72,7 @@ public class ProjectionManipulator : ApplicationElement
     {
         Ray cameraRay = c.ScreenPointToRay(point);
         RaycastHit hit;
-        if (Physics.Raycast(cameraRay, out hit, 30.0f))
+        if (Physics.Raycast(cameraRay, out hit, 30.0f, 1 << 8))
         {
             if (hit.transform.name == "BackPlane")
             {
