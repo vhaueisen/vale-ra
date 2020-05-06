@@ -7,6 +7,7 @@ using UnityEngine.XR.ARFoundation;
 public class ProjectionController : ProjectionManipulator
 {
     private byte currentState = 0;
+    public bool Enabled = true;
     private void Start()
     {
         MainApp.touchView.TouchStateMachine += OnTouchStateChange;
@@ -82,6 +83,9 @@ public class ProjectionController : ProjectionManipulator
 
     private void Update()
     {
+        if (!Enabled)
+            return;
+
         if (currentState > 0)
         {
             if (currentState == TouchModel.Pinching)

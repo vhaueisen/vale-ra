@@ -9,28 +9,42 @@ public class ToolPanelView : ApplicationElement
     public GameObject[] panelList;
     private int currentPage;
     public GameObject contents;
+    public GameObject root;
 
     private void Start()
     {
         MainApp.toolBoxView.toolBoxEvent += OnToolBoxEvent;
+        MainApp.footerView.SceneLoaderEvent += OnSceneEvent;
     }
+
     public void Toggle(int _page)
     {
         page = _page;
     }
 
+    private void OnSceneEvent(object sender, SceneLoaderEventArgs eventArgs)
+    {
+        root.SetActive(!(eventArgs.Scene.sceneIndex != SceneLoaderModel.HomeScene.sceneIndex &&
+    eventArgs.Scene.sceneIndex != SceneLoaderModel.ARScene.sceneIndex));
+    }
+
     public void OnToolBoxEvent(object sender, ToolBoxEventArgs eventArgs)
     {
+        ProjectionController projectionController = FindObjectOfType<ProjectionController>();
+        if (projectionController != null)
+            projectionController.Enabled = false;
+
         if (eventArgs.ToolKey == ToolBoxEventArgs.sliceKey)
         {
-            if (state)
-                ToggleView();
-            else
-            {
-                ChangePanel(0);
-                ToggleState(true);
-                MainApp.slicerView.Reload();
-            }
+            ChangePanel(0);
+            ToggleState(true);
+            MainApp.slicerView.Reload();
+        }
+        else if (eventArgs.ToolKey == ToolBoxEventArgs.moveKey)
+        {
+            ToggleState(false);
+            if (projectionController != null)
+                projectionController.Enabled = true;
         }
         else
         {

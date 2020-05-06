@@ -92,8 +92,15 @@ public class LoginController : ApplicationElement
     {
         if (username.text != "")
             if (password.text != "")
-                // if (!username.text.StartsWith("C0"))
-                StartCoroutine("GetToken");
+                if (username.text.ToUpper() == "VISITANTE")
+                {
+                    LoginSettings.AuthData auth = new LoginSettings.AuthData();
+                    auth.lastAuth = DateTime.Now.ToString();
+                    auth.fullName = "Visitante";
+                    Connect(auth);
+                }
+                else
+                    StartCoroutine("GetToken");
             // else
             //     UpdateWarningMessage("Contratados não podem acessar esta aplicação.");
             else

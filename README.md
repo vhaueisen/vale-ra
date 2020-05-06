@@ -2,7 +2,7 @@
 
 App de visualição de modelos 3D em realidade aumentada.
 
-*Versão Unity recomendada: 2019.2.17f1*
+*Versão Unity recomendada: 2019.3.11f1*
 
 ---
 

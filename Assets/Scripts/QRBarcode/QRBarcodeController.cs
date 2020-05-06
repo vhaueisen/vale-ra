@@ -74,7 +74,7 @@ public class QRBarcodeController : MonoBehaviour
 
         camDevice = WebCamTexture.devices[0];
 
-        camTexture = new WebCamTexture(camDevice.name, 1080, 1920, 24);
+        camTexture = new WebCamTexture(camDevice.name, 720, 1280, 24);
 
         // Set camera filter modes for a smoother looking image
         camTexture.filterMode = FilterMode.Trilinear;
@@ -122,7 +122,7 @@ public class QRBarcodeController : MonoBehaviour
                     decoded = r;
                 }
             }
-            Thread.Sleep(200);
+            Thread.Sleep(500);
         }
     }
 

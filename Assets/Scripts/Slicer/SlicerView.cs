@@ -11,7 +11,7 @@ public class SlicerView : ApplicationElement
     public Material Fresnel;
     private GameObject fresnel;
     private Transform modelContainer;
-    private Shader crossShader;
+    public Shader crossShader;
     private bool state = false;
     private readonly string[] planeNames = { "XZ", "YZ", "XY" };
     private int planeIndex = 0;
@@ -23,11 +23,6 @@ public class SlicerView : ApplicationElement
     private Vector3 boxSize;
     private float sliderPos;
     public Slider holoSlider;
-
-    void Start()
-    {
-        crossShader = Shader.Find("Shader Graphs/TexturedCrossSection");
-    }
 
     public void ToggleNormal()
     {
@@ -42,13 +37,6 @@ public class SlicerView : ApplicationElement
         planeIndex = i;
         UpdateVectors();
     }
-
-    /*     void OnDrawGizmosSelected()
-        {
-            // Draw a semitransparent blue cube at the transforms position
-            Gizmos.color = new Color(1, 0, 0, 0.5f);
-            Gizmos.DrawCube(modelContainer.transform.position + offset, boxSize);
-        } */
 
     public void Reload()
     {

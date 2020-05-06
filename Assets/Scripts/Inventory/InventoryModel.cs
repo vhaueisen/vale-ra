@@ -53,9 +53,6 @@ public class InventoryModel : ApplicationElement
     void Awake()
     {
         bundlePath = Application.persistentDataPath;
-#if UNITY_EDITOR
-        bundlePath = @"C:/Users/vitor/Desktop/";
-#endif
         LocateBundle();
     }
 

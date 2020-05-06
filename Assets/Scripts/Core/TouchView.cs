@@ -29,7 +29,7 @@ public class TouchView : RawTouch
         if (!EventSystem.current.IsPointerOverGameObject()
             && EventSystem.current.currentSelectedGameObject == null)
         {
-#if UNITY_EDITOR
+#if UNITY_EDITOR || UNITY_STANDALONE
             DigestMouse();
 #else
             DigestTouches();
