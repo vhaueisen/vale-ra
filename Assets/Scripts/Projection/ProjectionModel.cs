@@ -15,10 +15,11 @@ public class ProjectionModel : ApplicationElement
     public bool ARMode = false;
     public GameObject CurrentInstance = null;
     public GameObject HomeOrigin;
-    public readonly float ScaleSpeed = 0.25e-3f;
-    public readonly float TranslateSpeed = 4.0f;
-    public readonly float RotateSpeed = 2.0f;
-    public readonly float ElevateSpeed = 0.0001f;
+    public readonly float ScaleSpeed = 0.5e-3f;
+    public readonly float TranslateSpeed = 5.0f;
+    public readonly float RotateSpeed = 2.5f;
+    public readonly float ElevateSpeed = 0.0004f;
     public readonly float MaxElevation = 10.0f;
     public readonly float ScaleSnapProximity = 0.02f;
+    public Quaternion instanceRotation = Quaternion.identity;
 }

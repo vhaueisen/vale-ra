@@ -27,8 +27,6 @@ public class ARObjectScript
         Area = model.Area;
         GUID = model.GUID;
         Bucket = model.Bucket;
-        if (model.Image == null)
-            Debug.Log(model.Name);
         imageTexture = Texture2D.Instantiate(model.Image.texture);
         Image = Sprite.Create(imageTexture, model.Image.rect, model.Image.pivot);
         ARImage = model.ARImage;

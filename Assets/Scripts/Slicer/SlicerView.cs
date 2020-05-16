@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.XR.ARFoundation;
 
 public class SlicerView : ApplicationElement
 {
@@ -12,7 +12,6 @@ public class SlicerView : ApplicationElement
     private GameObject fresnel;
     private Transform modelContainer;
     public Shader crossShader;
-    private bool state = false;
     private readonly string[] planeNames = { "XZ", "YZ", "XY" };
     private int planeIndex = 0;
     private bool invertedNormals = false;
@@ -23,6 +22,10 @@ public class SlicerView : ApplicationElement
     private Vector3 boxSize;
     private float sliderPos;
     public Slider holoSlider;
+    private Vector3[] lerpingPoints = new Vector3[3];
+    private Vector3[] normals;
+    private Vector3 center;
+    private ProjectionModel projectionModel;
 
     public void ToggleNormal()
     {
@@ -40,20 +43,39 @@ public class SlicerView : ApplicationElement
 
     public void Reload()
     {
+        projectionModel = FindObjectOfType<ProjectionModel>();
+
+        if (projectionModel.CurrentInstance == null)
+            return;
+
         modelContainer = FindObjectOfType<ProjectionModel>().RotateComponent;
-        state = true;
+
         if (fresnel != null)
             Destroy(fresnel);
-        //PositionPlanes();
+
         materialList = GetMaterials(modelContainer);
         InstantiateFresnel();
         ApplyShader(crossShader);
         StopAllCoroutines();
+
+        Transform modelTransform = modelContainer.GetChild(0).transform;
+        BoxCollider bc = modelContainer.GetChild(0).GetComponent<BoxCollider>();
+        center = modelTransform.TransformPoint(bc.center);
+
+        normals = new Vector3[] {
+            modelTransform.up,
+            modelTransform.right,
+            modelTransform.forward
+        };
+
+        for (int i = 0; i < 3; i++)
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(center + normals[i] * 500, -normals[i], out hit, 750.0f, 1 << 10))
+                lerpingPoints[i] = hit.point;
+        }
         StartCoroutine(LoadShaders());
     }
-
-    private Vector3 lerpingPoints;
-    private Vector3 center;
 
     private IEnumerator LoadShaders()
     {
@@ -61,6 +83,7 @@ public class SlicerView : ApplicationElement
         UpdateVectors();
         yield break;
     }
+
     private void PositionPlanes()
     {
         List<Renderer> renderList = new List<Renderer>(modelContainer.GetComponentsInChildren<Renderer>());
@@ -80,9 +103,7 @@ public class SlicerView : ApplicationElement
     private void ApplyShader(Shader s)
     {
         foreach (Material m in materialList)
-        {
             m.shader = s;
-        }
     }
 
     private void InstantiateFresnel()
@@ -107,29 +128,15 @@ public class SlicerView : ApplicationElement
         sliderPos = _sliderPos;
         float t = (_sliderPos * 2.0f - 1.0f) * 1.05f;
         sliderLabel.text = Mathf.RoundToInt(sliderPos * 100.0f) + "%";
+        Vector3 direction = normals[planeIndex] * (invertedNormals ? 1 : -1);
+        float distance = t * Vector3.Distance(center, lerpingPoints[planeIndex]);
 
-        BoxCollider bc = modelContainer.GetChild(0).GetComponent<BoxCollider>();
-        Transform modelTransform = modelContainer.GetChild(0).transform;
-        if (bc == null)
+        foreach (Material m in materialList)
         {
-            state = false;
-            return;
-        }
-        center = modelTransform.TransformPoint(bc.center);
-
-        Vector3 normal = new Vector3[] { modelContainer.up, modelContainer.right, modelContainer.forward }[planeIndex];
-        Vector3 direction = normal * (invertedNormals ? 1 : -1);
-
-        if (WalkInDirection(normal))
-        {
-            float distance = t * Vector3.Distance(center, lerpingPoints);
-            foreach (Material m in materialList)
-            {
-                m.SetVector("_PlanePosition", center + normal * distance);
-                m.SetVector("_PlaneNormal", direction);
-                Fresnel.SetVector("_PlanePosition", center + normal * distance);
-                Fresnel.SetVector("_PlaneNormal", direction);
-            }
+            m.SetVector("_PlanePosition", center + normals[planeIndex] * distance);
+            m.SetVector("_PlaneNormal", direction);
+            Fresnel.SetVector("_PlanePosition", center + normals[planeIndex] * distance);
+            Fresnel.SetVector("_PlaneNormal", direction);
         }
     }
 
@@ -140,16 +147,5 @@ public class SlicerView : ApplicationElement
         else
             InstantiateFresnel();
         holoSlider.value = holoSlider.value * -1;
-    }
-
-    private bool WalkInDirection(Vector3 direction)
-    {
-        RaycastHit hit;
-        if (Physics.Raycast(center + direction * 500, -direction, out hit, 725, 1 << 10))
-        {
-            lerpingPoints = hit.point;
-            return true;
-        }
-        return false;
     }
 }

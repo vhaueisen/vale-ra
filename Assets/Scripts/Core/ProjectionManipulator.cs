@@ -89,6 +89,7 @@ public class ProjectionManipulator : ApplicationElement
         SetScale(1.0f);
         posTarget.position = raycast.position;
         GameObject instance = Instantiate(prefab, rotTarget.position, raycast.rotation);
+        projectionModel.instanceRotation = raycast.rotation;
         instance.transform.position = instance.transform.position + Vector3.down * MainApp.inventoryModel.CurrentModel.YOffset;
         instance.transform.SetParent(rotTarget);
         instance.transform.localScale = Vector3.one;
@@ -148,7 +149,10 @@ public class ProjectionManipulator : ApplicationElement
 
     public void UpdateRotation(float desiredRotation, Transform target, bool isAR)
     {
-        target.Rotate(Vector3.up * desiredRotation * Time.deltaTime * projectionModel.RotateSpeed * MainApp.coreDataModel.Settings.Core.RotateSpeed);
+        if (isAR)
+            projectionModel.HomeOrigin.transform.Rotate(-Vector3.up * desiredRotation * Time.deltaTime * projectionModel.RotateSpeed * MainApp.coreDataModel.Settings.Core.RotateSpeed);
+        else
+            target.Rotate(Vector3.up * desiredRotation * Time.deltaTime * projectionModel.RotateSpeed * MainApp.coreDataModel.Settings.Core.RotateSpeed);
     }
 
     private float elevationOffset = 0.0f;

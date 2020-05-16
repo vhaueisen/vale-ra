@@ -77,9 +77,8 @@ public class InventoryModel : ApplicationElement
                                 AssetBundle bundle = AssetBundle.LoadFromFile(file);
                                 ValidateBundle(bundle, fileLocation, file);
                             }
-                            catch (System.Exception e)
+                            catch
                             {
-                                Debug.Log(e.ToString());
                             }
                         }
                     }
@@ -93,6 +92,7 @@ public class InventoryModel : ApplicationElement
     {
         if (bundle == null)
             return;
+
         StringBuilder s = new StringBuilder();
         string manifestPath = Path.Combine(folderPath, bundle.name + ".manifest");
         if (File.Exists(manifestPath))

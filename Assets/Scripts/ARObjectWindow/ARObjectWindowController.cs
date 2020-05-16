@@ -78,9 +78,9 @@ public class ARObjectWindowController : ApplicationElement
                 FindObjectOfType<ARTrackedImageManager>().trackedImagePrefab = loadModel.ARPrefab;
                 FindObjectOfType<ARTrackedImageManager>().enabled = true;
             }
-            catch (Exception e)
+            catch
             {
-                Debug.Log(e.ToString());
+
             }
         }
         else

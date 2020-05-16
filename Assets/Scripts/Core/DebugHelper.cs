@@ -16,7 +16,6 @@ public class DebugHelper : MonoBehaviour
             boundingBox.Encapsulate(r.bounds);
         float YOffset = boundingBox.min.y;
         YOffset -= 0.001f + 0.05f;
-        Debug.Log(YOffset);
         Gizmos.DrawCube(transform.position + Vector3.up * YOffset, new Vector3(1.0f, 0.1f, 1.0f));
     }
 }

@@ -196,7 +196,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 520bb47c46cf8624fafb307b7d1b862a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 1603537984}
 --- !u!114 &663590877
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -211,8 +211,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SerializedLibrary: {fileID: 0}
   m_MaxNumberOfMovingImages: 1
-  m_TrackedImagePrefab: {fileID: 2448716963577568853, guid: fea01c600b16c814583c7f55638777df,
-    type: 3}
+  m_TrackedImagePrefab: {fileID: 0}
 --- !u!114 &663590878
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -261,7 +260,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 1266195196}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -553,7 +552,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1446647492}
-  - {fileID: 1358741139}
   - {fileID: 743591607}
   m_Father: {fileID: 1033986135}
   m_RootOrder: 2
@@ -586,8 +584,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1768589934}
-  m_Father: {fileID: 1266195196}
-  m_RootOrder: 1
+  m_Father: {fileID: 1446647492}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1446647491
 GameObject:
@@ -615,7 +613,8 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1358741139}
   m_Father: {fileID: 1266195196}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -677,7 +676,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_RenderPostProcessing: 1
-  m_Antialiasing: 0
+  m_Antialiasing: 1
   m_AntialiasingQuality: 2
   m_StopNaN: 0
   m_Dithering: 0
@@ -740,8 +739,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 816b289ef451e094f9ae174fb4cf8db0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UseCustomMaterial: 0
-  m_CustomMaterial: {fileID: 0}
+  m_UseCustomMaterial: 1
+  m_CustomMaterial: {fileID: 2100000, guid: 5c14004c8e613dc4f96d4e7a52d7443f, type: 2}
 --- !u!114 &1603537986
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -755,7 +754,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_FocusMode: 1
-  m_LightEstimationMode: 0
+  m_LightEstimationMode: 1
 --- !u!114 &1603537987
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -841,13 +840,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2fe4446708176e40a5b8bdd4427e8c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MainCamera: {fileID: 0}
+  MainCamera: {fileID: 1603537984}
   RayManager: {fileID: 663590875}
   ModelContainer: {fileID: 1358741139}
   RotateComponent: {fileID: 1768589934}
   ARMode: 1
   CurrentInstance: {fileID: 0}
-  HomeOrigin: {fileID: 0}
+  HomeOrigin: {fileID: 663590872}
+  instanceRotation: {x: 0, y: 0, z: 0, w: 1}
 --- !u!1 &1953858279
 GameObject:
   m_ObjectHideFlags: 0
@@ -891,6 +891,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e1ee22669f754e47bf3bec374a600af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  snapedScale: 1
+  snapedScale: 0.5
   projectionModel: {fileID: 1825001010}
   Enabled: 1
