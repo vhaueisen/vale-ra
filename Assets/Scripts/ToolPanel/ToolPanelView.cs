@@ -38,7 +38,7 @@ public class ToolPanelView : ApplicationElement
         {
             ChangePanel(0);
             ToggleState(true);
-            MainApp.slicerView.Reload();
+            MainApp.slicerModel.controller.Reload();
         }
         else if (eventArgs.ToolKey == ToolBoxEventArgs.moveKey)
         {

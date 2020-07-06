@@ -75,8 +75,8 @@ Material:
     - _BaseColor: {r: 0, g: 1, b: 0.827451, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _PlaneNormal: {r: -0, g: -1, b: -0, a: 0}
-    - _PlanePosition: {r: 0.39696494, g: -0.0045048892, b: -0.38603264, a: 0}
+    - _PlaneNormal: {r: -1, g: -0, b: -0, a: 0}
+    - _PlanePosition: {r: 0.2055023, g: 0.1464, b: -0.093499996, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
 --- !u!114 &3565377393221888525
 MonoBehaviour:

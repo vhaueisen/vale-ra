@@ -13,7 +13,7 @@ public class MainApplication : MonoBehaviour
     public ToolboxController toolboxController;
     public ToolboxModel toolboxModel;
     public ToolboxView toolBoxView;
-    public SlicerView slicerView;
+    public SlicerModel slicerModel;
 
     void Start()
     {

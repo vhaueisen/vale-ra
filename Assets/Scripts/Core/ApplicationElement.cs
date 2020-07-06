@@ -45,15 +45,26 @@ public class ApplicationElement : MonoBehaviour
         }
     }
 
+    public QRApplication QRApp
+    {
+        get
+        {
+            return qrApplication;
+        }
+    }
+
 
     private MainApplication mainApplication;
     private HomeApplication homeApplication;
     private ARApplication arApplication;
     private SettingsApplication settingsApp;
+    private QRApplication qrApplication;
+
     void Awake()
     {
         mainApplication = GameObject.FindObjectOfType<MainApplication>();
         homeApplication = GameObject.FindObjectOfType<HomeApplication>();
         arApplication = GameObject.FindObjectOfType<ARApplication>();
+        qrApplication = GameObject.FindObjectOfType<QRApplication>();
     }
 }

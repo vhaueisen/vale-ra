@@ -744,8 +744,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 549.99994, y: -30}
-  m_SizeDelta: {x: 999.9999, y: 64}
+  m_AnchoredPosition: {x: 551.0266, y: -30}
+  m_SizeDelta: {x: 1002.0532, y: 64}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &74941603
 MonoBehaviour:
@@ -1402,8 +1402,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 156.66664, y: -75}
-  m_SizeDelta: {x: 313.33328, y: 150}
+  m_AnchoredPosition: {x: 157.00887, y: -75}
+  m_SizeDelta: {x: 314.01773, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &357298664
 GameObject:
@@ -4288,8 +4288,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 549.99994, y: -419}
-  m_SizeDelta: {x: 999.9999, y: 150}
+  m_AnchoredPosition: {x: 551.0266, y: -419}
+  m_SizeDelta: {x: 1002.0532, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1763032995
 MonoBehaviour:
@@ -4506,8 +4506,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 843.3332, y: -75}
-  m_SizeDelta: {x: 313.33328, y: 150}
+  m_AnchoredPosition: {x: 845.0443, y: -75}
+  m_SizeDelta: {x: 314.01773, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1898761500
 GameObject:
@@ -4878,8 +4878,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 499.99994, y: -75}
-  m_SizeDelta: {x: 313.33328, y: 150}
+  m_AnchoredPosition: {x: 501.0266, y: -75}
+  m_SizeDelta: {x: 314.01773, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &84238467787069070
 GameObject:
@@ -5738,7 +5738,7 @@ MonoBehaviour:
   toolboxController: {fileID: 4326913941938639421}
   toolboxModel: {fileID: 6032910650845196870}
   toolBoxView: {fileID: 2857714108416859508}
-  slicerView: {fileID: 2157525858165373258}
+  slicerModel: {fileID: 2157525857894418046}
 --- !u!114 &2157525857673189794
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5788,6 +5788,7 @@ GameObject:
   - component: {fileID: 2157525857673189794}
   - component: {fileID: 2157525857673189795}
   - component: {fileID: 4326913941938639421}
+  - component: {fileID: 2157525857673189808}
   m_Layer: 0
   m_Name: Controller
   m_TagString: Untagged
@@ -5809,6 +5810,18 @@ Transform:
   m_Father: {fileID: 2157525857558823036}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2157525857673189808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2157525857673189806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ee11188cb7186d409e8baed5f09ce84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &2157525857894418032
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5912,6 +5925,7 @@ GameObject:
   - component: {fileID: 2157525857894418039}
   - component: {fileID: 4127676703790383250}
   - component: {fileID: 6032910650845196870}
+  - component: {fileID: 2157525857894418046}
   m_Layer: 0
   m_Name: Model
   m_TagString: Untagged
@@ -5919,6 +5933,42 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &2157525857894418046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2157525857894418045}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 400e36de9c61c034e8b39df677e4397a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  materialList: []
+  Fresnel: {fileID: 2100000, guid: 55095ec42419827449ba9d53e6c4392d, type: 2}
+  fresnel: {fileID: 0}
+  rotateComponent: {fileID: 0}
+  crossShader: {fileID: -6465566751694194690, guid: 106a579299a012742a4af5694e948c79,
+    type: 3}
+  planeIndex: 0
+  invertedNormals: 0
+  normalsSlider: {fileID: 374279728}
+  sliderTitle: {fileID: 6995476108446301988}
+  sliderLabel: {fileID: 6644269846857862855}
+  offset: {x: 0, y: 0, z: 0}
+  boxSize: {x: 0, y: 0, z: 0}
+  sliderPos: 0
+  holoSlider: {fileID: 309703969}
+  lerpingPoints:
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  normals: []
+  center: {x: 0, y: 0, z: 0}
+  projectionModel: {fileID: 0}
+  controller: {fileID: 2157525857673189808}
+  view: {fileID: 2157525858165373258}
 --- !u!1 &2157525858165373257
 GameObject:
   m_ObjectHideFlags: 0
@@ -5952,13 +6002,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fea96a4416667249900cf72f796af37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Fresnel: {fileID: 2100000, guid: 55095ec42419827449ba9d53e6c4392d, type: 2}
-  crossShader: {fileID: -6465566751694194690, guid: 106a579299a012742a4af5694e948c79,
-    type: 3}
-  normalsSlider: {fileID: 374279728}
-  sliderTitle: {fileID: 6644269846857862855}
-  sliderLabel: {fileID: 6995476108446301988}
-  holoSlider: {fileID: 309703969}
 --- !u!114 &2157525858165373259
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10015,8 +10058,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 549.99994, y: -219}
-  m_SizeDelta: {x: 999.9999, y: 150}
+  m_AnchoredPosition: {x: 551.0266, y: -219}
+  m_SizeDelta: {x: 1002.0532, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &6656008716474896279
 GameObject:

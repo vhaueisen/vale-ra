@@ -686,6 +686,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 417105832}
+  - component: {fileID: 417105833}
   m_Layer: 0
   m_Name: Model
   m_TagString: Untagged
@@ -707,6 +708,27 @@ Transform:
   m_Father: {fileID: 2100980966}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &417105833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 417105831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74a3415e659cbf947a0fa57073a59847, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraBufferFitter: {fileID: 7098584841977176246}
+  QRFrame: {fileID: 791659232}
+  cameraFrame: {fileID: 1599230049}
+  cameraBuffer: {fileID: 202753589}
+  resultDialog: {fileID: 198926612}
+  resultText: {fileID: 415709731}
+  imageRotator: {fileID: 1273631655}
+  qrFrameRect: {fileID: 791659233}
+  cameraFrameRect: {fileID: 1599230050}
 --- !u!1 &601966175
 GameObject:
   m_ObjectHideFlags: 0
@@ -1386,13 +1408,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 258424d682dfcd94bad289b34aab211b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraBufferFitter: {fileID: 7098584841977176246}
-  QRFrame: {fileID: 791659232}
-  cameraFrame: {fileID: 202753587}
-  cameraBuffer: {fileID: 202753589}
-  resultDialog: {fileID: 198926612}
-  resultText: {fileID: 415709731}
-  imageRotator: {fileID: 1273631655}
 --- !u!1 &1672210687
 GameObject:
   m_ObjectHideFlags: 0
@@ -1508,6 +1523,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2100980966}
+  - component: {fileID: 2100980967}
   m_Layer: 0
   m_Name: Application
   m_TagString: Untagged
@@ -1532,6 +1548,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2100980967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2100980965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 127f6e80ac425a44b9e8715ab4ac062d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  qrModel: {fileID: 417105833}
+  qrController: {fileID: 1645581300}
 --- !u!114 &7098584841977176246
 MonoBehaviour:
   m_ObjectHideFlags: 0

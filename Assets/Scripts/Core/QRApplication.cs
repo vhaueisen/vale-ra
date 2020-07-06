@@ -1,0 +1,5 @@
+﻿public class QRApplication : ApplicationElement
+{
+    public QRBarcodeModel qrModel;
+    public QRBarcodeController qrController;
+}
