@@ -11,7 +11,7 @@ public class QRBarcodeController : ApplicationElement
     private WebCamTexture camTexture;
     private WebCamDevice camDevice;
     private Color32[] c;
-    private bool decodeEnabled = true;
+    public bool decodeEnabled = true;
     private bool camAvailable;
     private BarcodeReader barcodeReader;
     private Thread qrThread;
@@ -28,16 +28,18 @@ public class QRBarcodeController : ApplicationElement
     private Vector3 defaultScale = new Vector3(1f, 1f, 1f);
     private Vector3 fixedScale = new Vector3(-1f, 1f, 1f);
     private QRBarcodeModel model;
+
     public void exitDialog()
     {
         model.resultDialog.SetActive(false);
         decodeEnabled = true;
     }
 
-    private void enterDialog(string decoded)
+    public void EnterDialog(string jsonResponse, Texture2D thumbnail)
     {
-        model.resultText.text = decoded;
+        model.resultText.text = jsonResponse;
         model.resultDialog.SetActive(true);
+        model.resultDialogThumb.texture = thumbnail;
         dialogEvent = false;
     }
 
@@ -153,6 +155,9 @@ public class QRBarcodeController : ApplicationElement
         if (c == null && decodeEnabled)
             c = camTexture.GetPixels32();
         if (dialogEvent)
-            enterDialog(decoded.Text);
+        {
+            QRApp.downloaderController.DownloadRequestGUID = decoded.Text;
+            dialogEvent = false;
+        }
     }
 }

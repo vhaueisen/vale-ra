@@ -12,4 +12,5 @@ public class QRBarcodeModel : ApplicationElement
     public RectTransform imageRotator;
     public RectTransform qrFrameRect;
     public RectTransform cameraFrameRect;
+    public RawImage resultDialogThumb;
 }
