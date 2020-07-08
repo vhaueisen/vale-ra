@@ -7,10 +7,7 @@ public class QRBarcodeModel : ApplicationElement
     public GameObject QRFrame;
     public GameObject cameraFrame;
     public RawImage cameraBuffer;
-    public GameObject resultDialog;
-    public Text resultText;
     public RectTransform imageRotator;
     public RectTransform qrFrameRect;
     public RectTransform cameraFrameRect;
-    public RawImage resultDialogThumb;
 }

@@ -3,6 +3,7 @@ using ZXing;
 using System.Collections.Generic;
 using System;
 using System.Threading;
+using static DownloaderModel;
 
 public class QRBarcodeController : ApplicationElement
 {
@@ -28,20 +29,6 @@ public class QRBarcodeController : ApplicationElement
     private Vector3 defaultScale = new Vector3(1f, 1f, 1f);
     private Vector3 fixedScale = new Vector3(-1f, 1f, 1f);
     private QRBarcodeModel model;
-
-    public void exitDialog()
-    {
-        model.resultDialog.SetActive(false);
-        decodeEnabled = true;
-    }
-
-    public void EnterDialog(string jsonResponse, Texture2D thumbnail)
-    {
-        model.resultText.text = jsonResponse;
-        model.resultDialog.SetActive(true);
-        model.resultDialogThumb.texture = thumbnail;
-        dialogEvent = false;
-    }
 
     void OnDisable()
     {

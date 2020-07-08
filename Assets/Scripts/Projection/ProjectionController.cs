@@ -27,21 +27,6 @@ public class ProjectionController : ProjectionManipulator
         BundleId = MainApp.coreDataModel.Inventory.Core.Id;
 
         yield return new WaitForEndOfFrame();
-        string parentDir = Directory.GetParent(BundlePath).ToString();
-        try
-        {
-            AssetBundle assetBundle = AssetBundle.LoadFromFile(Path.Combine(parentDir, new DirectoryInfo(parentDir).Name));
-            AssetBundleManifest manifest = assetBundle.LoadAsset<AssetBundleManifest>("AssetBundleManifest");
-            string[] dependencies = manifest.GetAllDependencies(BundleId);
-            foreach (string dependency in dependencies)
-                AssetBundle.LoadFromFile(Path.Combine(Directory.GetParent(BundlePath).ToString(), dependency));
-        }
-        catch
-        {
-            HomeProjection();
-            yield break;
-        }
-
         AssetBundle bundle = AssetBundle.LoadFromFile(BundlePath);
         GameObject asset = bundle.LoadAsset(BundleAddress) as GameObject;
         ARObejctModel loadModel = asset.GetComponent<ARObejctModel>();
@@ -56,7 +41,6 @@ public class ProjectionController : ProjectionManipulator
             }
             catch
             {
-
             }
         }
         else

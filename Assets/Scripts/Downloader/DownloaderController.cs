@@ -1,7 +1,9 @@
-using System;
 using System.Collections;
+using System.IO;
+using System.IO.Compression;
 using UnityEngine;
 using UnityEngine.Networking;
+using static DownloaderModel;
 
 public class DownloaderController : ApplicationElement
 {
@@ -18,7 +20,10 @@ public class DownloaderController : ApplicationElement
     {
         get
         {
-            return (apiDomainURL + m_downloadRequestGUID + "/Model.zip");
+#if UNITY_IOS
+            return (apiDomainURL + m_downloadRequestGUID + "/Model_IOS.zip");
+#endif
+            return (apiDomainURL + m_downloadRequestGUID + "/Model_Android.zip");
         }
     }
 
@@ -26,7 +31,6 @@ public class DownloaderController : ApplicationElement
     {
         get
         {
-            Debug.Log(apiDomainURL + m_downloadRequestGUID + "/Thumbnail.png");
             return (apiDomainURL + m_downloadRequestGUID + "/Thumbnail.png");
         }
     }
@@ -50,14 +54,22 @@ public class DownloaderController : ApplicationElement
 
     private bool ValidGUID(string request, out string GUID)
     {
-        string[] tokenGUID = request.Split(':');
-        GUID = tokenGUID[1].ToUpper();
-        return (tokenGUID[0] == "ValeRA");
+        try
+        {
+            string[] tokenGUID = request.Split(':');
+            GUID = tokenGUID[1].ToUpper();
+            return (tokenGUID[0] == "ValeRA");
+        }
+        catch
+        {
+            GUID = "";
+            return false;
+        }
     }
 
     private IEnumerator DownloaderHandler()
     {
-        string jsonResponse;
+        DownloaderJSON jsonResponse;
         Texture2D textureResponse;
 
         using (UnityWebRequest JSONRequest = UnityWebRequest.Get(JsonUrl))
@@ -68,31 +80,91 @@ public class DownloaderController : ApplicationElement
                 OnRequestError();
                 yield break;
             }
-            jsonResponse = JSONRequest.downloadHandler.text;
+            jsonResponse = JsonUtility.FromJson<DownloaderJSON>(JSONRequest.downloadHandler.text);
         }
 
-        using (UnityWebRequest ThumbRequest = UnityWebRequestTexture.GetTexture(ThumbUrl))
+        using (UnityWebRequest thumbRequest = UnityWebRequestTexture.GetTexture(ThumbUrl))
         {
-            yield return ThumbRequest.SendWebRequest();
-            if (ThumbRequest.isNetworkError || ThumbRequest.isHttpError)
+            yield return thumbRequest.SendWebRequest();
+            if (thumbRequest.isNetworkError || thumbRequest.isHttpError)
             {
                 OnRequestError();
                 yield break;
             }
-            DownloadHandlerTexture thumbnailHandler = ThumbRequest.downloadHandler as DownloadHandlerTexture;
+            DownloadHandlerTexture thumbnailHandler = thumbRequest.downloadHandler as DownloadHandlerTexture;
             textureResponse = thumbnailHandler.texture;
         }
-
         OnRequestSuccess(jsonResponse, textureResponse);
+        yield break;
     }
 
     private void OnRequestError()
     {
         QRApp.qrController.decodeEnabled = true;
+        ExitDownloadDialog();
     }
 
-    private void OnRequestSuccess(string response, Texture2D thumbnail)
+    private void OnRequestSuccess(DownloaderJSON response, Texture2D thumbnail)
     {
-        QRApp.qrController.EnterDialog(response, thumbnail);
+        EnterDownloadDialog();
+        QRApp.downloaderModel.objectThumbnail.texture = thumbnail;
+        QRApp.downloaderModel.objectName.text = response.Name;
+        QRApp.downloaderModel.objectDescription.text = response.Description;
+    }
+
+    private void EnterDownloadDialog()
+    {
+        QRApp.downloaderModel.downloadPanel.SetActive(true);
+        QRApp.downloaderModel.downloadingPanel.SetActive(false);
+    }
+
+    public void ExitDownloadDialog()
+    {
+        QRApp.downloaderModel.downloadPanel.SetActive(false);
+        QRApp.downloaderModel.downloadingPanel.SetActive(false);
+        QRApp.qrController.decodeEnabled = true;
+    }
+
+    public void EnterDownloadingDialog()
+    {
+        QRApp.downloaderModel.downloadingPanel.SetActive(true);
+        StartCoroutine(DownloadAssetBundle());
+    }
+
+    private IEnumerator DownloadAssetBundle()
+    {
+        using (UnityWebRequest bundleRequest = UnityWebRequest.Get(ModelUrl))
+        {
+            AsyncOperation downloadOperation = bundleRequest.SendWebRequest();
+            while (!downloadOperation.isDone)
+            {
+                QRApp.downloaderModel.progressBar.value = downloadOperation.progress;
+                QRApp.downloaderModel.progressText.text = string.Format("{0:0.0}%", downloadOperation.progress * 100.0f);
+                yield return null;
+            }
+
+            if (bundleRequest.isNetworkError || bundleRequest.isHttpError)
+            {
+                OnRequestError();
+                yield break;
+            }
+
+            using (Stream data = new MemoryStream(bundleRequest.downloadHandler.data))
+            {
+                ZipArchive archive = new ZipArchive(data);
+                foreach (ZipArchiveEntry entry in archive.Entries)
+                {
+                    string path = Path.Combine(Application.persistentDataPath, "Bundles", m_downloadRequestGUID);
+                    if (!Directory.Exists(path))
+                        Directory.CreateDirectory(path);
+                    string destinationPath = Path.GetFullPath(Path.Combine(path, entry.FullName));
+                    using (FileStream outputFileStream = new FileStream(destinationPath, FileMode.Create))
+                        entry.Open().CopyTo(outputFileStream);
+                }
+            }
+        }
+
+        QRApp.downloaderModel.downloadingPanel.SetActive(false);
+        yield break;
     }
 }

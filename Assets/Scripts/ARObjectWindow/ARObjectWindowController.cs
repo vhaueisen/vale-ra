@@ -57,15 +57,6 @@ public class ARObjectWindowController : ApplicationElement
         }
 
         AssetBundle.UnloadAllAssetBundles(true);
-        string parentDir = Directory.GetParent(BundlePath).ToString();
-        AssetBundle assetBundle = AssetBundle.LoadFromFile(Path.Combine(parentDir, new DirectoryInfo(parentDir).Name));
-        AssetBundleManifest manifest = assetBundle.LoadAsset<AssetBundleManifest>("AssetBundleManifest");
-        string[] dependencies = manifest.GetAllDependencies(BundleId);
-        foreach (string dependency in dependencies)
-        {
-            AssetBundle.LoadFromFile(Path.Combine(Directory.GetParent(BundlePath).ToString(), dependency));
-        }
-
         AssetBundle bundle = AssetBundle.LoadFromFile(BundlePath);
         GameObject asset = bundle.LoadAsset(BundleAddress) as GameObject;
         ARObejctModel loadModel = asset.GetComponent<ARObejctModel>();
