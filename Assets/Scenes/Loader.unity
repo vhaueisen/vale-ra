@@ -5502,6 +5502,7 @@ MonoBehaviour:
   footerView: {fileID: 2157525858165373260}
   sceneLoaderController: {fileID: 2157525857673189795}
   toolboxController: {fileID: 4326913941938639421}
+  inventoryController: {fileID: 2157525857673189804}
   toolboxModel: {fileID: 6032910650845196870}
   toolBoxView: {fileID: 2857714108416859508}
   slicerModel: {fileID: 2157525857894418046}

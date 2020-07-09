@@ -9,6 +9,7 @@ using System.Text;
 using UnityEngine;
 using System;
 using UnityEngine.UI;
+using System.Collections;
 
 public class InventoryEventArgs : EventArgs
 {
@@ -22,6 +23,33 @@ public class InventoryEventArgs : EventArgs
 public class InventoryModel : ApplicationElement
 {
     private static string bundleFolder = @"Bundles";
+    public bool DirtyInventory
+    {
+        set
+        {
+            m_dirtyInventory = true;
+            StartCoroutine(CleanInventory());
+        }
+    }
+
+    private IEnumerator CleanInventory()
+    {
+        yield return null;
+        AssetBundle.UnloadAllAssetBundles(true);
+        yield return null;
+        bundlePath = Application.persistentDataPath;
+        ARObjectModels = new List<ARObjectScript>();
+        ARObjectNames = new List<string>();
+        ARObjectAreas = new List<string>();
+        ARObjectBuckets = new List<string>();
+        ARObjectThumbnails = new List<Sprite>();
+        yield return null;
+        LocateBundle();
+        yield return null;
+        FindObjectOfType<InventoryController>().Reload();
+        m_dirtyInventory = false;
+    }
+    private bool m_dirtyInventory;
     private static string bundlePath;
     public GameObject inventoryItem;
     public GameObject inventoryContainer;
@@ -141,5 +169,14 @@ public class InventoryModel : ApplicationElement
         ARObjectNames = ARObjectNames.Distinct().ToList();
         ARObjectAreas = ARObjectAreas.Distinct().ToList();
         ARObjectBuckets = ARObjectBuckets.Distinct().ToList();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Debug.Log("Initiated inventory clean");
+            StartCoroutine(CleanInventory());
+        }
     }
 }

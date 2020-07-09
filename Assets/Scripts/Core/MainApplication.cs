@@ -11,6 +11,7 @@ public class MainApplication : MonoBehaviour
     public FooterView footerView;
     public SceneLoaderController sceneLoaderController;
     public ToolboxController toolboxController;
+    public InventoryController inventoryController;
     public ToolboxModel toolboxModel;
     public ToolboxView toolBoxView;
     public SlicerModel slicerModel;

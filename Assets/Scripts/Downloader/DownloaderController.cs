@@ -165,6 +165,7 @@ public class DownloaderController : ApplicationElement
         }
 
         QRApp.downloaderModel.downloadingPanel.SetActive(false);
+        MainApp.inventoryModel.DirtyInventory = true;
         yield break;
     }
 }

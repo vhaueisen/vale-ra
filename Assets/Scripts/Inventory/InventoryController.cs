@@ -18,7 +18,7 @@ public class InventoryController : ApplicationElement
         public ARObjectScript Script;
     }
     private bool initiated = false;
-    private List<ItemBucket> bucketList = new List<ItemBucket>();
+    private List<ItemBucket> bucketList;
     private readonly byte SortByName = 0;
     private readonly byte SortByArea = 1;
     private readonly byte SortByBucket = 2;
@@ -27,8 +27,17 @@ public class InventoryController : ApplicationElement
     private int CurrentState = 0;
     private void Start()
     {
-        if (initiated)
-            return;
+        Reload();
+    }
+
+    public void Reload()
+    {
+        bucketList = new List<ItemBucket>();
+        foreach (Transform child in MainApp.inventoryModel.VerticalAlignedContent.transform)
+            GameObject.Destroy(child.gameObject);
+
+        foreach (Transform child in MainApp.inventoryModel.GridAlignedContent.transform)
+            GameObject.Destroy(child.gameObject);
 
         (MainApp.inventoryModel.containerList,
          MainApp.inventoryModel.containerComponentList) = GenerateContainers();

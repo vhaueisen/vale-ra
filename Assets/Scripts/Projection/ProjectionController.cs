@@ -27,6 +27,7 @@ public class ProjectionController : ProjectionManipulator
         BundleId = MainApp.coreDataModel.Inventory.Core.Id;
 
         yield return new WaitForEndOfFrame();
+        AssetBundle.UnloadAllAssetBundles(true);
         AssetBundle bundle = AssetBundle.LoadFromFile(BundlePath);
         GameObject asset = bundle.LoadAsset(BundleAddress) as GameObject;
         ARObejctModel loadModel = asset.GetComponent<ARObejctModel>();
