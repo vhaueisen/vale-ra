@@ -10,6 +10,7 @@ using UnityEngine;
 using System;
 using UnityEngine.UI;
 using System.Collections;
+using System.Diagnostics;
 
 public class InventoryEventArgs : EventArgs
 {
@@ -53,8 +54,8 @@ public class InventoryModel : ApplicationElement
     private static string bundlePath;
     public GameObject inventoryItem;
     public GameObject inventoryContainer;
-    public GameObject[] containerList;
-    public InventoryContainerComponent[] containerComponentList;
+    public List<GameObject> containerList;
+    public List<InventoryContainerComponent> containerComponentList;
     public Transform VerticalAlignedContent;
     public Transform GridAlignedContent;
     public ScrollRect ScrollRect;
@@ -80,8 +81,19 @@ public class InventoryModel : ApplicationElement
     }
     void Awake()
     {
+        Stopwatch stopWatch = new Stopwatch();
+        stopWatch.Start();
         bundlePath = Application.persistentDataPath;
         LocateBundle();
+        stopWatch.Stop();
+        // Get the elapsed time as a TimeSpan value.
+        TimeSpan ts = stopWatch.Elapsed;
+
+        // Format and display the TimeSpan value.
+        string elapsedTime = String.Format("Model: {0:00}.{1:00}",
+            ts.Seconds,
+            ts.Milliseconds / 10);
+        UnityEngine.Debug.Log("RunTime " + elapsedTime);
     }
 
     private void LocateBundle()
@@ -116,10 +128,11 @@ public class InventoryModel : ApplicationElement
         Digest();
     }
 
-    private void ValidateBundle(AssetBundle bundle, string folderPath, string bundlePath)
+    public ARObjectScript ValidateBundle(AssetBundle bundle, string folderPath, string bundlePath)
     {
+        ARObjectScript model = new ARObjectScript();
         if (bundle == null)
-            return;
+            return null;
 
         StringBuilder s = new StringBuilder();
         string manifestPath = Path.Combine(folderPath, bundle.name + ".manifest");
@@ -142,7 +155,6 @@ public class InventoryModel : ApplicationElement
                     ARObejctModel _model = asset.GetComponent<ARObejctModel>();
                     if (_model != null)
                     {
-                        ARObjectScript model = new ARObjectScript();
                         model.Clone(_model);
                         model.bundlePath = bundlePath;
                         model.addr = addr;
@@ -152,6 +164,7 @@ public class InventoryModel : ApplicationElement
                 }
             }
         }
+        return model;
     }
 
     private void AddressBundle(ARObjectScript model)
@@ -169,14 +182,5 @@ public class InventoryModel : ApplicationElement
         ARObjectNames = ARObjectNames.Distinct().ToList();
         ARObjectAreas = ARObjectAreas.Distinct().ToList();
         ARObjectBuckets = ARObjectBuckets.Distinct().ToList();
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Debug.Log("Initiated inventory clean");
-            StartCoroutine(CleanInventory());
-        }
     }
 }

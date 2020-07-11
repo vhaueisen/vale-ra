@@ -1,6 +1,8 @@
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 using static DownloaderModel;
@@ -133,6 +135,7 @@ public class DownloaderController : ApplicationElement
 
     private IEnumerator DownloadAssetBundle()
     {
+        List<string> downloadedEntries = new List<string>();
         using (UnityWebRequest bundleRequest = UnityWebRequest.Get(ModelUrl))
         {
             AsyncOperation downloadOperation = bundleRequest.SendWebRequest();
@@ -149,6 +152,7 @@ public class DownloaderController : ApplicationElement
                 yield break;
             }
 
+
             using (Stream data = new MemoryStream(bundleRequest.downloadHandler.data))
             {
                 ZipArchive archive = new ZipArchive(data);
@@ -160,12 +164,20 @@ public class DownloaderController : ApplicationElement
                     string destinationPath = Path.GetFullPath(Path.Combine(path, entry.FullName));
                     using (FileStream outputFileStream = new FileStream(destinationPath, FileMode.Create))
                         entry.Open().CopyTo(outputFileStream);
+                    if (!destinationPath.Contains(".manifest"))
+                    {
+                        downloadedEntries.Add(destinationPath);
+                    }
+                }
+
+                foreach (string path in downloadedEntries)
+                {
+                    MainApp.inventoryController.AddObject(path);
                 }
             }
         }
 
         QRApp.downloaderModel.downloadingPanel.SetActive(false);
-        MainApp.inventoryModel.DirtyInventory = true;
         yield break;
     }
 }

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,7 +19,6 @@ public class InventoryController : ApplicationElement
         public GameObject Obj;
         public ARObjectScript Script;
     }
-    private bool initiated = false;
     private List<ItemBucket> bucketList;
     private readonly byte SortByName = 0;
     private readonly byte SortByArea = 1;
@@ -27,7 +28,18 @@ public class InventoryController : ApplicationElement
     private int CurrentState = 0;
     private void Start()
     {
+        Stopwatch stopWatch = new Stopwatch();
+        stopWatch.Start();
         Reload();
+        stopWatch.Stop();
+        // Get the elapsed time as a TimeSpan value.
+        TimeSpan ts = stopWatch.Elapsed;
+
+        // Format and display the TimeSpan value.
+        string elapsedTime = String.Format("Controller: {0:00}.{1:00}",
+            ts.Seconds,
+            ts.Milliseconds / 10);
+        UnityEngine.Debug.Log("RunTime " + elapsedTime);
     }
 
     public void Reload()
@@ -39,8 +51,7 @@ public class InventoryController : ApplicationElement
         foreach (Transform child in MainApp.inventoryModel.GridAlignedContent.transform)
             GameObject.Destroy(child.gameObject);
 
-        (MainApp.inventoryModel.containerList,
-         MainApp.inventoryModel.containerComponentList) = GenerateContainers();
+        GenerateContainers();
 
         foreach (ARObjectScript model in MainApp.inventoryModel.ARObjectModels)
         {
@@ -61,10 +72,9 @@ public class InventoryController : ApplicationElement
         AssetBundle.UnloadAllAssetBundles(true);
         GC.Collect();
         ChangeOrder(SortByBucket);
-        initiated = true;
     }
 
-    private (GameObject[], InventoryContainerComponent[]) GenerateContainers()
+    private void GenerateContainers()
     {
         int containerSize = MainApp.inventoryModel.ARObjectBuckets.Count;
         containerSize = MainApp.inventoryModel.ARObjectAreas.Count < containerSize ? containerSize : MainApp.inventoryModel.ARObjectAreas.Count;
@@ -81,7 +91,20 @@ public class InventoryController : ApplicationElement
             containerList[i].SetActive(false);
             componentList[i] = containerList[i].GetComponent<InventoryContainerComponent>();
         }
-        return (containerList, componentList);
+        MainApp.inventoryModel.containerList = containerList.ToList();
+        MainApp.inventoryModel.containerComponentList = componentList.ToList();
+    }
+
+    private void NewConteiner()
+    {
+        GameObject instance = Instantiate(MainApp.inventoryModel.inventoryContainer,
+            Vector3.zero,
+            Quaternion.identity,
+            MainApp.inventoryModel.VerticalAlignedContent);
+        instance.SetActive(false);
+        InventoryContainerComponent instanceComponent = instance.GetComponent<InventoryContainerComponent>();
+        MainApp.inventoryModel.containerList.Add(instance);
+        MainApp.inventoryModel.containerComponentList.Add(instanceComponent);
     }
 
     private void ChangeOrder(byte mode, bool reverse = false)
@@ -213,5 +236,36 @@ public class InventoryController : ApplicationElement
                 OnOrderChange(CurrentState);
             }
         }
+    }
+
+    public void AddObject(string file)
+    {
+        int containerSize = MainApp.inventoryModel.containerList.Count;
+        AssetBundle bundle = AssetBundle.LoadFromFile(file);
+        ARObjectScript model = MainApp.inventoryModel.ValidateBundle(bundle, Path.GetDirectoryName(file), file);
+        GameObject itemInstance = Instantiate(MainApp.inventoryModel.inventoryItem,
+                Vector3.zero,
+                Quaternion.identity,
+                MainApp.inventoryModel.containerList[0].transform);
+        InventoryItemController itemController = itemInstance.GetComponent<InventoryItemController>();
+        if (itemController)
+        {
+            itemController.Initialize(model);
+            bucketList.Add(new ItemBucket(itemInstance, model));
+            int newContainerSize = MainApp.inventoryModel.ARObjectBuckets.Count;
+            newContainerSize = MainApp.inventoryModel.ARObjectAreas.Count < containerSize ? containerSize : MainApp.inventoryModel.ARObjectAreas.Count;
+            if (containerSize != newContainerSize)
+            {
+                UnityEngine.Debug.Log("NewConteiner");
+                NewConteiner();
+                itemInstance.transform.SetParent
+                (
+                    MainApp.inventoryModel.containerList[MainApp.inventoryModel.containerList.Count - 1].transform
+                );
+            }
+            OnOrderChange(CurrentState);
+        }
+        else
+            Destroy(itemInstance);
     }
 }
