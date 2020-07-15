@@ -15,6 +15,7 @@ public class MainApplication : MonoBehaviour
     public ToolboxModel toolboxModel;
     public ToolboxView toolBoxView;
     public SlicerModel slicerModel;
+    public ToastNotificationComponent notificationComponent;
 
     void Start()
     {

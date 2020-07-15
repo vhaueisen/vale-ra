@@ -9,8 +9,6 @@ using System.Text;
 using UnityEngine;
 using System;
 using UnityEngine.UI;
-using System.Collections;
-using System.Diagnostics;
 
 public class InventoryEventArgs : EventArgs
 {
@@ -23,33 +21,7 @@ public class InventoryEventArgs : EventArgs
 
 public class InventoryModel : ApplicationElement
 {
-    private static string bundleFolder = @"Bundles";
-    public bool DirtyInventory
-    {
-        set
-        {
-            m_dirtyInventory = true;
-            StartCoroutine(CleanInventory());
-        }
-    }
-
-    private IEnumerator CleanInventory()
-    {
-        yield return null;
-        AssetBundle.UnloadAllAssetBundles(true);
-        yield return null;
-        bundlePath = Application.persistentDataPath;
-        ARObjectModels = new List<ARObjectScript>();
-        ARObjectNames = new List<string>();
-        ARObjectAreas = new List<string>();
-        ARObjectBuckets = new List<string>();
-        ARObjectThumbnails = new List<Sprite>();
-        yield return null;
-        LocateBundle();
-        yield return null;
-        FindObjectOfType<InventoryController>().Reload();
-        m_dirtyInventory = false;
-    }
+    public static string bundleFolder = "Bundles";
     private bool m_dirtyInventory;
     private static string bundlePath;
     public GameObject inventoryItem;
@@ -67,6 +39,8 @@ public class InventoryModel : ApplicationElement
     public List<Sprite> ARObjectThumbnails = new List<Sprite>();
     public event EventHandler<InventoryEventArgs> InventoryStateMachine;
     public GameObject ProjectionPrefab;
+    public RectTransform loadingPanel;
+
 
     protected virtual void OnStateChange(GameObject prefab)
     {
@@ -81,19 +55,8 @@ public class InventoryModel : ApplicationElement
     }
     void Awake()
     {
-        Stopwatch stopWatch = new Stopwatch();
-        stopWatch.Start();
         bundlePath = Application.persistentDataPath;
         LocateBundle();
-        stopWatch.Stop();
-        // Get the elapsed time as a TimeSpan value.
-        TimeSpan ts = stopWatch.Elapsed;
-
-        // Format and display the TimeSpan value.
-        string elapsedTime = String.Format("Model: {0:00}.{1:00}",
-            ts.Seconds,
-            ts.Milliseconds / 10);
-        UnityEngine.Debug.Log("RunTime " + elapsedTime);
     }
 
     private void LocateBundle()

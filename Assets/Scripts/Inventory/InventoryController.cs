@@ -26,20 +26,10 @@ public class InventoryController : ApplicationElement
     private readonly byte GridLayout = 0;
     private readonly byte VerticalLayout = 1;
     private int CurrentState = 0;
+
     private void Start()
     {
-        Stopwatch stopWatch = new Stopwatch();
-        stopWatch.Start();
         Reload();
-        stopWatch.Stop();
-        // Get the elapsed time as a TimeSpan value.
-        TimeSpan ts = stopWatch.Elapsed;
-
-        // Format and display the TimeSpan value.
-        string elapsedTime = String.Format("Controller: {0:00}.{1:00}",
-            ts.Seconds,
-            ts.Milliseconds / 10);
-        UnityEngine.Debug.Log("RunTime " + elapsedTime);
     }
 
     public void Reload()
@@ -240,6 +230,13 @@ public class InventoryController : ApplicationElement
 
     public void AddObject(string file)
     {
+        bool skip = false;
+        if (MainApp.inventoryModel.containerList == null || MainApp.inventoryModel.containerList.Count == 0)
+        {
+            NewConteiner();
+            skip = true;
+        }
+
         int containerSize = MainApp.inventoryModel.containerList.Count;
         AssetBundle bundle = AssetBundle.LoadFromFile(file);
         ARObjectScript model = MainApp.inventoryModel.ValidateBundle(bundle, Path.GetDirectoryName(file), file);
@@ -254,9 +251,8 @@ public class InventoryController : ApplicationElement
             bucketList.Add(new ItemBucket(itemInstance, model));
             int newContainerSize = MainApp.inventoryModel.ARObjectBuckets.Count;
             newContainerSize = MainApp.inventoryModel.ARObjectAreas.Count < containerSize ? containerSize : MainApp.inventoryModel.ARObjectAreas.Count;
-            if (containerSize != newContainerSize)
+            if (containerSize != newContainerSize && !skip)
             {
-                UnityEngine.Debug.Log("NewConteiner");
                 NewConteiner();
                 itemInstance.transform.SetParent
                 (
@@ -267,5 +263,18 @@ public class InventoryController : ApplicationElement
         }
         else
             Destroy(itemInstance);
+    }
+
+    public void ShowLoading()
+    {
+        MainApp.inventoryModel.loadingPanel.gameObject.SetActive(true);
+        MainApp.inventoryModel.loadingPanel.LeanAlpha(0.5f, 0.5f);
+    }
+
+    public void HideLoading()
+    {
+        MainApp.inventoryModel.loadingPanel.LeanAlpha(0.0f, 0.5f).setOnComplete(
+            () => MainApp.inventoryModel.loadingPanel.gameObject.SetActive(false)
+        );
     }
 }

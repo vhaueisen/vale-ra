@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class InventoryContainerComponent : MonoBehaviour
 {
     private bool m_state = true;
+
     private bool state
     {
         get

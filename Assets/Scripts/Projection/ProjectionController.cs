@@ -18,7 +18,7 @@ public class ProjectionController : ProjectionManipulator
 
     private IEnumerator loadAsync()
     {
-        yield return new WaitForEndOfFrame();
+        yield return null;
         string BundlePath;
         string BundleAddress;
         string BundleId;
@@ -26,26 +26,32 @@ public class ProjectionController : ProjectionManipulator
         BundleAddress = MainApp.coreDataModel.Inventory.Core.Addr;
         BundleId = MainApp.coreDataModel.Inventory.Core.Id;
 
-        yield return new WaitForEndOfFrame();
+        yield return null;
         AssetBundle.UnloadAllAssetBundles(true);
-        AssetBundle bundle = AssetBundle.LoadFromFile(BundlePath);
-        GameObject asset = bundle.LoadAsset(BundleAddress) as GameObject;
-        ARObejctModel loadModel = asset.GetComponent<ARObejctModel>();
-        if (loadModel.ARImage && FindObjectOfType<ProjectionModel>().ARMode)
+        try
         {
-            try
+            if (BundlePath != null && File.Exists(BundlePath))
             {
+                AssetBundle bundle = AssetBundle.LoadFromFile(BundlePath);
+                GameObject asset = bundle.LoadAsset(BundleAddress) as GameObject;
+                ARObejctModel loadModel = asset.GetComponent<ARObejctModel>();
+                if (loadModel.ARImage && FindObjectOfType<ProjectionModel>().ARMode)
+                {
 
-                FindObjectOfType<ARTrackedImageManager>().referenceLibrary = loadModel.referenceImageLibrary;
-                FindObjectOfType<ARTrackedImageManager>().trackedImagePrefab = loadModel.ARPrefab;
-                FindObjectOfType<ARTrackedImageManager>().enabled = true;
-            }
-            catch
-            {
+                    FindObjectOfType<ARTrackedImageManager>().referenceLibrary = loadModel.referenceImageLibrary;
+                    FindObjectOfType<ARTrackedImageManager>().trackedImagePrefab = loadModel.ARPrefab;
+                    FindObjectOfType<ARTrackedImageManager>().enabled = true;
+
+                }
+                else
+                    MainApp.inventoryModel.ChangeProjection(loadModel);
+                MainApp.toolBoxView.ChangeObject(loadModel);
             }
         }
-        else
-            MainApp.inventoryModel.ChangeProjection(loadModel);
+        catch
+        {
+
+        }
         HomeProjection();
         yield break;
     }
@@ -92,10 +98,11 @@ public class ProjectionController : ProjectionManipulator
                 }
                 else
                 {
-                    projectionModel.CurrentInstance = InstantiateProjection(
-                        raycast, MainApp.inventoryModel.ProjectionPrefab,
-                        projectionModel.RotateComponent,
-                        projectionModel.ModelContainer);
+                    if (!(MainApp.inventoryModel.CurrentModel.ARImage && SceneLoaderModel.CurrentScene.sceneIndex == SceneLoaderModel.ARScene.sceneIndex))
+                        projectionModel.CurrentInstance = InstantiateProjection(
+                            raycast, MainApp.inventoryModel.ProjectionPrefab,
+                            projectionModel.RotateComponent,
+                            projectionModel.ModelContainer);
                 }
             }
             else if (currentState == TouchModel.Elevating && projectionModel.ARMode)

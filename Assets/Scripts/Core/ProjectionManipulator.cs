@@ -136,7 +136,7 @@ public class ProjectionManipulator : ApplicationElement
         }
         else
             target.localScale = new Vector3(snapedScale, snapedScale, snapedScale);
-        FindObjectOfType<ToastNotificationComponent>().Notify(string.Format("Escala: {0}%", Mathf.RoundToInt(snapedScale * 100)));
+        MainApp.notificationComponent.Notify(string.Format("Escala: {0}%", Mathf.RoundToInt(snapedScale * 100)));
     }
 
     private float Snap(float f, float proximity)
@@ -164,6 +164,6 @@ public class ProjectionManipulator : ApplicationElement
             elevationOffset / snapedScale,
             target.transform.localPosition.z);
         target.transform.localPosition = Vector3.Lerp(target.localPosition, targetPos, Time.deltaTime * projectionModel.TranslateSpeed * MainApp.coreDataModel.Settings.Core.TranslateSpeed);
-        FindObjectOfType<ToastNotificationComponent>().Notify(string.Format("Elevacão: {0:0.00}m", elevationOffset));
+        MainApp.notificationComponent.Notify(string.Format("Elevacão: {0:0.00}m", elevationOffset));
     }
 }

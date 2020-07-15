@@ -78,10 +78,8 @@ public class QRBarcodeController : ApplicationElement
         // create a reader with a custom luminance source
         barcodeReader = new BarcodeReader
         {
-            AutoRotate = true,
             Options = new ZXing.Common.DecodingOptions
             {
-                TryHarder = true,
                 PossibleFormats = new List<BarcodeFormat>
                     {
                         BarcodeFormat.QR_CODE

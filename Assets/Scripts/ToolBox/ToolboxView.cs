@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 using System;
+using static ToolboxModel;
 
 public class ToolboxView : ApplicationElement
 {
@@ -16,18 +17,31 @@ public class ToolboxView : ApplicationElement
     {
         toolBoxEvent(this, new ToolBoxEventArgs(toolKey));
     }
+
+    public void ChangeObject(ARObejctModel script)
+    {
+        ChangeTool(model.moveTool);
+        Toolbox tools = new Toolbox(script.toolbox);
+        Transform[] btns = new Transform[]
+        {
+            model.sliceBtn.transform,
+            model.hierarchyBtn.transform,
+            model.animationBtn.transform
+        };
+
+        for (int i = 0; i < btns.Length; i++)
+            if (tools.btnStates[i])
+                btns[i].SetParent(model.containerTransform);
+            else
+                btns[i].SetParent(model.hiddenTools);
+    }
+
     private void Start()
     {
         model = MainApp.toolboxModel;
         containerBackground = model.containerTransform.GetComponent<Image>();
         currentTool = model.currentToolTransform.GetChild(0).transform;
         model.containerTransform = model.container.GetComponent<RectTransform>();
-        RefreshChildren();
-    }
-
-    private void RefreshChildren()
-    {
-        model.openSize = model.openSize * model.containerBtnList.Length;
     }
 
     public void ToggleView(RectTransform toolToChange)

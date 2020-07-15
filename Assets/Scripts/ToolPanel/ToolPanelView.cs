@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using static ToolPanelModel;
 
 public class ToolPanelView : ApplicationElement
 {

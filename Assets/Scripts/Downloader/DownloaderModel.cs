@@ -14,9 +14,18 @@ public class DownloaderModel : ApplicationElement
 
     public Slider progressBar;
     public Text objectName;
+    public Text objectArea;
     public Text progressText;
+    public Text downloadingPanelObjName;
     public Text objectDescription;
     public RawImage objectThumbnail;
     public GameObject downloadPanel;
     public GameObject downloadingPanel;
+    public RectTransform downloadPanelTransform;
+    public RectTransform downloadingPanelTransform;
+    public float restPos;
+    private void Awake()
+    {
+        restPos = downloadPanelTransform.position.y;
+    }
 }

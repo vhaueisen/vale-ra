@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 using static DownloaderModel;
@@ -111,29 +110,45 @@ public class DownloaderController : ApplicationElement
         EnterDownloadDialog();
         QRApp.downloaderModel.objectThumbnail.texture = thumbnail;
         QRApp.downloaderModel.objectName.text = response.Name;
+        QRApp.downloaderModel.objectArea.text = response.Area;
         QRApp.downloaderModel.objectDescription.text = response.Description;
     }
 
     private void EnterDownloadDialog()
     {
         QRApp.downloaderModel.downloadPanel.SetActive(true);
+        QRApp.downloaderModel.downloadPanelTransform.LeanMoveY(0.0f, 0.3f);
         QRApp.downloaderModel.downloadingPanel.SetActive(false);
     }
 
     public void ExitDownloadDialog()
     {
-        QRApp.downloaderModel.downloadPanel.SetActive(false);
-        QRApp.downloaderModel.downloadingPanel.SetActive(false);
+        QRApp.downloaderModel.downloadPanelTransform.LeanMoveY(
+            QRApp.downloaderModel.restPos, 0.3f).setOnComplete(
+            () =>
+            {
+                QRApp.downloaderModel.downloadPanel.SetActive(false);
+                QRApp.downloaderModel.downloadingPanel.SetActive(false);
+            }
+        );
         QRApp.qrController.decodeEnabled = true;
     }
 
     public void EnterDownloadingDialog()
     {
+        bool update = Directory.Exists(
+            Path.Combine(Application.persistentDataPath, "Bundles", m_downloadRequestGUID)
+        );
         QRApp.downloaderModel.downloadingPanel.SetActive(true);
-        StartCoroutine(DownloadAssetBundle());
+        QRApp.downloaderModel.downloadingPanelTransform.LeanMoveY(0.0f, 0.3f);
+        QRApp.downloaderModel.downloadingPanelObjName.text = update ? string.Format(
+            "Atualizando: \"{0}\"", QRApp.downloaderModel.objectName.text) :
+            string.Format(
+            "Baixando: \"{0}\"", QRApp.downloaderModel.objectName.text);
+        StartCoroutine(DownloadAssetBundle(update));
     }
 
-    private IEnumerator DownloadAssetBundle()
+    private IEnumerator DownloadAssetBundle(bool update)
     {
         List<string> downloadedEntries = new List<string>();
         using (UnityWebRequest bundleRequest = UnityWebRequest.Get(ModelUrl))
@@ -152,15 +167,25 @@ public class DownloaderController : ApplicationElement
                 yield break;
             }
 
+            string path = Path.Combine(Application.persistentDataPath, "Bundles", m_downloadRequestGUID);
+            if (Directory.Exists(path))
+                Directory.Delete(path, true);
 
             using (Stream data = new MemoryStream(bundleRequest.downloadHandler.data))
             {
                 ZipArchive archive = new ZipArchive(data);
                 foreach (ZipArchiveEntry entry in archive.Entries)
                 {
-                    string path = Path.Combine(Application.persistentDataPath, "Bundles", m_downloadRequestGUID);
                     if (!Directory.Exists(path))
                         Directory.CreateDirectory(path);
+                    else
+                    {
+                        string destination = Path.GetFullPath(Path.Combine(path, entry.FullName));
+                        if (!destination.Contains(".manifest"))
+                        {
+                            downloadedEntries.Add(destination);
+                        }
+                    }
                     string destinationPath = Path.GetFullPath(Path.Combine(path, entry.FullName));
                     using (FileStream outputFileStream = new FileStream(destinationPath, FileMode.Create))
                         entry.Open().CopyTo(outputFileStream);
@@ -170,14 +195,42 @@ public class DownloaderController : ApplicationElement
                     }
                 }
 
-                foreach (string path in downloadedEntries)
-                {
-                    MainApp.inventoryController.AddObject(path);
-                }
+                if (!update)
+                    foreach (string p in downloadedEntries)
+                        try
+                        {
+                            MainApp.inventoryController.AddObject(p);
+
+                        }
+                        catch
+                        {
+                            continue;
+                        }
+
             }
         }
-
-        QRApp.downloaderModel.downloadingPanel.SetActive(false);
+        QRApp.downloaderModel.downloadingPanelTransform.LeanMoveY(QRApp.downloaderModel.restPos, 0.3f).setOnComplete(
+            () =>
+            {
+                QRApp.downloaderModel.downloadingPanel.SetActive(false);
+            }
+        );
+        ExitDownloadDialog();
+        MainApp.notificationComponent.Notify(string.Format("\"{0}\" baixado com sucesso!", QRApp.downloaderModel.objectName.text));
         yield break;
+    }
+
+    public void CancelOngoingDownload()
+    {
+        StopAllCoroutines();
+        string path = Path.Combine(Application.persistentDataPath, "Bundles", m_downloadRequestGUID);
+        if (Directory.Exists(path))
+            Directory.Delete(path, true);
+        QRApp.downloaderModel.downloadingPanelTransform.LeanMoveY(QRApp.downloaderModel.restPos, 0.3f).setOnComplete(
+            () =>
+            {
+                QRApp.downloaderModel.downloadingPanel.SetActive(false);
+            }
+        );
     }
 }

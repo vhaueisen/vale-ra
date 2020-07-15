@@ -1,78 +1,74 @@
-﻿using System.Collections;
+﻿using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WindowComponent : MonoBehaviour
 {
-    // Start is called before the first frame update
     public RectTransform windowRect;
     public GameObject content;
-    public float animationSpeed = 1.0f;
-    private Vector3 defaultScale = Vector3.one;
-    private Vector3 defaultPosition;
-    public Transform appearFrom;
-    private readonly bool playAnimation = false;
-    public bool PlayAnimation
+    private const float animationSpeed = 0.15f;
+    public bool animated = true;
+    private float m_initialPos;
+    public Graphic[] graphics;
+    public float[] alphas;
+
+    private void Awake()
     {
-        get; set;
+        m_initialPos = windowRect.localPosition.y;
+        if (animated)
+        {
+            windowRect.LeanMoveLocalY(m_initialPos - 250.0f, 0.0f);
+            graphics = GetComponentsInChildren<Graphic>(true);
+            alphas = graphics.Select(o => o.color.a).ToArray();
+        }
     }
+
     private void Start()
     {
-        if (playAnimation)
-            Invoke("loadDeafult", 1.0f);
-    }
-
-    private void loadDeafult()
-    {
-        defaultPosition = windowRect.position;
-        defaultScale = windowRect.localScale;
-    }
-
-    private float Interpolate(int framecounter)
-    {
-        return (float)(20.0f * framecounter * animationSpeed * Time.deltaTime);
-    }
-
-    private IEnumerator EnterAnimation()
-    {
-        content.SetActive(true);
-        int framecounter = 0;
-        while (playAnimation)
-        {
-            float t = Interpolate(framecounter);
-            windowRect.localScale = Vector3.Lerp(Vector3.zero, defaultScale, t);
-            windowRect.position = Vector3.Lerp(appearFrom.position, defaultPosition, t);
-            framecounter++;
-            if (t >= 1.0f)
-                break;
-            yield return new WaitForEndOfFrame();
-        }
-        yield break;
-    }
-
-    private IEnumerator ExitAnimation()
-    {
-        int framecounter = 0;
-        while (playAnimation)
-        {
-            float t = Interpolate(framecounter);
-            windowRect.localScale = Vector3.Lerp(windowRect.localScale, Vector3.zero, t);
-            windowRect.position = Vector3.Lerp(windowRect.position, appearFrom.position, t);
-            framecounter++;
-            if (t >= 1.0f)
-                break;
-            yield return new WaitForEndOfFrame();
-        }
-        content.SetActive(false);
-        yield break;
+        //     for (int i = 0; i < graphics.Length; i++)
+        //         LeanTween.alpha(graphics[i].rectTransform, 0.0f, 0.0f)
+        //             .setRecursive(false)
+        //                 .setOnComplete(
+        //                     () => content.SetActive(false));
     }
 
     public void Enter()
     {
         content.SetActive(true);
+        EnterTween();
     }
 
     public void Exit()
     {
-        content.SetActive(false);
+        ExitTween();
+    }
+
+    private void EnterTween()
+    {
+        if (!animated)
+            return;
+        windowRect.LeanMoveLocalY(m_initialPos, animationSpeed);
+        TweenAlpha(true);
+    }
+
+    private void TweenAlpha(bool reverse)
+    {
+        for (int i = 0; i < graphics.Length; i++)
+            LeanTween.alpha(graphics[i].rectTransform, reverse ? alphas[i] : 0.0f, animationSpeed).setRecursive(false);
+    }
+
+    private void ExitTween()
+    {
+        if (!animated)
+        {
+            content.SetActive(false);
+            return;
+        }
+        else
+        {
+            windowRect.LeanMoveLocalY(m_initialPos - 250.0f, animationSpeed).setOnComplete(
+                () => content.SetActive(false));
+            TweenAlpha(false);
+        }
     }
 }

@@ -23,6 +23,7 @@ public class ARObejctModel : ApplicationElement
     public float MaxScaleFactor;
     public float MinScaleFactor;
     public float YOffset;
+    public string toolbox;
     public void Clone(ARObejctModel model)
     {
         Name = model.Name;
@@ -38,5 +39,6 @@ public class ARObejctModel : ApplicationElement
         MaxScaleFactor = model.MaxScaleFactor;
         MinScaleFactor = model.MinScaleFactor;
         YOffset = model.YOffset;
+        toolbox = model.toolbox;
     }
 }

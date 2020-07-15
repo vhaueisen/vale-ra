@@ -33,8 +33,66 @@ public class ToolboxModel : ApplicationElement
     public RectTransform containerTransform;
     public RectTransform currentToolTransform;
     public bool state = false;
-    public float openSize = 150.0f;
+    public float openSize
+    {
+        get
+        {
+            return containerTransform.childCount > 0 ?
+                75.0f + 150.0f * (containerTransform.childCount + 1) : 0.0f;
+        }
+    }
     public const float speed = 7.5f;
     public Image tooboxPanel;
     public Color panelColor;
+    public struct Toolbox
+    {
+        public Toolbox(string toolbox)
+        {
+            slice = false;
+            hierarchy = false;
+            animation = false;
+            btnStates = new bool[] { slice, hierarchy, animation };
+
+            if (toolbox == null || toolbox.Length < 2)
+                return;
+
+            string[] tokens = toolbox.Split(';');
+            foreach (string token in tokens)
+            {
+                try
+                {
+                    string[] tool = token.Split(':');
+                    string name = tool[0];
+                    int value = int.Parse(tool[1]);
+                    switch (name)
+                    {
+                        case "slice":
+                            slice = value > 0;
+                            break;
+                        case "hierarchy":
+                            hierarchy = value > 0;
+                            break;
+                        case "animation":
+                            animation = value > 0;
+                            break;
+                    }
+                }
+                catch
+                {
+                    continue;
+                }
+            }
+
+            btnStates = new bool[] { slice, hierarchy, animation };
+        }
+        public bool slice;
+        public bool hierarchy;
+        public bool animation;
+        public bool[] btnStates;
+    }
+    public GameObject sliceBtn;
+    public GameObject hierarchyBtn;
+    public GameObject animationBtn;
+    public RectTransform moveTool;
+    public Transform hiddenTools;
 }

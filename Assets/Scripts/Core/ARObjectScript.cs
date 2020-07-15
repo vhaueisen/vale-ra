@@ -20,6 +20,7 @@ public class ARObjectScript
     public float MaxScaleFactor;
     public float MinScaleFactor;
     public float YOffset;
+    public string toolbox;
     public void Clone(ARObejctModel model)
     {
         Name = model.Name;

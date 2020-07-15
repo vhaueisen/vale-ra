@@ -41,8 +41,6 @@ public class TouchView : RawTouch
         if (MainApp.touchModel.CurrentState != previousState)
         {
             OnStateChange();
-            // FindObjectOfType<ToastNotificationComponent>().Notify(
-            //MainApp.touchModel.CurrentState.ToString());
         }
         previousState = MainApp.touchModel.CurrentState;
     }
