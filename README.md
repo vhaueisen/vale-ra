@@ -1,20 +1,25 @@
-# Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+## Vale RA
 
-# Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
+App de visualição de modelos 3D em realidade aumentada.
 
-# Build and Test
-TODO: Describe and show how to build your code and run the tests. 
+*Versão Unity recomendada: 2019.3.11f1*
 
-# Contribute
-TODO: Explain how other users and developers can contribute to make your code better. 
+---
 
-If you want to learn more about creating good readme files then refer the following [guidelines](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-a-readme?view=azure-devops). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
+## Disclaimer
+**Atenção**
+
+O projeto utiliza o recurso *Asset Bundles* da unity para adição de Assets durante o runtime. Estes arquivos não constam no repositório. Caso haja necessidade de adquiri-los favor contatar o autor.
+
+---
+
+## Autor
+**Vítor Haueisen Costa Ruas**
+
+*Email:* Vitor.ruas@vale.com  
+*Telefone:* +55 (27) 3333 2356  
+
+Engenharia Sudeste | South East Engineering  
+Vale S.A.  
+Av. Dante Micheline, 5500  
+29090 900 – Vitória, ES - Brasil  

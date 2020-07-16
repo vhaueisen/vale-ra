@@ -1,0 +1,748 @@
+fileFormatVersion: 2
+guid: 55b549b100bae7b4dbb0672e0d056102
+timeCreated: 1524603808
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: anel_de_desgaste_t002
+    100002: aste_freio_1_t01
+    100004: bucha_pino_01_t002
+    100006: bucha_pino_01_t003
+    100008: bucha_pino_01_t004
+    100010: bucha_pino_01_t005
+    100012: bucha_pino_01_t006
+    100014: bucha_pino_01_t007
+    100016: bucha_pino_01_t01
+    100018: buchas_desgaste_01_t002
+    100020: buchas_desgaste_01_t003
+    100022: buchas_desgaste_01_t004
+    100024: buchas_desgaste_01_t005
+    100026: buchas_desgaste_01_t006
+    100028: buchas_desgaste_01_t007
+    100030: buchas_desgaste_01_t01
+    100032: castanha_do_rolete_e_t002
+    100034: castanha_do_rolete_e_t003
+    100036: chapa_seguranca_01_t002
+    100038: chapa_seguranca_01_t003
+    100040: contra_pino_04_t002
+    100042: contra_pino_04_t003
+    100044: contra_pino_04_t004
+    100046: contra_pino_04_t005
+    100048: contra_pino_04_t006
+    100050: contra_pino_04_t007
+    100052: contra_pino_04_t008
+    100054: contra_sapata_e1_t002
+    100056: contra_sapata_e1_t003
+    100058: contra_sapata_e1_t004
+    100060: contra_sapata_e1_t005
+    100062: cunha_01_mola_t003
+    100064: cunha_01_mola_t004
+    100066: cunha_01_mola_t005
+    100068: cunha_01_mola_t01
+    100070: cunha_01_travessa_t01
+    100072: cunha_01_travessa_t02
+    100074: cunha_01_travessa_t03
+    100076: cunha_01_travessa_t04
+    100078: //RootNode
+    100080: molas_externas_d_t002
+    100082: molas_externas_d_t003
+    100084: molas_externas_d_t004
+    100086: molas_externas_d_t005
+    100088: molas_externas_d_t006
+    100090: molas_externas_d_t007
+    100092: molas_externas_d_t008
+    100094: molas_externas_d_t009
+    100096: molas_externas_d_t010
+    100098: molas_externas_d_t011
+    100100: molas_externas_d_t012
+    100102: molas_externas_d_t013
+    100104: molas_externas_d_t014
+    100106: molas_externas_d_t015
+    100108: molas_internas_d_t002
+    100110: molas_internas_d_t003
+    100112: molas_internas_d_t004
+    100114: molas_internas_d_t005
+    100116: molas_internas_d_t006
+    100118: molas_internas_d_t007
+    100120: parafuso_1_t003
+    100122: parafuso_1_t004
+    100124: parafuso_1_t005
+    100126: parafuso_1_t006
+    100128: parafuso_1_t007
+    100130: parafuso_1_t008
+    100132: parafuso_1_t01
+    100134: placas_desgaste_travessa_01_t003
+    100136: placas_desgaste_travessa_01_t004
+    100138: placas_desgaste_travessa_01_t005
+    100140: placas_desgaste_travessa_01_t01
+    100142: placas_desgaste_travessa_01_t02
+    100144: rolete_e01_t003
+    100146: rolete_e01_t004
+    100148: rolete_e01_t1
+    100150: rolete_e01_t2
+    100152: sapata_de_freio_aste_e1_t002
+    100154: sapata_de_freio_aste_e1_t003
+    100156: sapata_de_freio_aste_e1_t004
+    100158: sapata_de_freio_aste_e1_t005
+    100160: sapata_de_freio_e1_t003
+    100162: sapata_de_freio_e1_t004
+    100164: sapata_de_freio_e1_t005
+    100166: sapata_de_freio_e1_t01
+    100168: travessa_t002
+    100170: triangulo_01_t003
+    100172: triangulo_01_t01
+    100174: triangulo_aste_2_t004
+    100176: triangulo_aste_2_t01
+    100178: triangulo_aste_3_t01
+    100180: truque_lateral_01_t01
+    100182: truque_lateral_02_t01
+    400000: anel_de_desgaste_t002
+    400002: aste_freio_1_t01
+    400004: bucha_pino_01_t002
+    400006: bucha_pino_01_t003
+    400008: bucha_pino_01_t004
+    400010: bucha_pino_01_t005
+    400012: bucha_pino_01_t006
+    400014: bucha_pino_01_t007
+    400016: bucha_pino_01_t01
+    400018: buchas_desgaste_01_t002
+    400020: buchas_desgaste_01_t003
+    400022: buchas_desgaste_01_t004
+    400024: buchas_desgaste_01_t005
+    400026: buchas_desgaste_01_t006
+    400028: buchas_desgaste_01_t007
+    400030: buchas_desgaste_01_t01
+    400032: castanha_do_rolete_e_t002
+    400034: castanha_do_rolete_e_t003
+    400036: chapa_seguranca_01_t002
+    400038: chapa_seguranca_01_t003
+    400040: contra_pino_04_t002
+    400042: contra_pino_04_t003
+    400044: contra_pino_04_t004
+    400046: contra_pino_04_t005
+    400048: contra_pino_04_t006
+    400050: contra_pino_04_t007
+    400052: contra_pino_04_t008
+    400054: contra_sapata_e1_t002
+    400056: contra_sapata_e1_t003
+    400058: contra_sapata_e1_t004
+    400060: contra_sapata_e1_t005
+    400062: cunha_01_mola_t003
+    400064: cunha_01_mola_t004
+    400066: cunha_01_mola_t005
+    400068: cunha_01_mola_t01
+    400070: cunha_01_travessa_t01
+    400072: cunha_01_travessa_t02
+    400074: cunha_01_travessa_t03
+    400076: cunha_01_travessa_t04
+    400078: //RootNode
+    400080: molas_externas_d_t002
+    400082: molas_externas_d_t003
+    400084: molas_externas_d_t004
+    400086: molas_externas_d_t005
+    400088: molas_externas_d_t006
+    400090: molas_externas_d_t007
+    400092: molas_externas_d_t008
+    400094: molas_externas_d_t009
+    400096: molas_externas_d_t010
+    400098: molas_externas_d_t011
+    400100: molas_externas_d_t012
+    400102: molas_externas_d_t013
+    400104: molas_externas_d_t014
+    400106: molas_externas_d_t015
+    400108: molas_internas_d_t002
+    400110: molas_internas_d_t003
+    400112: molas_internas_d_t004
+    400114: molas_internas_d_t005
+    400116: molas_internas_d_t006
+    400118: molas_internas_d_t007
+    400120: parafuso_1_t003
+    400122: parafuso_1_t004
+    400124: parafuso_1_t005
+    400126: parafuso_1_t006
+    400128: parafuso_1_t007
+    400130: parafuso_1_t008
+    400132: parafuso_1_t01
+    400134: placas_desgaste_travessa_01_t003
+    400136: placas_desgaste_travessa_01_t004
+    400138: placas_desgaste_travessa_01_t005
+    400140: placas_desgaste_travessa_01_t01
+    400142: placas_desgaste_travessa_01_t02
+    400144: rolete_e01_t003
+    400146: rolete_e01_t004
+    400148: rolete_e01_t1
+    400150: rolete_e01_t2
+    400152: sapata_de_freio_aste_e1_t002
+    400154: sapata_de_freio_aste_e1_t003
+    400156: sapata_de_freio_aste_e1_t004
+    400158: sapata_de_freio_aste_e1_t005
+    400160: sapata_de_freio_e1_t003
+    400162: sapata_de_freio_e1_t004
+    400164: sapata_de_freio_e1_t005
+    400166: sapata_de_freio_e1_t01
+    400168: travessa_t002
+    400170: triangulo_01_t003
+    400172: triangulo_01_t01
+    400174: triangulo_aste_2_t004
+    400176: triangulo_aste_2_t01
+    400178: triangulo_aste_3_t01
+    400180: truque_lateral_01_t01
+    400182: truque_lateral_02_t01
+    2300000: anel_de_desgaste_t002
+    2300002: aste_freio_1_t01
+    2300004: bucha_pino_01_t002
+    2300006: bucha_pino_01_t003
+    2300008: bucha_pino_01_t004
+    2300010: bucha_pino_01_t005
+    2300012: bucha_pino_01_t006
+    2300014: bucha_pino_01_t007
+    2300016: bucha_pino_01_t01
+    2300018: buchas_desgaste_01_t002
+    2300020: buchas_desgaste_01_t003
+    2300022: buchas_desgaste_01_t004
+    2300024: buchas_desgaste_01_t005
+    2300026: buchas_desgaste_01_t006
+    2300028: buchas_desgaste_01_t007
+    2300030: buchas_desgaste_01_t01
+    2300032: castanha_do_rolete_e_t002
+    2300034: castanha_do_rolete_e_t003
+    2300036: chapa_seguranca_01_t002
+    2300038: chapa_seguranca_01_t003
+    2300040: contra_pino_04_t002
+    2300042: contra_pino_04_t003
+    2300044: contra_pino_04_t004
+    2300046: contra_pino_04_t005
+    2300048: contra_pino_04_t006
+    2300050: contra_pino_04_t007
+    2300052: contra_pino_04_t008
+    2300054: contra_sapata_e1_t002
+    2300056: contra_sapata_e1_t003
+    2300058: contra_sapata_e1_t004
+    2300060: contra_sapata_e1_t005
+    2300062: cunha_01_mola_t003
+    2300064: cunha_01_mola_t004
+    2300066: cunha_01_mola_t005
+    2300068: cunha_01_mola_t01
+    2300070: cunha_01_travessa_t01
+    2300072: cunha_01_travessa_t02
+    2300074: cunha_01_travessa_t03
+    2300076: cunha_01_travessa_t04
+    2300078: molas_externas_d_t002
+    2300080: molas_externas_d_t003
+    2300082: molas_externas_d_t004
+    2300084: molas_externas_d_t005
+    2300086: molas_externas_d_t006
+    2300088: molas_externas_d_t007
+    2300090: molas_externas_d_t008
+    2300092: molas_externas_d_t009
+    2300094: molas_externas_d_t010
+    2300096: molas_externas_d_t011
+    2300098: molas_externas_d_t012
+    2300100: molas_externas_d_t013
+    2300102: molas_externas_d_t014
+    2300104: molas_externas_d_t015
+    2300106: molas_internas_d_t002
+    2300108: molas_internas_d_t003
+    2300110: molas_internas_d_t004
+    2300112: molas_internas_d_t005
+    2300114: molas_internas_d_t006
+    2300116: molas_internas_d_t007
+    2300118: parafuso_1_t003
+    2300120: parafuso_1_t004
+    2300122: parafuso_1_t005
+    2300124: parafuso_1_t006
+    2300126: parafuso_1_t007
+    2300128: parafuso_1_t008
+    2300130: parafuso_1_t01
+    2300132: placas_desgaste_travessa_01_t003
+    2300134: placas_desgaste_travessa_01_t004
+    2300136: placas_desgaste_travessa_01_t005
+    2300138: placas_desgaste_travessa_01_t01
+    2300140: placas_desgaste_travessa_01_t02
+    2300142: rolete_e01_t003
+    2300144: rolete_e01_t004
+    2300146: rolete_e01_t1
+    2300148: rolete_e01_t2
+    2300150: sapata_de_freio_aste_e1_t002
+    2300152: sapata_de_freio_aste_e1_t003
+    2300154: sapata_de_freio_aste_e1_t004
+    2300156: sapata_de_freio_aste_e1_t005
+    2300158: sapata_de_freio_e1_t003
+    2300160: sapata_de_freio_e1_t004
+    2300162: sapata_de_freio_e1_t005
+    2300164: sapata_de_freio_e1_t01
+    2300166: travessa_t002
+    2300168: triangulo_01_t003
+    2300170: triangulo_01_t01
+    2300172: triangulo_aste_2_t004
+    2300174: triangulo_aste_2_t01
+    2300176: triangulo_aste_3_t01
+    2300178: truque_lateral_01_t01
+    2300180: truque_lateral_02_t01
+    3300000: anel_de_desgaste_t002
+    3300002: aste_freio_1_t01
+    3300004: bucha_pino_01_t002
+    3300006: bucha_pino_01_t003
+    3300008: bucha_pino_01_t004
+    3300010: bucha_pino_01_t005
+    3300012: bucha_pino_01_t006
+    3300014: bucha_pino_01_t007
+    3300016: bucha_pino_01_t01
+    3300018: buchas_desgaste_01_t002
+    3300020: buchas_desgaste_01_t003
+    3300022: buchas_desgaste_01_t004
+    3300024: buchas_desgaste_01_t005
+    3300026: buchas_desgaste_01_t006
+    3300028: buchas_desgaste_01_t007
+    3300030: buchas_desgaste_01_t01
+    3300032: castanha_do_rolete_e_t002
+    3300034: castanha_do_rolete_e_t003
+    3300036: chapa_seguranca_01_t002
+    3300038: chapa_seguranca_01_t003
+    3300040: contra_pino_04_t002
+    3300042: contra_pino_04_t003
+    3300044: contra_pino_04_t004
+    3300046: contra_pino_04_t005
+    3300048: contra_pino_04_t006
+    3300050: contra_pino_04_t007
+    3300052: contra_pino_04_t008
+    3300054: contra_sapata_e1_t002
+    3300056: contra_sapata_e1_t003
+    3300058: contra_sapata_e1_t004
+    3300060: contra_sapata_e1_t005
+    3300062: cunha_01_mola_t003
+    3300064: cunha_01_mola_t004
+    3300066: cunha_01_mola_t005
+    3300068: cunha_01_mola_t01
+    3300070: cunha_01_travessa_t01
+    3300072: cunha_01_travessa_t02
+    3300074: cunha_01_travessa_t03
+    3300076: cunha_01_travessa_t04
+    3300078: molas_externas_d_t002
+    3300080: molas_externas_d_t003
+    3300082: molas_externas_d_t004
+    3300084: molas_externas_d_t005
+    3300086: molas_externas_d_t006
+    3300088: molas_externas_d_t007
+    3300090: molas_externas_d_t008
+    3300092: molas_externas_d_t009
+    3300094: molas_externas_d_t010
+    3300096: molas_externas_d_t011
+    3300098: molas_externas_d_t012
+    3300100: molas_externas_d_t013
+    3300102: molas_externas_d_t014
+    3300104: molas_externas_d_t015
+    3300106: molas_internas_d_t002
+    3300108: molas_internas_d_t003
+    3300110: molas_internas_d_t004
+    3300112: molas_internas_d_t005
+    3300114: molas_internas_d_t006
+    3300116: molas_internas_d_t007
+    3300118: parafuso_1_t003
+    3300120: parafuso_1_t004
+    3300122: parafuso_1_t005
+    3300124: parafuso_1_t006
+    3300126: parafuso_1_t007
+    3300128: parafuso_1_t008
+    3300130: parafuso_1_t01
+    3300132: placas_desgaste_travessa_01_t003
+    3300134: placas_desgaste_travessa_01_t004
+    3300136: placas_desgaste_travessa_01_t005
+    3300138: placas_desgaste_travessa_01_t01
+    3300140: placas_desgaste_travessa_01_t02
+    3300142: rolete_e01_t003
+    3300144: rolete_e01_t004
+    3300146: rolete_e01_t1
+    3300148: rolete_e01_t2
+    3300150: sapata_de_freio_aste_e1_t002
+    3300152: sapata_de_freio_aste_e1_t003
+    3300154: sapata_de_freio_aste_e1_t004
+    3300156: sapata_de_freio_aste_e1_t005
+    3300158: sapata_de_freio_e1_t003
+    3300160: sapata_de_freio_e1_t004
+    3300162: sapata_de_freio_e1_t005
+    3300164: sapata_de_freio_e1_t01
+    3300166: travessa_t002
+    3300168: triangulo_01_t003
+    3300170: triangulo_01_t01
+    3300172: triangulo_aste_2_t004
+    3300174: triangulo_aste_2_t01
+    3300176: triangulo_aste_3_t01
+    3300178: truque_lateral_01_t01
+    3300180: truque_lateral_02_t01
+    4300000: travessa_t002
+    4300002: sapata_de_freio_aste_e1_t003
+    4300004: contra_sapata_e1_t003
+    4300006: sapata_de_freio_e1_t005
+    4300008: contra_sapata_e1_t002
+    4300010: sapata_de_freio_aste_e1_t002
+    4300012: sapata_de_freio_e1_t01
+    4300014: sapata_de_freio_aste_e1_t005
+    4300016: contra_sapata_e1_t005
+    4300018: sapata_de_freio_e1_t003
+    4300020: sapata_de_freio_aste_e1_t004
+    4300022: contra_sapata_e1_t004
+    4300024: sapata_de_freio_e1_t004
+    4300026: aste_freio_1_t01
+    4300028: triangulo_aste_2_t004
+    4300030: triangulo_aste_3_t01
+    4300032: parafuso_1_t005
+    4300034: triangulo_aste_2_t01
+    4300036: chapa_seguranca_01_t002
+    4300038: parafuso_1_t01
+    4300040: bucha_pino_01_t01
+    4300042: contra_pino_04_t005
+    4300044: parafuso_1_t008
+    4300046: chapa_seguranca_01_t003
+    4300048: bucha_pino_01_t007
+    4300050: contra_pino_04_t008
+    4300052: cunha_01_travessa_t01
+    4300054: cunha_01_mola_t003
+    4300056: cunha_01_travessa_t02
+    4300058: cunha_01_mola_t01
+    4300060: molas_internas_d_t002
+    4300062: molas_externas_d_t003
+    4300064: molas_externas_d_t002
+    4300066: molas_externas_d_t004
+    4300068: molas_internas_d_t003
+    4300070: molas_externas_d_t005
+    4300072: molas_externas_d_t006
+    4300074: molas_externas_d_t007
+    4300076: molas_internas_d_t004
+    4300078: molas_externas_d_t008
+    4300080: cunha_01_mola_t004
+    4300082: cunha_01_travessa_t03
+    4300084: cunha_01_mola_t005
+    4300086: cunha_01_travessa_t04
+    4300088: molas_externas_d_t012
+    4300090: molas_internas_d_t006
+    4300092: molas_externas_d_t013
+    4300094: molas_externas_d_t014
+    4300096: molas_internas_d_t005
+    4300098: molas_externas_d_t010
+    4300100: molas_externas_d_t015
+    4300102: molas_internas_d_t007
+    4300104: molas_externas_d_t009
+    4300106: molas_externas_d_t011
+    4300108: castanha_do_rolete_e_t003
+    4300110: rolete_e01_t003
+    4300112: rolete_e01_t004
+    4300114: rolete_e01_t1
+    4300116: castanha_do_rolete_e_t002
+    4300118: rolete_e01_t2
+    4300120: truque_lateral_01_t01
+    4300122: truque_lateral_02_t01
+    4300124: anel_de_desgaste_t002
+    4300126: bucha_pino_01_t002
+    4300128: bucha_pino_01_t003
+    4300130: bucha_pino_01_t004
+    4300132: bucha_pino_01_t005
+    4300134: bucha_pino_01_t006
+    4300136: buchas_desgaste_01_t01
+    4300138: buchas_desgaste_01_t002
+    4300140: buchas_desgaste_01_t003
+    4300142: buchas_desgaste_01_t004
+    4300144: buchas_desgaste_01_t005
+    4300146: buchas_desgaste_01_t006
+    4300148: buchas_desgaste_01_t007
+    4300150: contra_pino_04_t002
+    4300152: contra_pino_04_t003
+    4300154: contra_pino_04_t004
+    4300156: contra_pino_04_t006
+    4300158: contra_pino_04_t007
+    4300160: parafuso_1_t003
+    4300162: parafuso_1_t004
+    4300164: parafuso_1_t006
+    4300166: parafuso_1_t007
+    4300168: placas_desgaste_travessa_01_t01
+    4300170: placas_desgaste_travessa_01_t02
+    4300172: placas_desgaste_travessa_01_t003
+    4300174: placas_desgaste_travessa_01_t004
+    4300176: placas_desgaste_travessa_01_t005
+    4300178: triangulo_01_t01
+    4300180: triangulo_01_t003
+    7400000: Fig32BarraDeCompressao
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Fig32BarraDeCompressao
+      takeName: Take 001
+      firstFrame: 0
+      lastFrame: 160
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: anel_de_desgaste_t002
+        weight: 1
+      - path: aste_freio_1_t01
+        weight: 1
+      - path: bucha_pino_01_t01
+        weight: 1
+      - path: bucha_pino_01_t002
+        weight: 1
+      - path: bucha_pino_01_t003
+        weight: 1
+      - path: bucha_pino_01_t004
+        weight: 1
+      - path: bucha_pino_01_t005
+        weight: 1
+      - path: bucha_pino_01_t006
+        weight: 1
+      - path: bucha_pino_01_t007
+        weight: 1
+      - path: buchas_desgaste_01_t01
+        weight: 1
+      - path: buchas_desgaste_01_t002
+        weight: 1
+      - path: buchas_desgaste_01_t003
+        weight: 1
+      - path: buchas_desgaste_01_t004
+        weight: 1
+      - path: buchas_desgaste_01_t005
+        weight: 1
+      - path: buchas_desgaste_01_t006
+        weight: 1
+      - path: buchas_desgaste_01_t007
+        weight: 1
+      - path: castanha_do_rolete_e_t002
+        weight: 1
+      - path: castanha_do_rolete_e_t003
+        weight: 1
+      - path: chapa_seguranca_01_t002
+        weight: 1
+      - path: chapa_seguranca_01_t003
+        weight: 1
+      - path: contra_pino_04_t002
+        weight: 1
+      - path: contra_pino_04_t003
+        weight: 1
+      - path: contra_pino_04_t004
+        weight: 1
+      - path: contra_pino_04_t005
+        weight: 1
+      - path: contra_pino_04_t006
+        weight: 1
+      - path: contra_pino_04_t007
+        weight: 1
+      - path: contra_pino_04_t008
+        weight: 1
+      - path: contra_sapata_e1_t002
+        weight: 1
+      - path: contra_sapata_e1_t003
+        weight: 1
+      - path: contra_sapata_e1_t004
+        weight: 1
+      - path: contra_sapata_e1_t005
+        weight: 1
+      - path: cunha_01_mola_t01
+        weight: 1
+      - path: cunha_01_mola_t003
+        weight: 1
+      - path: cunha_01_mola_t004
+        weight: 1
+      - path: cunha_01_mola_t005
+        weight: 1
+      - path: cunha_01_travessa_t01
+        weight: 1
+      - path: cunha_01_travessa_t02
+        weight: 1
+      - path: cunha_01_travessa_t03
+        weight: 1
+      - path: cunha_01_travessa_t04
+        weight: 1
+      - path: molas_externas_d_t002
+        weight: 1
+      - path: molas_externas_d_t003
+        weight: 1
+      - path: molas_externas_d_t004
+        weight: 1
+      - path: molas_externas_d_t005
+        weight: 1
+      - path: molas_externas_d_t006
+        weight: 1
+      - path: molas_externas_d_t007
+        weight: 1
+      - path: molas_externas_d_t008
+        weight: 1
+      - path: molas_externas_d_t009
+        weight: 1
+      - path: molas_externas_d_t010
+        weight: 1
+      - path: molas_externas_d_t011
+        weight: 1
+      - path: molas_externas_d_t012
+        weight: 1
+      - path: molas_externas_d_t013
+        weight: 1
+      - path: molas_externas_d_t014
+        weight: 1
+      - path: molas_externas_d_t015
+        weight: 1
+      - path: molas_internas_d_t002
+        weight: 1
+      - path: molas_internas_d_t003
+        weight: 1
+      - path: molas_internas_d_t004
+        weight: 1
+      - path: molas_internas_d_t005
+        weight: 1
+      - path: molas_internas_d_t006
+        weight: 1
+      - path: molas_internas_d_t007
+        weight: 1
+      - path: parafuso_1_t01
+        weight: 1
+      - path: parafuso_1_t003
+        weight: 1
+      - path: parafuso_1_t004
+        weight: 1
+      - path: parafuso_1_t005
+        weight: 1
+      - path: parafuso_1_t006
+        weight: 1
+      - path: parafuso_1_t007
+        weight: 1
+      - path: parafuso_1_t008
+        weight: 1
+      - path: placas_desgaste_travessa_01_t01
+        weight: 1
+      - path: placas_desgaste_travessa_01_t02
+        weight: 1
+      - path: placas_desgaste_travessa_01_t003
+        weight: 1
+      - path: placas_desgaste_travessa_01_t004
+        weight: 1
+      - path: placas_desgaste_travessa_01_t005
+        weight: 1
+      - path: rolete_e01_t1
+        weight: 1
+      - path: rolete_e01_t2
+        weight: 1
+      - path: rolete_e01_t003
+        weight: 1
+      - path: rolete_e01_t004
+        weight: 1
+      - path: sapata_de_freio_aste_e1_t002
+        weight: 1
+      - path: sapata_de_freio_aste_e1_t003
+        weight: 1
+      - path: sapata_de_freio_aste_e1_t004
+        weight: 1
+      - path: sapata_de_freio_aste_e1_t005
+        weight: 1
+      - path: sapata_de_freio_e1_t01
+        weight: 1
+      - path: sapata_de_freio_e1_t003
+        weight: 1
+      - path: sapata_de_freio_e1_t004
+        weight: 1
+      - path: sapata_de_freio_e1_t005
+        weight: 1
+      - path: travessa_t002
+        weight: 1
+      - path: triangulo_01_t01
+        weight: 1
+      - path: triangulo_01_t003
+        weight: 1
+      - path: triangulo_aste_2_t01
+        weight: 1
+      - path: triangulo_aste_2_t004
+        weight: 1
+      - path: triangulo_aste_3_t01
+        weight: 1
+      - path: truque_lateral_01_t01
+        weight: 1
+      - path: truque_lateral_02_t01
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
