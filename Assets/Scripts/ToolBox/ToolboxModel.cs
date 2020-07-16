@@ -66,8 +66,11 @@ public class ToolboxModel : ApplicationElement
                     int value = int.Parse(tool[1]);
                     switch (name)
                     {
-                        case "slice":
+                        case "slicer":
+                            slice = false;
+#if UNITY_IOS
                             slice = value > 0;
+#endif
                             break;
                         case "hierarchy":
                             hierarchy = value > 0;

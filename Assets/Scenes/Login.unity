@@ -869,7 +869,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1670904966
 RectTransform:
   m_ObjectHideFlags: 0
@@ -943,7 +943,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1695874888
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3023,6 +3023,7 @@ MonoBehaviour:
   content: {fileID: 1329757867338668793}
   darkOverlay: {fileID: 1330627634504755049}
   container: {fileID: 1434112144944804071}
+  windowRect: {fileID: 1223966889825331663}
 --- !u!1 &1434183011704342187
 GameObject:
   m_ObjectHideFlags: 0

@@ -101,7 +101,7 @@ public class DownloaderController : ApplicationElement
 
     private void OnRequestError()
     {
-        QRApp.qrController.decodeEnabled = true;
+        m_downloadRequestGUID = "";
         ExitDownloadDialog();
     }
 
@@ -196,28 +196,30 @@ public class DownloaderController : ApplicationElement
                 }
 
                 if (!update)
+                {
                     foreach (string p in downloadedEntries)
+                    {
                         try
                         {
                             MainApp.inventoryController.AddObject(p);
-
                         }
                         catch
                         {
                             continue;
                         }
-
+                    }
+                }
+                QRApp.downloaderModel.downloadingPanelTransform.LeanMoveY(QRApp.downloaderModel.restPos, 0.3f).setOnComplete(
+                    () =>
+                    {
+                        QRApp.downloaderModel.downloadingPanel.SetActive(false);
+                    }
+                );
+                ExitDownloadDialog();
+                MainApp.notificationComponent.Notify(string.Format("\"{0}\" adcionado ao seu inventário!", QRApp.downloaderModel.objectName.text));
+                yield break;
             }
         }
-        QRApp.downloaderModel.downloadingPanelTransform.LeanMoveY(QRApp.downloaderModel.restPos, 0.3f).setOnComplete(
-            () =>
-            {
-                QRApp.downloaderModel.downloadingPanel.SetActive(false);
-            }
-        );
-        ExitDownloadDialog();
-        MainApp.notificationComponent.Notify(string.Format("\"{0}\" baixado com sucesso!", QRApp.downloaderModel.objectName.text));
-        yield break;
     }
 
     public void CancelOngoingDownload()

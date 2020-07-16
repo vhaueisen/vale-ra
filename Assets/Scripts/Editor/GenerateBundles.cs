@@ -60,6 +60,10 @@ public class GenerateBundles : Editor
             if (m.MinScaleFactor > 1.0f)
                 m.MinScaleFactor = 1.0f;
 
+            if (m.MinScaleFactor <= 0.1f)
+                m.MinScaleFactor = 0.1f;
+
+            m.InitialScaleFactor = Mathf.Clamp(m.InitialScaleFactor, m.MinScaleFactor, m.MaxScaleFactor);
             m.YOffset = boundingBox.min.y;
             PrefabUtility.ApplyPrefabInstance(m.gameObject, InteractionMode.AutomatedAction);
             DestroyImmediate(instance);

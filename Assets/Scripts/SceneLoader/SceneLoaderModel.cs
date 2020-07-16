@@ -27,16 +27,11 @@ public class SceneLoaderModel : ApplicationElement
     public static GameScene SettingsScene = new GameScene("Configurações", 6);
     public static GameScene BundleScene = new GameScene("Bundle Manager", 7);
     public static GameScene CurrentScene = LoaderScene;
-    // The Header title to change every new scene
     public Text headerText;
-
-    // The Inventory Panel needs to show its graphics only on the home and AR scene 
     public GameObject inventoryPanel;
     public GameObject loadingPanel;
     public Slider progressBar;
-    public Animator locomotiveAnimator;
-
-    // Custom type that holds the scene index and name
+    public RectTransform locomotive;
     public struct GameScene
     {
         public GameScene(string sceneName_, byte sceneIndex_)
@@ -48,4 +43,5 @@ public class SceneLoaderModel : ApplicationElement
         public byte sceneIndex;
         public string sceneName;
     }
+    public RectTransform formHider;
 }

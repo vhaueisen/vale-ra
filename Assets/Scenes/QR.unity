@@ -837,6 +837,7 @@ MonoBehaviour:
   downloadingPanel: {fileID: 1273796055}
   downloadPanelTransform: {fileID: 198926613}
   downloadingPanelTransform: {fileID: 709523059}
+  restPos: 0
 --- !u!1 &452966664
 GameObject:
   m_ObjectHideFlags: 0
@@ -1347,7 +1348,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0.4666667, b: 0.4666667, a: 1}
+  m_Color: {r: 0.9254902, g: 0.69411767, b: 0.12156863, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
