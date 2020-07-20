@@ -77,13 +77,19 @@ public class LoginController : ApplicationElement
     {
         if (auth.access_token != null)
         {
-            TextInfo textInfo = new CultureInfo("pt-BR", false).TextInfo;
-            auth.fullName = textInfo.ToTitleCase(auth.fullName.ToLower());
-            auth.location = textInfo.ToTitleCase(auth.location.ToLower());
-            auth.jobLevel = textInfo.ToTitleCase(auth.jobLevel.ToLower());
-            auth.email = auth.email.ToLower();
-        }
+            try
+            {
+                TextInfo textInfo = new CultureInfo("pt-BR", false).TextInfo;
+                auth.fullName = textInfo.ToTitleCase(auth.fullName.ToLower());
+                auth.location = textInfo.ToTitleCase(auth.location.ToLower());
+                auth.jobLevel = auth.jobLevel == null ? "Contratado" : textInfo.ToTitleCase(auth.jobLevel.ToLower());
+                auth.email = auth.email.ToLower();
+            }
+            catch
+            {
 
+            }
+        }
         DataModel.DataEventArgs eventArgs = new DataModel.DataEventArgs(DataModel.DataEventArgs.UpdateEvent, auth);
         authLoader.Login.OnSettingsEvent(this, eventArgs);
     }

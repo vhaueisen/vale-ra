@@ -1,3 +1,6 @@
+
+#pragma warning disable 0162
+
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -21,6 +24,9 @@ public class DownloaderController : ApplicationElement
     {
         get
         {
+#if UNITY_EDITOR
+            return (apiDomainURL + m_downloadRequestGUID + "/Model_x64.zip");
+#endif
 #if UNITY_IOS
             return (apiDomainURL + m_downloadRequestGUID + "/Model_IOS.zip");
 #endif
@@ -68,6 +74,11 @@ public class DownloaderController : ApplicationElement
         }
     }
 
+    // private void Start()
+    // {
+    //     MainApp.footerView.SceneLoaderEvent += OnSceneLoader;
+    // }
+
     private IEnumerator DownloaderHandler()
     {
         DownloaderJSON jsonResponse;
@@ -113,7 +124,6 @@ public class DownloaderController : ApplicationElement
         QRApp.downloaderModel.objectArea.text = response.Area;
         QRApp.downloaderModel.objectDescription.text = response.Description;
     }
-
     private void EnterDownloadDialog()
     {
         QRApp.downloaderModel.downloadPanel.SetActive(true);
@@ -220,6 +230,11 @@ public class DownloaderController : ApplicationElement
                 yield break;
             }
         }
+    }
+
+    private void OnDestroy()
+    {
+        CancelOngoingDownload();
     }
 
     public void CancelOngoingDownload()

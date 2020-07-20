@@ -5,7 +5,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using UnityEngine;
 using System;
 using UnityEngine.UI;
@@ -23,7 +22,7 @@ public class InventoryModel : ApplicationElement
 {
     public static string bundleFolder = "Bundles";
     private bool m_dirtyInventory;
-    private static string bundlePath;
+    public static string bundlePath;
     public GameObject inventoryItem;
     public GameObject inventoryContainer;
     public List<GameObject> containerList;
@@ -40,7 +39,18 @@ public class InventoryModel : ApplicationElement
     public event EventHandler<InventoryEventArgs> InventoryStateMachine;
     public GameObject ProjectionPrefab;
     public RectTransform loadingPanel;
+    public struct ItemBucket
+    {
+        public ItemBucket(GameObject obj, ARObjectScript script)
+        {
+            Obj = obj;
+            Script = script;
+        }
 
+        public GameObject Obj;
+        public ARObjectScript Script;
+    }
+    public List<ItemBucket> bucketList;
 
     protected virtual void OnStateChange(GameObject prefab)
     {
@@ -53,97 +63,11 @@ public class InventoryModel : ApplicationElement
         CurrentModel = currentModel;
         OnStateChange(currentModel.ARPrefab);
     }
-    void Awake()
+
+    void Start()
     {
         bundlePath = Application.persistentDataPath;
-        LocateBundle();
-    }
-
-    private void LocateBundle()
-    {
-        string path = Path.Combine(bundlePath, bundleFolder);
-        if (Directory.Exists(path))
-        {
-            List<string> fileEntries = Directory.GetDirectories(path).ToList();
-            fileEntries.Add(path);
-            foreach (string fileLocation in fileEntries)
-            {
-                string[] fileList = Directory.GetFiles(fileLocation);
-                foreach (string file in fileList)
-                {
-                    if (!file.Contains(".manifest"))
-                    {
-                        if (File.Exists(file))
-                        {
-                            try
-                            {
-                                AssetBundle bundle = AssetBundle.LoadFromFile(file);
-                                ValidateBundle(bundle, fileLocation, file);
-                            }
-                            catch
-                            {
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        Digest();
-    }
-
-    public ARObjectScript ValidateBundle(AssetBundle bundle, string folderPath, string bundlePath)
-    {
-        ARObjectScript model = new ARObjectScript();
-        if (bundle == null)
-            return null;
-
-        StringBuilder s = new StringBuilder();
-        string manifestPath = Path.Combine(folderPath, bundle.name + ".manifest");
-        if (File.Exists(manifestPath))
-        {
-            string[] text = File.ReadAllLines(manifestPath);
-            string addr = "";
-            foreach (string t in text)
-            {
-                if (t.Contains("ARObjectModel.prefab"))
-                {
-                    addr = t.Substring(2);
-                }
-            }
-            if (addr.Length > 0)
-            {
-                GameObject asset = bundle.LoadAsset(addr) as GameObject;
-                if (asset != null)
-                {
-                    ARObejctModel _model = asset.GetComponent<ARObejctModel>();
-                    if (_model != null)
-                    {
-                        model.Clone(_model);
-                        model.bundlePath = bundlePath;
-                        model.addr = addr;
-                        model.id = bundle.name;
-                        AddressBundle(model);
-                    }
-                }
-            }
-        }
-        return model;
-    }
-
-    private void AddressBundle(ARObjectScript model)
-    {
-        ARObjectModels.Add(model);
-        ARObjectNames.Add(model.Name);
-        ARObjectAreas.Add(model.Area);
-        ARObjectBuckets.Add(model.Bucket);
-        ARObjectThumbnails.Add(model.Image);
-    }
-
-    private void Digest()
-    {
-        ARObjectModels = ARObjectModels.Distinct().ToList();
-        ARObjectNames = ARObjectNames.Distinct().ToList();
-        ARObjectAreas = ARObjectAreas.Distinct().ToList();
-        ARObjectBuckets = ARObjectBuckets.Distinct().ToList();
+        FindObjectOfType<InventoryController>().LocateBundle();
+        FindObjectOfType<InventoryController>().LoadInventory();
     }
 }

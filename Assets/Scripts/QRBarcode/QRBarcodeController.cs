@@ -3,7 +3,7 @@ using ZXing;
 using System.Collections.Generic;
 using System;
 using System.Threading;
-using static DownloaderModel;
+using System.Diagnostics;
 
 public class QRBarcodeController : ApplicationElement
 {
@@ -40,12 +40,16 @@ public class QRBarcodeController : ApplicationElement
     {
         camTexture.Stop();
         camAvailable = false;
+        qrThread.Abort();
+        camTexture.Stop();
     }
 
     void OnDestroy()
     {
         camTexture.Stop();
         camAvailable = false;
+        qrThread.Abort();
+        camTexture.Stop();
     }
 
     void Start()
@@ -90,7 +94,6 @@ public class QRBarcodeController : ApplicationElement
 
     private void QRThread()
     {
-        Thread.Sleep(2000);
         while (true)
         {
             if (decodeEnabled && c != null)
@@ -108,7 +111,7 @@ public class QRBarcodeController : ApplicationElement
                     decoded = r;
                 }
             }
-            Thread.Sleep(100);
+            Thread.Sleep(750);
         }
     }
 

@@ -1,8 +1,4 @@
-﻿#pragma warning disable 0168
-#pragma warning disable 0219
-#pragma warning disable 0414
-
-using System;
+﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,7 +13,6 @@ public class SceneLoaderEventArgs : EventArgs
 
 public class SceneLoaderModel : ApplicationElement
 {
-    // Static fields naming each scene
     public static GameScene LoginScene = new GameScene("Login", 0);
     public static GameScene LoaderScene = new GameScene("Carregando", 1);
     public static GameScene HomeScene = new GameScene("Início", 2);
@@ -29,9 +24,10 @@ public class SceneLoaderModel : ApplicationElement
     public static GameScene CurrentScene = LoaderScene;
     public Text headerText;
     public GameObject inventoryPanel;
-    public GameObject loadingPanel;
+    public RectTransform loadingPanel;
     public Slider progressBar;
     public RectTransform locomotive;
+    public GameObject books;
     public struct GameScene
     {
         public GameScene(string sceneName_, byte sceneIndex_)
@@ -39,9 +35,7 @@ public class SceneLoaderModel : ApplicationElement
             sceneIndex = sceneIndex_;
             sceneName = sceneName_;
         }
-
         public byte sceneIndex;
         public string sceneName;
     }
-    public RectTransform formHider;
 }

@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class WindowComponent : MonoBehaviour
 {
+    public bool state = false;
     public RectTransform windowRect;
     public GameObject content;
     private const float animationSpeed = 0.15f;
@@ -30,23 +31,16 @@ public class WindowComponent : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        //     for (int i = 0; i < graphics.Length; i++)
-        //         LeanTween.alpha(graphics[i].rectTransform, 0.0f, 0.0f)
-        //             .setRecursive(false)
-        //                 .setOnComplete(
-        //                     () => content.SetActive(false));
-    }
-
     public void Enter()
     {
+        state = true;
         content.SetActive(true);
         EnterTween();
     }
 
     public void Exit()
     {
+        state = false;
         ExitTween();
     }
 

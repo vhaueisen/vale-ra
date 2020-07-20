@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.EventSystems;
+﻿using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class InventoryItemController : ApplicationElement, IPointerClickHandler
@@ -21,7 +18,6 @@ public class InventoryItemController : ApplicationElement, IPointerClickHandler
     public void OnPointerClick(PointerEventData eventData)
     {
         ARObjectWindowController window = FindObjectOfType<ARObjectWindowController>();
-
         if (window)
             window.EnterARWindow(model);
     }

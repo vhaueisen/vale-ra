@@ -1,25 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using static InventoryModel;
 
 public class InventoryController : ApplicationElement
 {
-    private struct ItemBucket
-    {
-        public ItemBucket(GameObject obj, ARObjectScript script)
-        {
-            Obj = obj;
-            Script = script;
-        }
-
-        public GameObject Obj;
-        public ARObjectScript Script;
-    }
-    private List<ItemBucket> bucketList;
     private readonly byte SortByName = 0;
     private readonly byte SortByArea = 1;
     private readonly byte SortByBucket = 2;
@@ -27,14 +13,9 @@ public class InventoryController : ApplicationElement
     private readonly byte VerticalLayout = 1;
     private int CurrentState = 0;
 
-    private void Start()
+    public void LoadInventory()
     {
-        Reload();
-    }
-
-    public void Reload()
-    {
-        bucketList = new List<ItemBucket>();
+        MainApp.inventoryModel.bucketList = new List<ItemBucket>();
         foreach (Transform child in MainApp.inventoryModel.VerticalAlignedContent.transform)
             GameObject.Destroy(child.gameObject);
 
@@ -54,13 +35,12 @@ public class InventoryController : ApplicationElement
             if (itemController)
             {
                 itemController.Initialize(model);
-                bucketList.Add(new ItemBucket(itemInstance, model));
+                MainApp.inventoryModel.bucketList.Add(new ItemBucket(itemInstance, model));
             }
             else
                 Destroy(itemInstance);
         }
         AssetBundle.UnloadAllAssetBundles(true);
-        GC.Collect();
         ChangeOrder(SortByBucket);
     }
 
@@ -85,7 +65,7 @@ public class InventoryController : ApplicationElement
         MainApp.inventoryModel.containerComponentList = componentList.ToList();
     }
 
-    private void NewConteiner()
+    public void NewConteiner()
     {
         GameObject instance = Instantiate(MainApp.inventoryModel.inventoryContainer,
             Vector3.zero,
@@ -103,14 +83,14 @@ public class InventoryController : ApplicationElement
         IEnumerable<ItemBucket> sortedList;
         if (mode == SortByName)
         {
-            sortedList = bucketList.OrderBy(bucket => bucket.Script.Name);
+            sortedList = MainApp.inventoryModel.bucketList.OrderBy(bucket => bucket.Script.Name);
             foreach (InventoryContainerComponent component in MainApp.inventoryModel.containerComponentList)
                 component.Show();
         }
         else if (mode == SortByArea)
-            sortedList = bucketList.OrderBy(bucket => bucket.Script.Area);
+            sortedList = MainApp.inventoryModel.bucketList.OrderBy(bucket => bucket.Script.Area);
         else
-            sortedList = bucketList.OrderBy(bucket => bucket.Script.Bucket);
+            sortedList = MainApp.inventoryModel.bucketList.OrderBy(bucket => bucket.Script.Bucket);
 
         // Deactivate all containers
         foreach (GameObject container in MainApp.inventoryModel.containerList)
@@ -123,7 +103,7 @@ public class InventoryController : ApplicationElement
             sortedList = sortedList.Reverse();
 
         // De-parent all items
-        foreach (ItemBucket bucket in bucketList)
+        foreach (ItemBucket bucket in MainApp.inventoryModel.bucketList)
             bucket.Obj.transform.SetParent(null);
 
         // Name Sort is very different from group sorting
@@ -212,7 +192,7 @@ public class InventoryController : ApplicationElement
         if (s.Length > 0)
         {
             ChangeOrder(SortByName);
-            foreach (ItemBucket bucket in bucketList)
+            foreach (ItemBucket bucket in MainApp.inventoryModel.bucketList)
             {
                 string tags = bucket.Script.Area + bucket.Script.Bucket + bucket.Script.Name + bucket.Script.Description;
                 bucket.Obj.SetActive(tags.ToUpper().Contains(s.ToUpper()));
@@ -220,7 +200,7 @@ public class InventoryController : ApplicationElement
         }
         else
         {
-            foreach (ItemBucket bucket in bucketList)
+            foreach (ItemBucket bucket in MainApp.inventoryModel.bucketList)
             {
                 bucket.Obj.SetActive(true);
                 OnOrderChange(CurrentState);
@@ -236,43 +216,9 @@ public class InventoryController : ApplicationElement
             NewConteiner();
             skip = true;
         }
-
-        int containerSize = MainApp.inventoryModel.containerList.Count;
-        try
-        {
-            AssetBundle bundle = AssetBundle.LoadFromFile(file);
-            if (bundle != null)
-            {
-                ARObjectScript model = MainApp.inventoryModel.ValidateBundle(bundle, Path.GetDirectoryName(file), file);
-                GameObject itemInstance = Instantiate(MainApp.inventoryModel.inventoryItem,
-                        Vector3.zero,
-                        Quaternion.identity,
-                        MainApp.inventoryModel.containerList[0].transform);
-                InventoryItemController itemController = itemInstance.GetComponent<InventoryItemController>();
-                if (itemController)
-                {
-                    itemController.Initialize(model);
-                    bucketList.Add(new ItemBucket(itemInstance, model));
-                    int newContainerSize = MainApp.inventoryModel.ARObjectBuckets.Count;
-                    newContainerSize = MainApp.inventoryModel.ARObjectAreas.Count < containerSize ? containerSize : MainApp.inventoryModel.ARObjectAreas.Count;
-                    if (containerSize != newContainerSize && !skip)
-                    {
-                        NewConteiner();
-                        itemInstance.transform.SetParent
-                        (
-                            MainApp.inventoryModel.containerList[MainApp.inventoryModel.containerList.Count - 1].transform
-                        );
-                    }
-                    OnOrderChange(CurrentState);
-                }
-                else
-                    Destroy(itemInstance);
-            }
-        }
-        catch
-        {
-            return;
-        }
+        MainApp.bundleManager.LoadInventoryItemData(file, skip);
+        OnOrderChange(CurrentState);
+        Digest();
     }
 
     public void ShowLoading()
@@ -286,5 +232,28 @@ public class InventoryController : ApplicationElement
         MainApp.inventoryModel.loadingPanel.LeanAlpha(0.0f, 0.5f).setOnComplete(
             () => MainApp.inventoryModel.loadingPanel.gameObject.SetActive(false)
         );
+    }
+
+    public void LocateBundle()
+    {
+        MainApp.bundleManager.LoadInventoryItemsData();
+        Digest();
+    }
+
+    public void AddressBundle(ARObjectScript model)
+    {
+        MainApp.inventoryModel.ARObjectModels.Add(model);
+        MainApp.inventoryModel.ARObjectNames.Add(model.Name);
+        MainApp.inventoryModel.ARObjectAreas.Add(model.Area);
+        MainApp.inventoryModel.ARObjectBuckets.Add(model.Bucket);
+        MainApp.inventoryModel.ARObjectThumbnails.Add(model.Image);
+    }
+
+    private void Digest()
+    {
+        MainApp.inventoryModel.ARObjectModels = MainApp.inventoryModel.ARObjectModels.Distinct().ToList();
+        MainApp.inventoryModel.ARObjectNames = MainApp.inventoryModel.ARObjectNames.Distinct().ToList();
+        MainApp.inventoryModel.ARObjectAreas = MainApp.inventoryModel.ARObjectAreas.Distinct().ToList();
+        MainApp.inventoryModel.ARObjectBuckets = MainApp.inventoryModel.ARObjectBuckets.Distinct().ToList();
     }
 }

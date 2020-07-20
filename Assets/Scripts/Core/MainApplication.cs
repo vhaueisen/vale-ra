@@ -16,6 +16,7 @@ public class MainApplication : MonoBehaviour
     public ToolboxView toolBoxView;
     public SlicerModel slicerModel;
     public ToastNotificationComponent notificationComponent;
+    public BundleManagerController bundleManager;
 
     void Start()
     {

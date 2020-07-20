@@ -13,47 +13,8 @@ public class ProjectionController : ProjectionManipulator
         MainApp.touchView.TouchStateMachine += OnTouchStateChange;
         MainApp.inventoryModel.InventoryStateMachine += OnProjectionStateChange;
         Initialize();
-        StartCoroutine(loadAsync());
-    }
-
-    private IEnumerator loadAsync()
-    {
-        yield return null;
-        string BundlePath;
-        string BundleAddress;
-        string BundleId;
-        BundlePath = MainApp.coreDataModel.Inventory.Core.BundlePath;
-        BundleAddress = MainApp.coreDataModel.Inventory.Core.Addr;
-        BundleId = MainApp.coreDataModel.Inventory.Core.Id;
-
-        yield return null;
-        AssetBundle.UnloadAllAssetBundles(true);
-        try
-        {
-            if (BundlePath != null && File.Exists(BundlePath))
-            {
-                AssetBundle bundle = AssetBundle.LoadFromFile(BundlePath);
-                GameObject asset = bundle.LoadAsset(BundleAddress) as GameObject;
-                ARObejctModel loadModel = asset.GetComponent<ARObejctModel>();
-                if (loadModel.ARImage && FindObjectOfType<ProjectionModel>().ARMode)
-                {
-
-                    FindObjectOfType<ARTrackedImageManager>().referenceLibrary = loadModel.referenceImageLibrary;
-                    FindObjectOfType<ARTrackedImageManager>().trackedImagePrefab = loadModel.ARPrefab;
-                    FindObjectOfType<ARTrackedImageManager>().enabled = true;
-
-                }
-                else
-                    MainApp.inventoryModel.ChangeProjection(loadModel);
-                MainApp.toolBoxView.ChangeObject(loadModel);
-            }
-        }
-        catch
-        {
-
-        }
-        HomeProjection();
-        yield break;
+        if (SceneLoaderModel.CurrentScene.sceneIndex == SceneLoaderModel.HomeScene.sceneIndex)
+            MainApp.bundleManager.LoadObject(null);
     }
 
     public void OnTouchStateChange(object sender, TouchEventArgs eventArgs)
