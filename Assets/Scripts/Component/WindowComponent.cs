@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class WindowComponent : MonoBehaviour
 {
+    public ScrollRect scrollRect;
     public bool state = false;
     public RectTransform windowRect;
     public GameObject content;
@@ -33,6 +34,7 @@ public class WindowComponent : MonoBehaviour
 
     public void Enter()
     {
+        scrollRect.verticalNormalizedPosition = 1.0f;
         state = true;
         content.SetActive(true);
         EnterTween();

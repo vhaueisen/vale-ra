@@ -589,10 +589,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 457f65de0ad2cf8478afa5dfd1ed3896, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scrollRect: {fileID: 7335393549020561340}
+  state: 0
   windowRect: {fileID: 2210514391412269498}
   content: {fileID: 9067571423804113804}
-  animationSpeed: 1
-  appearFrom: {fileID: 0}
+  graphics: []
+  alphas: []
+  animationType: 0
 --- !u!114 &3052999551211849325
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2433,8 +2436,7 @@ GameObject:
   - component: {fileID: 5523420578694679283}
   - component: {fileID: 2343084226346145529}
   - component: {fileID: 1667106868309564142}
-  - component: {fileID: 9127658339751494496}
-  - component: {fileID: 3302771774874379917}
+  - component: {fileID: 7335393549020561340}
   m_Layer: 0
   m_Name: Scroll View
   m_TagString: Untagged
@@ -2501,7 +2503,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &9127658339751494496
+--- !u!114 &7335393549020561340
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2510,22 +2512,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 9067571423804113804}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
-  m_EffectDistance: {x: 2, y: 2}
-  m_UseGraphicAlpha: 1
---- !u!114 &3302771774874379917
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9067571423804113804}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4bab2efb9f9bfb24aa70df0edec64711, type: 3}
+  m_Script: {fileID: 11500000, guid: 1aa08ab6e0800fa44ae55d278d1423e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Content: {fileID: 7252108912906516459}
@@ -2536,14 +2523,13 @@ MonoBehaviour:
   m_Inertia: 1
   m_DecelerationRate: 0.135
   m_ScrollSensitivity: 250
-  m_ScrollFactor: 1
   m_Viewport: {fileID: 6102601833108942405}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 4012562942747386890}
-  m_HorizontalScrollbarVisibility: 0
-  m_VerticalScrollbarVisibility: 2
-  m_HorizontalScrollbarSpacing: 0
-  m_VerticalScrollbarSpacing: 0
+  m_HorizontalScrollbarVisibility: 1
+  m_VerticalScrollbarVisibility: 1
+  m_HorizontalScrollbarSpacing: -3
+  m_VerticalScrollbarSpacing: -3
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []

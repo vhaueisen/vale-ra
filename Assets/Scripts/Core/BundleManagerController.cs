@@ -102,48 +102,49 @@ public class BundleManagerController : ApplicationElement
                     yield return null;
             }
         }
-
-        AssetBundleCreateRequest bundleRequest = AssetBundle.LoadFromFileAsync(BundlePath);
-        while (!bundleRequest.isDone)
-            yield return null;
-
-        AssetBundleRequest prefabRequest = bundleRequest.assetBundle.LoadAssetAsync(BundleAddress);
-        while (!prefabRequest.isDone)
-            yield return null;
-
-        ARObejctModel loadModel = (prefabRequest.asset as GameObject).GetComponent<ARObejctModel>();
-        if (loadModel.ARImage && FindObjectOfType<ProjectionModel>().ARMode)
+        if (File.Exists(BundlePath))
         {
-            try
+            AssetBundleCreateRequest bundleRequest = AssetBundle.LoadFromFileAsync(BundlePath);
+            while (!bundleRequest.isDone)
+                yield return null;
+
+            AssetBundleRequest prefabRequest = bundleRequest.assetBundle.LoadAssetAsync(BundleAddress);
+            while (!prefabRequest.isDone)
+                yield return null;
+
+            ARObejctModel loadModel = (prefabRequest.asset as GameObject).GetComponent<ARObejctModel>();
+            if (loadModel.ARImage && FindObjectOfType<ProjectionModel>().ARMode)
             {
-                FindObjectOfType<ARTrackedImageManager>().referenceLibrary = loadModel.referenceImageLibrary;
-                FindObjectOfType<ARTrackedImageManager>().trackedImagePrefab = loadModel.ARPrefab;
-                FindObjectOfType<ARTrackedImageManager>().enabled = true;
+                try
+                {
+                    FindObjectOfType<ARTrackedImageManager>().referenceLibrary = loadModel.referenceImageLibrary;
+                    FindObjectOfType<ARTrackedImageManager>().trackedImagePrefab = loadModel.ARPrefab;
+                    FindObjectOfType<ARTrackedImageManager>().enabled = true;
+                }
+                catch
+                {
+
+                }
             }
-            catch
+            else
+                MainApp.inventoryModel.ChangeProjection(loadModel);
+
+            yield return null;
+            WindowComponent[] windows = FindObjectsOfType<WindowComponent>();
+            foreach (WindowComponent window in windows)
+                window.Exit();
+
+            if (SceneLoaderModel.CurrentScene.sceneIndex == SceneLoaderModel.ARScene.sceneIndex)
             {
-
+                MainApp.notificationComponent.Notify(
+                    loadModel.ARImage ? "Aproxime câmera do seu dispositivo da imagem" : "Pressione e segure no local de ancoragem do objeto"
+                );
             }
+            else
+                FindObjectOfType<ProjectionController>().HomeProjection();
+            MainApp.toolBoxView.ChangeObject(loadModel);
         }
-        else
-            MainApp.inventoryModel.ChangeProjection(loadModel);
-
-        yield return null;
-        WindowComponent[] windows = FindObjectsOfType<WindowComponent>();
-        foreach (WindowComponent window in windows)
-            window.Exit();
-
-        if (SceneLoaderModel.CurrentScene.sceneIndex == SceneLoaderModel.ARScene.sceneIndex)
-        {
-            MainApp.notificationComponent.Notify(
-                loadModel.ARImage ? "Aproxime câmera do seu dispositivo da imagem" : "Pressione e segure no local de ancoragem do objeto"
-            );
-        }
-        else
-            FindObjectOfType<ProjectionController>().HomeProjection();
-
         MainApp.inventoryController.HideLoading();
-        MainApp.toolBoxView.ChangeObject(loadModel);
         yield break;
     }
 
@@ -222,7 +223,6 @@ public class BundleManagerController : ApplicationElement
 
     public bool LoadInventoryItemData(string file, bool createConteiner = false)
     {
-        int containerSize = MainApp.inventoryModel.containerList.Count;
         try
         {
             AssetBundle bundle = AssetBundle.LoadFromFile(file);
@@ -240,6 +240,8 @@ public class BundleManagerController : ApplicationElement
                     {
                         itemController.Initialize(model);
                         MainApp.inventoryModel.bucketList.Add(new ItemBucket(itemInstance, model));
+                        MainApp.inventoryController.AddressBundle(model);
+                        int containerSize = MainApp.inventoryModel.containerList.Count;
                         int newContainerSize = MainApp.inventoryModel.ARObjectBuckets.Count;
                         newContainerSize = MainApp.inventoryModel.ARObjectAreas.Count < containerSize ? containerSize : MainApp.inventoryModel.ARObjectAreas.Count;
                         if (containerSize != newContainerSize && !createConteiner)

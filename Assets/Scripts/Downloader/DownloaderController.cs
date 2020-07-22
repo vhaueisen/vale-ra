@@ -12,6 +12,7 @@ using static DownloaderModel;
 public class DownloaderController : ApplicationElement
 {
     private const string apiDomainURL = "https://valendo.azurewebsites.net/Vale%20RA/Models/";
+    private volatile bool m_downloading = false;
     private string JsonUrl
     {
         get
@@ -114,6 +115,7 @@ public class DownloaderController : ApplicationElement
     {
         m_downloadRequestGUID = "";
         ExitDownloadDialog();
+        m_downloading = false;
     }
 
     private void OnRequestSuccess(DownloaderJSON response, Texture2D thumbnail)
@@ -146,6 +148,7 @@ public class DownloaderController : ApplicationElement
 
     public void EnterDownloadingDialog()
     {
+        m_downloading = true;
         bool update = Directory.Exists(
             Path.Combine(Application.persistentDataPath, "Bundles", m_downloadRequestGUID)
         );
@@ -188,14 +191,6 @@ public class DownloaderController : ApplicationElement
                 {
                     if (!Directory.Exists(path))
                         Directory.CreateDirectory(path);
-                    else
-                    {
-                        string destination = Path.GetFullPath(Path.Combine(path, entry.FullName));
-                        if (!destination.Contains(".manifest"))
-                        {
-                            downloadedEntries.Add(destination);
-                        }
-                    }
                     string destinationPath = Path.GetFullPath(Path.Combine(path, entry.FullName));
                     using (FileStream outputFileStream = new FileStream(destinationPath, FileMode.Create))
                         entry.Open().CopyTo(outputFileStream);
@@ -227,6 +222,7 @@ public class DownloaderController : ApplicationElement
                 );
                 ExitDownloadDialog();
                 MainApp.notificationComponent.Notify(string.Format("\"{0}\" adcionado ao seu inventário!", QRApp.downloaderModel.objectName.text));
+                m_downloading = false;
                 yield break;
             }
         }
@@ -234,7 +230,8 @@ public class DownloaderController : ApplicationElement
 
     private void OnDestroy()
     {
-        CancelOngoingDownload();
+        if (m_downloading)
+            CancelOngoingDownload();
     }
 
     public void CancelOngoingDownload()
@@ -249,5 +246,6 @@ public class DownloaderController : ApplicationElement
                 QRApp.downloaderModel.downloadingPanel.SetActive(false);
             }
         );
+        m_downloading = false;
     }
 }

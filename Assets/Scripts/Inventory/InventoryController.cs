@@ -210,15 +210,11 @@ public class InventoryController : ApplicationElement
 
     public void AddObject(string file)
     {
-        bool skip = false;
-        if (MainApp.inventoryModel.containerList == null || MainApp.inventoryModel.containerList.Count == 0)
-        {
+        bool skip = MainApp.inventoryModel.containerList == null || MainApp.inventoryModel.containerList.Count == 0;
+        if (skip)
             NewConteiner();
-            skip = true;
-        }
         MainApp.bundleManager.LoadInventoryItemData(file, skip);
         OnOrderChange(CurrentState);
-        Digest();
     }
 
     public void ShowLoading()
@@ -237,7 +233,6 @@ public class InventoryController : ApplicationElement
     public void LocateBundle()
     {
         MainApp.bundleManager.LoadInventoryItemsData();
-        Digest();
     }
 
     public void AddressBundle(ARObjectScript model)
@@ -247,6 +242,7 @@ public class InventoryController : ApplicationElement
         MainApp.inventoryModel.ARObjectAreas.Add(model.Area);
         MainApp.inventoryModel.ARObjectBuckets.Add(model.Bucket);
         MainApp.inventoryModel.ARObjectThumbnails.Add(model.Image);
+        Digest();
     }
 
     private void Digest()
