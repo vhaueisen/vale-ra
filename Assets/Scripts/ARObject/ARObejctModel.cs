@@ -2,8 +2,6 @@
 #pragma warning disable 0219
 #pragma warning disable 0414
 
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.ARSubsystems;
 

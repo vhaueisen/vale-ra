@@ -68,7 +68,7 @@ public class ToolboxModel : ApplicationElement
                     {
                         case "slicer":
                             slice = false;
-#if UNITY_IOS
+#if UNITY_IOS || UNITY_PLAYER
                             slice = value > 0;
 #endif
                             break;
