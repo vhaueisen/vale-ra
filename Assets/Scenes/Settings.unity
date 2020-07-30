@@ -1020,7 +1020,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Vers\xE3o 0.1 Alpha\n2019 - 2020\n"
+  m_Text: "Vers\xE3o 1.0\n2019 - 2020\n"
 --- !u!222 &494891568
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2363,7 +2363,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Ativar Oclus\xE3o de Planos (Experimental):"
+  m_Text: "Oclus\xE3o (Experimental):"
 --- !u!222 &1241554934
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2972,11 +2972,11 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1.25
   m_Text: "    O Vale RA foi criado pelo Centro de Capacita\xE7\xE3o T\xE9cnica (CCT)
-    no intuito de disseminar novas tecnologias para a Vale, bem como propagar o conhecimento
-    de diferentes \xE1reas para aumentar a sinergia entre os empregados.\n    O CCT
-    possui profissionais orientados para desenvolvimento de tecnologias educacionais,
-    constru\xE7\xE3o de materiais did\xE1ticos e execu\xE7\xE3o de treinamentos para
-    as diferentes \xE1reas da Vale.\r"
+    em parceria com o IFES - Campus Vit\xF3ria no intuito de disseminar novas tecnologias
+    para a Vale, bem como propagar o conhecimento de diferentes \xE1reas para aumentar
+    a sinergia entre os empregados.\n    O CCT possui profissionais orientados para
+    desenvolvimento de tecnologias educacionais, constru\xE7\xE3o de materiais did\xE1ticos
+    e execu\xE7\xE3o de treinamentos para as diferentes \xE1reas da Vale.\r"
 --- !u!222 &1408247453
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3387,8 +3387,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1894630780}
   m_HandleRect: {fileID: 1894630779}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 0.60473365
+  m_Value: 0.99999946
+  m_Size: 0.88894486
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -3589,7 +3589,7 @@ MonoBehaviour:
   m_MinValue: -1
   m_MaxValue: 1
   m_WholeNumbers: 1
-  m_Value: 1
+  m_Value: -1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -4379,7 +4379,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1.25
-  m_Text: "V\xEDtor Haueisen Costa Ruas\r\nvitor.ruas@vale.com\r\n+55 (27) 3333 2386\r"
+  m_Text: "V\xEDtor Haueisen Costa Ruas\r\nvitor.ruas@vale.com\r"
 --- !u!222 &1931796469
 CanvasRenderer:
   m_ObjectHideFlags: 0

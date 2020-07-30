@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 663590874}
   - component: {fileID: 663590877}
   - component: {fileID: 663590878}
+  - component: {fileID: 663590879}
   m_Layer: 0
   m_Name: AR Session Origin
   m_TagString: Untagged
@@ -169,7 +170,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1760703bbd54c04488a8d10600262ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_PlanePrefab: {fileID: 4111876437758604471, guid: 612daf13333d01148b0f94c619dc5bce,
+  m_PlanePrefab: {fileID: 439483959856433134, guid: 5553c83c514a9ef47ac4bb9784f035f5,
     type: 3}
   m_DetectionMode: -1
 --- !u!114 &663590875
@@ -226,10 +227,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   planeManager: {fileID: 663590874}
+  occlusionManager: {fileID: 1603537988}
   occlusionPlane: {fileID: 4111876437758604471, guid: 612daf13333d01148b0f94c619dc5bce,
     type: 3}
   transparentPlane: {fileID: 439483959856433134, guid: 5553c83c514a9ef47ac4bb9784f035f5,
     type: 3}
+--- !u!114 &663590879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 663590872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 728ad7fae8e460a4ba41265c7308d757, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AnchorPrefab: {fileID: 0}
 --- !u!1 &743591606
 GameObject:
   m_ObjectHideFlags: 0
@@ -634,6 +649,7 @@ GameObject:
   - component: {fileID: 1603537983}
   - component: {fileID: 1603537986}
   - component: {fileID: 1603537985}
+  - component: {fileID: 1603537988}
   m_Layer: 0
   m_Name: AR Camera
   m_TagString: MainCamera
@@ -758,7 +774,7 @@ MonoBehaviour:
   m_FocusMode: -1
   m_LightEstimationMode: -1
   m_AutoFocus: 1
-  m_LightEstimation: -1
+  m_LightEstimation: 0
   m_FacingDirection: 1
 --- !u!114 &1603537987
 MonoBehaviour:
@@ -772,6 +788,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e3c44306fb1e439a9f18b2212b8ab70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1603537988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1603537981}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b15f82cc229284894964d2d30806969d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HumanSegmentationStencilMode: 2
+  m_HumanSegmentationDepthMode: 1
+  m_EnvironmentDepthMode: 2
+  m_OcclusionPreferenceMode: 0
 --- !u!1 &1768589933
 GameObject:
   m_ObjectHideFlags: 0

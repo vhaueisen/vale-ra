@@ -8,7 +8,9 @@ public class ProjectionManipulator : ApplicationElement
     private float scaleBuffer = 1.0f;
     public float snapedScale = 1.0f;
     public ProjectionModel projectionModel;
-    ARSessionOrigin sessionOrigin;
+    private ARSessionOrigin sessionOrigin;
+    private ARAnchor anchor;
+    private ARAnchorManager anchorManager;
     public struct FlexibleRaycast
     {
         public FlexibleRaycast(Pose _pose, RaycastHit _hit, bool _isValid, bool _isAR)
@@ -51,13 +53,14 @@ public class ProjectionManipulator : ApplicationElement
     {
         projectionModel = FindObjectOfType<ProjectionModel>();
         sessionOrigin = FindObjectOfType<ARSessionOrigin>();
+        anchorManager = FindObjectOfType<ARAnchorManager>();
     }
 
     // AR Overload
     public FlexibleRaycast Raycast(Vector2 point, ARRaycastManager manager, Camera c)
     {
         List<ARRaycastHit> hit = new List<ARRaycastHit>();
-        manager.Raycast(point, hit, TrackableType.PlaneWithinPolygon);
+        manager.Raycast(point, hit, TrackableType.Planes);
         if (hit.Count > 0)
         {
             return new FlexibleRaycast(hit[0].pose, new RaycastHit(), true, true);
@@ -94,6 +97,7 @@ public class ProjectionManipulator : ApplicationElement
         instance.transform.SetParent(rotTarget);
         instance.transform.localScale = Vector3.one;
         SetScale(MainApp.inventoryModel.CurrentModel.InitialScaleFactor);
+        ReAnchor(raycast.pose);
         return instance;
     }
 
@@ -103,9 +107,22 @@ public class ProjectionManipulator : ApplicationElement
             return;
 
         if (isAR)
+        {
+            ReAnchor(raycast.pose);
             sessionOrigin.MakeContentAppearAt(target, raycast.position);
+        }
         else
             target.position = Vector3.Lerp(target.position, raycast.position, Time.deltaTime * projectionModel.TranslateSpeed * MainApp.coreDataModel.Settings.Core.TranslateSpeed);
+    }
+
+    private void ReAnchor(Pose pose)
+    {
+        if (anchorManager != null)
+        {
+            if (anchor != null)
+                anchorManager.RemoveAnchor(anchor);
+            anchor = anchorManager.AddAnchor(pose);
+        }
     }
 
     private void SetScale(float scale)

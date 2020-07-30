@@ -3,7 +3,7 @@ using ZXing;
 using System.Collections.Generic;
 using System;
 using System.Threading;
-using System.Diagnostics;
+using UnityEngine.UI;
 
 public class QRBarcodeController : ApplicationElement
 {
@@ -38,7 +38,6 @@ public class QRBarcodeController : ApplicationElement
 
     void OnApplicationQuit()
     {
-        camTexture.Stop();
         camAvailable = false;
         qrThread.Abort();
         camTexture.Stop();
@@ -46,7 +45,6 @@ public class QRBarcodeController : ApplicationElement
 
     void OnDestroy()
     {
-        camTexture.Stop();
         camAvailable = false;
         qrThread.Abort();
         camTexture.Stop();
@@ -60,15 +58,7 @@ public class QRBarcodeController : ApplicationElement
 
         camDevice = WebCamTexture.devices[0];
 
-        int w = Screen.width;
-        int h = Screen.height;
-
-        if (Screen.width / 2.0f > 900)
-        {
-            w = w / 2;
-            h = h / 2;
-        }
-        camTexture = new WebCamTexture(camDevice.name, w, h - 200, 60);
+        camTexture = new WebCamTexture(camDevice.name, 720, 1280, 30);
 
         // Set camera filter modes for a smoother looking image
         camTexture.filterMode = FilterMode.Trilinear;
@@ -82,8 +72,11 @@ public class QRBarcodeController : ApplicationElement
         // create a reader with a custom luminance source
         barcodeReader = new BarcodeReader
         {
+            AutoRotate = true,
+            TryInverted = true,
             Options = new ZXing.Common.DecodingOptions
             {
+
                 PossibleFormats = new List<BarcodeFormat>
                     {
                         BarcodeFormat.QR_CODE
@@ -111,7 +104,7 @@ public class QRBarcodeController : ApplicationElement
                     decoded = r;
                 }
             }
-            Thread.Sleep(750);
+            Thread.Sleep(250);
         }
     }
 
@@ -131,8 +124,8 @@ public class QRBarcodeController : ApplicationElement
                 camTexture.videoVerticallyMirrored ? fixedRect : defaultRect;
             cameraAligned = true;
             videoWidth = camTexture.width;
-            _width = Mathf.CeilToInt((camTexture.width * (model.qrFrameRect.rect.size.x / model.cameraFrameRect.rect.size.x + 0.05f)));
-            _height = Mathf.CeilToInt((camTexture.height * (model.qrFrameRect.rect.size.y / model.cameraFrameRect.rect.size.y + 0.05f)));
+            _width = Mathf.CeilToInt((camTexture.width * (model.qrFrameRect.rect.size.x / model.cameraFrameRect.rect.size.x)));
+            _height = Mathf.CeilToInt((camTexture.height * (model.qrFrameRect.rect.size.y / model.cameraFrameRect.rect.size.y)));
             offset_X = (camTexture.width - _width) / 2;
             offset_Y = (camTexture.height - _height) / 2;
             buffer = new Color32[_width * _height];

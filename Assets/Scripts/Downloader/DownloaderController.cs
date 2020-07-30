@@ -220,6 +220,8 @@ public class DownloaderController : ApplicationElement
                         QRApp.downloaderModel.downloadingPanel.SetActive(false);
                     }
                 );
+
+                MainApp.inventoryController.ReassignConteiners();
                 ExitDownloadDialog();
                 MainApp.notificationComponent.Notify(string.Format("\"{0}\" adcionado ao seu inventário!", QRApp.downloaderModel.objectName.text));
                 m_downloading = false;

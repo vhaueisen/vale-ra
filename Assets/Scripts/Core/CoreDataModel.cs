@@ -22,7 +22,7 @@ public class UserSettings : DataModel
             TranslateSpeed = 1.0f;
             RotateSpeed = 1.0f;
             ElevateSpeed = 1.0f;
-            IsOcclusion = true;
+            IsOcclusion = false;
         }
     }
     public UserData Core = new UserData(true);

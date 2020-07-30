@@ -79,7 +79,6 @@ public class InventoryController : ApplicationElement
 
     private void ChangeOrder(byte mode, bool reverse = false)
     {
-        CurrentState = mode;
         IEnumerable<ItemBucket> sortedList;
         if (mode == SortByName)
         {
@@ -214,6 +213,10 @@ public class InventoryController : ApplicationElement
         if (skip)
             NewConteiner();
         MainApp.bundleManager.LoadInventoryItemData(file, skip);
+    }
+
+    public void ReassignConteiners()
+    {
         OnOrderChange(CurrentState);
     }
 

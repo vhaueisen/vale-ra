@@ -17,6 +17,7 @@ public class LoginController : ApplicationElement
     public GameObject loadingPanel;
     public GameObject formHider;
     public PopupComponent popup;
+    private const string policyURL = "https://gestaodoconhecimento.blob.core.windows.net/inovation-team-cct/ValeRA/Documentos/Vale%20RA%20-%20Politica%20de%20Privacidade.html";
 
     private IEnumerator GetToken()
     {
@@ -98,17 +99,7 @@ public class LoginController : ApplicationElement
     {
         if (username.text != "")
             if (password.text != "")
-                if (username.text.ToUpper() == "VISITANTE")
-                {
-                    LoginSettings.AuthData auth = new LoginSettings.AuthData();
-                    auth.lastAuth = DateTime.Now.ToString();
-                    auth.fullName = "Visitante";
-                    Connect(auth);
-                }
-                else
-                    StartCoroutine("GetToken");
-            // else
-            //     UpdateWarningMessage("Contratados não podem acessar esta aplicação.");
+                StartCoroutine("GetToken");
             else
                 popup.Popup("Erro", "Preencha a senha!");
         else
@@ -146,5 +137,10 @@ public class LoginController : ApplicationElement
     {
         popup.Popup("Esqueci a Senha",
             "O usuário é a sua matrícula (geralmente inicia-se com 01).\nA senha para acessar o jogo é a mesma senha utilizada para acessar o e-Dados (contracheques, férias e demais serviço de RH), VES ou CSP.\nCaso tenha dificuldades com a senha é possível recuperá-la através do Help Desk (no ramal telefônico 4001 ou 0800-022-4001) ou do IAM (no endereço eletrônico http://iam/).\nA senha será enviada ao seu superior imediato ou ao e-mail cadastrado previamente.");
+    }
+
+    public void PrivacyPolicy()
+    {
+        Application.OpenURL(policyURL);
     }
 }
