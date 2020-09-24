@@ -10,6 +10,7 @@ public class DownloaderModel : ApplicationElement
         public string Area;
         public string Bucket;
         public string GUID;
+        public bool IsEncrypted;
     }
 
     public Slider progressBar;

@@ -16,6 +16,9 @@ public class MainApplication : MonoBehaviour
     public SlicerModel slicerModel;
     public ToastNotificationComponent notificationComponent;
     public BundleManagerController bundleManager;
+    public HierarchyController hierarchyController;
+    public HierarchyModel hierarchyModel;
+
 
     void Start()
     {

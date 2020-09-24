@@ -70,13 +70,40 @@ public class GenerateBundles : Editor
         }
     }
 
+    [MenuItem("Bundle/Create Package")]
+    static void Compress()
+    {
+        string folderPath = EditorUtility.OpenFolderPanel("Open project Bundle", "", "");
+        string filePath = EditorUtility.SaveFilePanel("Save compressed File", folderPath, "", "valerapkg");
+        bool option = EditorUtility.DisplayDialog("Encriptografar", "Encriptografados?", "Sim", "Nao");
+        PackageHandler.CreateBundle(filePath, folderPath, option);
+    }
+
+    [MenuItem("Bundle/Extract Package")]
+    static void Extract()
+    {
+        string filePath = EditorUtility.OpenFilePanel("Open project Bundle", "", "");
+        string folderPath = EditorUtility.OpenFolderPanel("Save project Bundle", filePath, "");
+        PackageHandler.ExtractBundle(filePath, folderPath);
+    }
+
+    [MenuItem("Bundle/Run Package Test")]
+    static void Test()
+    {
+        string folderPath = @"C:\Users\vitor\Desktop\Bundles\Run";
+        string filePath = @"C:\Users\vitor\Desktop\Bundles\package.valerapackage";
+        PackageHandler.CreateBundle(filePath, folderPath, true);
+        folderPath = @"C:\Users\vitor\Desktop\Bundles\Run_Output";
+        PackageHandler.ExtractBundle(filePath, folderPath);
+    }
+
     static void DoBuild(BuildTarget target)
     {
-        string dataPath = EditorUtility.SaveFolderPanel(
+        string outputFolder = EditorUtility.SaveFolderPanel(
             "Save all project Bundles",
             "",
             "Bundles");
-        BuildPipeline.BuildAssetBundles(dataPath,
+        BuildPipeline.BuildAssetBundles(outputFolder,
             BuildAssetBundleOptions.ChunkBasedCompression,
             target);
     }

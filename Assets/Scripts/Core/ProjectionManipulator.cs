@@ -60,7 +60,7 @@ public class ProjectionManipulator : ApplicationElement
     public FlexibleRaycast Raycast(Vector2 point, ARRaycastManager manager, Camera c)
     {
         List<ARRaycastHit> hit = new List<ARRaycastHit>();
-        manager.Raycast(point, hit, TrackableType.Planes);
+        manager.Raycast(point, hit, TrackableType.PlaneWithinPolygon);
         if (hit.Count > 0)
         {
             return new FlexibleRaycast(hit[0].pose, new RaycastHit(), true, true);

@@ -53,6 +53,11 @@ public class SceneLoaderController : ApplicationElement
         if (!Permission.HasUserAuthorizedPermission(Permission.Camera) && cameraScene)
             Permission.RequestUserPermission(Permission.Camera);
 #endif
+        if (scene.sceneIndex == SceneLoaderModel.ARScene.sceneIndex)
+            Screen.sleepTimeout = SleepTimeout.NeverSleep;
+        else
+            Screen.sleepTimeout = SleepTimeout.SystemSetting;
+
         MainApp.sceneLoaderModel.headerText.text = scene.sceneName;
         AsyncOperation sceneLoaderOperation = SceneManager.LoadSceneAsync(scene.sceneIndex);
         MainApp.sceneLoaderModel.locomotive.LeanMoveLocalX(2500.0f, 10.0f);
@@ -65,6 +70,7 @@ public class SceneLoaderController : ApplicationElement
         MainApp.sceneLoaderModel.progressBar.value = 1.0f;
         if (cameraScene)
             yield return new WaitForSeconds(1.0f);
+
         MainApp.sceneLoaderModel.books.SetActive(false);
         TweenAlpha(false);
         yield break;

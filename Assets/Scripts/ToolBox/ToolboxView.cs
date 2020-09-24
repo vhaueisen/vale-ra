@@ -134,11 +134,13 @@ public class ToolboxView : ApplicationElement
 
         if (click)
         {
+#if UNITY_EDITOR
             if (Input.GetMouseButton(0))
             {
                 position = Input.mousePosition;
             }
-            else if (Input.touchCount > 0)
+#endif
+            if (Input.touchCount > 0)
             {
                 position = Input.GetTouch(0).position;
             }

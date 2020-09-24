@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections.Generic;
 
 public class HierarchyController : MonoBehaviour
 {
@@ -8,6 +7,7 @@ public class HierarchyController : MonoBehaviour
     public void LoadHierarchyRecursively(modelObject node, HierarchyNodeController parent, int level)
     {
         GameObject nodeInstance = Instantiate(model.nodePrefab, Vector3.zero, Quaternion.identity, level == 0 ? model.mainPage : model.nodeContainer);
+        model.loadedNodes.Add(nodeInstance);
         HierarchyNodeView nodeView = nodeInstance.GetComponent<HierarchyNodeView>();
         HierarchyNodeController recursiveNode = new HierarchyNodeController(node, nodeView, parent, level);
         if (model.currentViewing == null)
@@ -27,6 +27,9 @@ public class HierarchyController : MonoBehaviour
 
     public void Initialize()
     {
-
+        model.IsLoaded = model.LoadXML();
+        model.mainPageInitialPosition = model.mainPage.anchoredPosition;
+        model.targetPageInitialPosition = model.targetPage.anchoredPosition;
+        model.width = model.mainPage.rect.width * 1.075f;
     }
 }

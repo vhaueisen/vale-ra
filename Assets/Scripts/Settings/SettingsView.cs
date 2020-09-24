@@ -15,6 +15,7 @@ public class SettingsView : ApplicationElement
     public Text TranslationValue;
     public Text RotationValue;
     public Text ElevationValue;
+    public GameObject OcclusionContainer;
 
     public void UpdateVars()
     {
@@ -48,6 +49,7 @@ public class SettingsView : ApplicationElement
         TranslationValue.text = string.Format("{0:0}%", TranslationSlider.value * 100.0);
         RotationValue.text = string.Format("{0:0}%", RotationSlider.value * 100.0);
         ElevationValue.text = string.Format("{0:0}%", ElevationSlider.value * 100.0);
+        UpdateVars();
     }
 
     public void UpdateOcclusion()
@@ -59,6 +61,8 @@ public class SettingsView : ApplicationElement
     private void Start()
     {
         LoadVars();
+        if (Debug.isDebugBuild)
+            OcclusionContainer.SetActive(true);
     }
 
     public void Disconnect()

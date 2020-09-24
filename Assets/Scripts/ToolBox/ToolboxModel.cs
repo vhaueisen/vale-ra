@@ -49,7 +49,7 @@ public class ToolboxModel : ApplicationElement
         public Toolbox(string toolbox)
         {
             slice = false;
-            hierarchy = false;
+            hierarchy = true;
             animation = false;
             btnStates = new bool[] { slice, hierarchy, animation };
 
@@ -67,7 +67,7 @@ public class ToolboxModel : ApplicationElement
                     switch (name)
                     {
                         case "slicer":
-                            slice = false;
+                            slice = true;
 #if UNITY_IOS || UNITY_PLAYER
                             slice = value > 0;
 #endif

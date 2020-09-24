@@ -4,7 +4,7 @@ using System.Text;
 
 public static class DataEncrypt
 {
-    private static readonly string hashAlgorithm = "SHA1";
+    private static readonly string hashAlgorithm = "SHA256";
     private static readonly int passwordIterations = 1000;
     private static readonly int keySize = 256;
 

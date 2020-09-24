@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class HierarchyPopupView : MonoBehaviour
@@ -10,18 +8,10 @@ public class HierarchyPopupView : MonoBehaviour
     public RectTransform overlayTransform;
     public Text nodeTitle;
     private Color overlayColor = new Color(0.0f, 0.0f, 0.0f, 0.5f);
-
-    // Start is called before the first frame update
     void Start()
     {
         LeanTween.alpha(overlayTransform, 0f, 0f);
         HierarchyNodeView.NodeEvent += OnNodeViewEvent;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     private void OnNodeViewEvent(object sender, NodeViewEventArgs eventArgs)

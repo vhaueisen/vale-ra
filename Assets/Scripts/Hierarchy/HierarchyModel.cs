@@ -4,16 +4,16 @@ using System.Xml.Serialization;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System;
 
-public class HierarchyModel : MonoBehaviour
+public class HierarchyModel : ApplicationElement
 {
-    public HierarchyController controller;
     public HierarchyView view;
     public HierarchyNodeController currentViewing;
     public List<HierarchyNodeController> hierarchyNodeRoot = new List<HierarchyNodeController>();
     public List<HierarchyNodeController> hierarchyNodeList = new List<HierarchyNodeController>();
     public List<List<HierarchyNodeController>> hierarchyNodeSortedList = new List<List<HierarchyNodeController>>();
-    public TextAsset modelXML;
+    public TextAsset socariaXml;
     public bool IsLoaded = false;
     public GameObject[] targets;
     public RectTransform mainPage;
@@ -22,33 +22,36 @@ public class HierarchyModel : MonoBehaviour
     public Vector2 targetPageInitialPosition;
     public float animDuration = 0.25f;
     public float width;
-    public float padding = 60;
+    public float padding = 0;
     public GameObject nodePrefab;
     public RectTransform nodeContainer;
     public Text headerTitle;
-
-    void Start()
+    public List<GameObject> loadedNodes = new List<GameObject>();
+    public ScrollRect scrollRect;
+    public string ModelXml
     {
-        IsLoaded = LoadXML();
-        mainPageInitialPosition = mainPage.anchoredPosition;
-        targetPageInitialPosition = targetPage.anchoredPosition;
-        width = mainPage.rect.width;
-        if (IsLoaded)
-            controller.Initialize();
+        get => m_modelXml;
+        set
+        {
+            string oldModel = m_modelXml;
+            m_modelXml = value;
+            if (!string.Equals(oldModel, m_modelXml, StringComparison.OrdinalIgnoreCase))
+                MainApp.hierarchyController.Initialize();
+        }
     }
-
-    private bool LoadXML()
+    private string m_modelXml = "";
+    public bool LoadXML()
     {
         try
         {
             XmlSerializer serializer = new XmlSerializer(typeof(ModelXML), new XmlRootAttribute("model"));
-            TextReader textReader = new StringReader(modelXML.text);
+            TextReader textReader = new StringReader(ModelXml);
             XmlTextReader xmlReader = new XmlTextReader(textReader);
             ModelXML xmlModel = (ModelXML)serializer.Deserialize(xmlReader);
             modelObject rootModel = xmlModel.Root;
             HierarchyNodeController root = new HierarchyNodeController();
             foreach (modelObject node in xmlModel.Root.ChildList)
-                controller.LoadHierarchyRecursively(node, root, 0);
+                MainApp.hierarchyController.LoadHierarchyRecursively(node, root, 0);
             HierarchyNodeController.hierarchyModel = this;
             return true;
         }

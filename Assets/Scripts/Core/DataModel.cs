@@ -67,12 +67,13 @@ public class DataModel
     {
         try
         {
-            BinaryFormatter binaryFormatter = new BinaryFormatter();
-            FileStream fileStream = new FileStream(DataName, FileMode.Create);
-            binaryFormatter.Serialize(fileStream, data);
-            fileStream.Close();
-            IsLoaded = true;
-            return true;
+            using (FileStream fileStream = new FileStream(DataName, FileMode.Create))
+            {
+                BinaryFormatter binaryFormatter = new BinaryFormatter();
+                binaryFormatter.Serialize(fileStream, data);
+                IsLoaded = true;
+                return true;
+            }
         }
         catch (Exception e)
         {
@@ -84,11 +85,13 @@ public class DataModel
     {
         try
         {
-            BinaryFormatter binaryFormatter = new BinaryFormatter();
-            FileStream fileStream = new FileStream(DataName, FileMode.Open);
-            data = binaryFormatter.Deserialize(fileStream);
-            fileStream.Close();
-            return true;
+            using (FileStream fileStream = new FileStream(DataName, FileMode.Open))
+            {
+                BinaryFormatter binaryFormatter = new BinaryFormatter();
+                data = binaryFormatter.Deserialize(fileStream);
+                fileStream.Close();
+                return true;
+            }
         }
         catch (Exception e)
         {

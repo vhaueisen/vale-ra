@@ -4,12 +4,12 @@ using UnityEngine;
 public class ToolPanelView : ApplicationElement
 {
     private bool state = false;
-    private int page;
     public Animator amin;
     public GameObject[] panelList;
     private int currentPage;
     public GameObject contents;
     public GameObject root;
+    private bool isOpen = false;
 
     private void Start()
     {
@@ -17,15 +17,9 @@ public class ToolPanelView : ApplicationElement
         MainApp.footerView.SceneLoaderEvent += OnSceneEvent;
     }
 
-    public void Toggle(int _page)
-    {
-        page = _page;
-    }
-
     private void OnSceneEvent(object sender, SceneLoaderEventArgs eventArgs)
     {
-        root.SetActive(!(eventArgs.Scene.sceneIndex != SceneLoaderModel.HomeScene.sceneIndex &&
-    eventArgs.Scene.sceneIndex != SceneLoaderModel.ARScene.sceneIndex));
+        root.SetActive(!(eventArgs.Scene.sceneIndex != SceneLoaderModel.HomeScene.sceneIndex && eventArgs.Scene.sceneIndex != SceneLoaderModel.ARScene.sceneIndex));
     }
 
     public void OnToolBoxEvent(object sender, ToolBoxEventArgs eventArgs)
@@ -37,7 +31,6 @@ public class ToolPanelView : ApplicationElement
         if (eventArgs.ToolKey == ToolBoxEventArgs.sliceKey)
         {
             ChangePanel(0);
-            ToggleState(true);
             MainApp.slicerModel.controller.Reload();
         }
         else if (eventArgs.ToolKey == ToolBoxEventArgs.moveKey)
@@ -45,6 +38,11 @@ public class ToolPanelView : ApplicationElement
             ToggleState(false);
             if (projectionController != null)
                 projectionController.Enabled = true;
+        }
+        else if (eventArgs.ToolKey == ToolBoxEventArgs.hierarchyKey)
+        {
+            ChangePanel(1);
+            MainApp.hierarchyModel.ModelXml = MainApp.hierarchyModel.socariaXml.text;
         }
         else
         {
@@ -63,7 +61,8 @@ public class ToolPanelView : ApplicationElement
 
     public void ChangePanel(int i)
     {
-        currentPage = (int)Mathf.Clamp(0, panelList.Length - 1, currentPage);
+        currentPage = (int)Mathf.Clamp(i, 0, panelList.Length - 1);
+        ToggleState(true);
         panelList[currentPage].SetActive(true);
     }
 
@@ -72,7 +71,6 @@ public class ToolPanelView : ApplicationElement
         state = !state;
         foreach (GameObject panel in panelList)
             panel.SetActive(false);
-        ChangePanel(currentPage);
         contents.SetActive(state);
     }
 
@@ -81,14 +79,17 @@ public class ToolPanelView : ApplicationElement
         if (i)
         {
             contents.SetActive(i);
-            amin.Play("ToolBarToggleON");
+            if (!isOpen)
+            {
+                amin.Play("ToolBarToggleON");
+                isOpen = true;
+            }
+
         }
         else
             StartCoroutine(TurnOffPanel());
         foreach (GameObject panel in panelList)
             panel.SetActive(false);
-
-        ChangePanel(currentPage);
     }
 
     private IEnumerator TurnOffPanel()
@@ -96,5 +97,7 @@ public class ToolPanelView : ApplicationElement
         amin.Play("ToolBarToggleOFF");
         yield return new WaitForSeconds(1.0f);
         contents.SetActive(false);
+        isOpen = false;
+        state = false;
     }
 }

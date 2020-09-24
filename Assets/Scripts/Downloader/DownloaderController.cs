@@ -11,6 +11,11 @@ using static DownloaderModel;
 
 public class DownloaderController : ApplicationElement
 {
+    private bool isEncrypted = false;
+    private string EncryptionPwrd
+    {
+        get => "c5b0d566ee14c06429d4bd8e30260836a399977d5b693034db73662347d3d9d3";
+    }
     private const string apiDomainURL = "https://valendo.azurewebsites.net/Vale%20RA/Models/";
     private volatile bool m_downloading = false;
     private string JsonUrl
@@ -125,6 +130,7 @@ public class DownloaderController : ApplicationElement
         QRApp.downloaderModel.objectName.text = response.Name;
         QRApp.downloaderModel.objectArea.text = response.Area;
         QRApp.downloaderModel.objectDescription.text = response.Description;
+        isEncrypted = response.IsEncrypted;
     }
     private void EnterDownloadDialog()
     {
@@ -249,5 +255,10 @@ public class DownloaderController : ApplicationElement
             }
         );
         m_downloading = false;
+    }
+
+    private void ZipTest()
+    {
+
     }
 }

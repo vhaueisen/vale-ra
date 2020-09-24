@@ -42,6 +42,7 @@ public class HierarchyView : MonoBehaviour
         model.mainPage.LeanMoveX(back ? model.width : -model.width, model.animDuration)
             .setEase(LeanTweenType.easeInCubic)
             .setOnComplete(ResetPositions);
+        model.scrollRect.content = model.targetPage;
     }
 
     private void ResetPositions()

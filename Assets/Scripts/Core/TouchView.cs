@@ -116,6 +116,7 @@ public class TouchView : RawTouch
 
     private void DigestMouse()
     {
+#if UNITY_EDITOR
         if (Input.GetMouseButton(0) || Input.GetMouseButton(1))
         {
             MainApp.touchModel.TouchPosition = Input.mousePosition;
@@ -145,5 +146,6 @@ public class TouchView : RawTouch
         }
         else
             MainApp.touchModel.CurrentState = TouchModel.Idle;
+#endif
     }
 }
