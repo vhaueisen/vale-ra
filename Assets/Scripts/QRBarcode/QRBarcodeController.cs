@@ -58,7 +58,7 @@ public class QRBarcodeController : ApplicationElement
 
         camDevice = WebCamTexture.devices[0];
 
-        camTexture = new WebCamTexture(camDevice.name, 720, 1280, 30);
+        camTexture = new WebCamTexture(camDevice.name, 1280, 720, 30);
 
         // Set camera filter modes for a smoother looking image
         camTexture.filterMode = FilterMode.Trilinear;

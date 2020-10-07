@@ -21,7 +21,9 @@ public class ProjectionController : ProjectionManipulator
     {
         currentState = eventArgs.currentState;
 #if (UNITY_ANDROID || UNITY_IOS)
-        if (currentState == TouchModel.LongPressing)
+        if (currentState == TouchModel.LongPressing &&
+        (SceneLoaderModel.CurrentScene.sceneIndex == SceneLoaderModel.HomeScene.sceneIndex ||
+        SceneLoaderModel.CurrentScene.sceneIndex == SceneLoaderModel.ARScene.sceneIndex))
             Handheld.Vibrate();
 #endif
     }

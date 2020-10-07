@@ -27,7 +27,7 @@ public class FooterView : ApplicationElement
 
     public void LoadProfileScene()
     {
-        OnSceneLoader(SceneLoaderModel.ProfileScene);
+        // OnSceneLoader(SceneLoaderModel.ProfileScene);
     }
 
     public void LoadSettingsScene()

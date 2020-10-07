@@ -90,8 +90,9 @@ public class PackageHandler
             package.Content = memoryStream.ToArray();
         }
         Save(filePath, ref package);
-
+#if UNITY_EDITOR
         UnityEngine.Debug.Log(string.Format("Compress Time: {0}, Speed(Mb/s): {1}", watch.ElapsedMilliseconds, (package.UncompressedSize / (watch.ElapsedMilliseconds / 1000.0f))));
+#endif
         watch.Stop();
     }
 
@@ -108,8 +109,9 @@ public class PackageHandler
                 DecompressPackage(memoryStream, zipStream, folderPath, ref package);
             }
         }
-
+#if UNITY_EDITOR
         UnityEngine.Debug.Log(string.Format("Extract Time: {0}, Speed(Mb/s): {1}", watch.ElapsedMilliseconds, (package.CompressedSize / (watch.ElapsedMilliseconds / 1000.0f))));
+#endif
         watch.Stop();
     }
 }

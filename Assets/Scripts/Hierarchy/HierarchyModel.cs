@@ -57,7 +57,9 @@ public class HierarchyModel : ApplicationElement
         }
         catch (System.Exception e)
         {
+#if UNITY_EDITOR
             Debug.Log(e.ToString());
+#endif
             return false;
         }
     }
