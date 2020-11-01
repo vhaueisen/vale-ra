@@ -18,7 +18,8 @@ public class MainApplication : MonoBehaviour
     public BundleManagerController bundleManager;
     public HierarchyController hierarchyController;
     public HierarchyModel hierarchyModel;
-
+    public ARSessionController arSessionController;
+    public AnimationPanelView animationPanelView;
 
     void Start()
     {

@@ -224,6 +224,7 @@ public class InventoryController : ApplicationElement
     {
         MainApp.inventoryModel.loadingPanel.gameObject.SetActive(true);
         MainApp.inventoryModel.loadingPanel.LeanAlpha(0.5f, 0.5f);
+        MainApp.inventoryModel.loadingCircle.LeanRotate(new Vector3(-360, 0, 0), 3f).setLoopClamp();
     }
 
     public void HideLoading()
@@ -231,6 +232,7 @@ public class InventoryController : ApplicationElement
         MainApp.inventoryModel.loadingPanel.LeanAlpha(0.0f, 0.5f).setOnComplete(
             () => MainApp.inventoryModel.loadingPanel.gameObject.SetActive(false)
         );
+        LeanTween.cancel(MainApp.inventoryModel.loadingCircle);
     }
 
     public void LocateBundle()

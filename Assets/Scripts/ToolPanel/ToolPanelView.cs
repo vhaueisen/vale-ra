@@ -4,7 +4,7 @@ using UnityEngine;
 public class ToolPanelView : ApplicationElement
 {
     private bool state = false;
-    public Animator amin;
+    public RectTransform toolPanel;
     public GameObject[] panelList;
     private int currentPage;
     public GameObject contents;
@@ -46,17 +46,39 @@ public class ToolPanelView : ApplicationElement
         }
         else
         {
-            ToggleState(false);
+            MainApp.animationPanelView.initializePlayer();
+            ChangePanel(2);
         }
+    }
+
+    private float animationTime = 0.75f;
+    private void ShowPanel()
+    {
+        toolPanel.LeanMoveY(700, animationTime).setEase(LeanTweenType.easeSpring);
+    }
+
+    private void HidePanel()
+    {
+        toolPanel.LeanMoveY(50, animationTime).setEase(LeanTweenType.easeSpring);
+    }
+
+    private void ShowToolBar()
+    {
+        HidePanel();
+    }
+
+    private void HideToolBar()
+    {
+        toolPanel.LeanMoveY(0, animationTime).setEase(LeanTweenType.easeSpring);
     }
 
     public void ToggleView()
     {
         state = !state;
         if (state)
-            amin.Play("ToolPanelOpen");
+            ShowPanel();
         else
-            amin.Play("ToolPanelClose");
+            HidePanel();
     }
 
     public void ChangePanel(int i)
@@ -81,7 +103,7 @@ public class ToolPanelView : ApplicationElement
             contents.SetActive(i);
             if (!isOpen)
             {
-                amin.Play("ToolBarToggleON");
+                ShowToolBar();
                 isOpen = true;
             }
 
@@ -94,7 +116,7 @@ public class ToolPanelView : ApplicationElement
 
     private IEnumerator TurnOffPanel()
     {
-        amin.Play("ToolBarToggleOFF");
+        HideToolBar();
         yield return new WaitForSeconds(1.0f);
         contents.SetActive(false);
         isOpen = false;

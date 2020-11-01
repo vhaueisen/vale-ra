@@ -89,6 +89,10 @@ public class ProjectionManipulator : ApplicationElement
     {
         if (!raycast.isValid || prefab == null)
             return null;
+
+        if (m_elevateTarget != null)
+            Elevate(m_elevateTarget, -1e8f, false);
+
         SetScale(1.0f);
         posTarget.position = raycast.position;
         GameObject instance = Instantiate(prefab, rotTarget.position, raycast.rotation);
@@ -154,6 +158,9 @@ public class ProjectionManipulator : ApplicationElement
         else
             target.localScale = new Vector3(snapedScale, snapedScale, snapedScale);
         MainApp.notificationComponent.Notify(string.Format("Escala: {0}%", Mathf.RoundToInt(snapedScale * 100)));
+
+        if (m_elevateTarget != null)
+            Elevate(m_elevateTarget, 0.0f, false);
     }
 
     private float Snap(float f, float proximity)
@@ -173,14 +180,18 @@ public class ProjectionManipulator : ApplicationElement
     }
 
     private float elevationOffset = 0.0f;
-    public void Elevate(Transform target, float amount)
+    private Transform m_elevateTarget;
+
+    public void Elevate(Transform target, float amount, bool notificate = true)
     {
+        m_elevateTarget = target;
         elevationOffset = projectionModel.ElevateSpeed * amount * MainApp.coreDataModel.Settings.Core.ElevateSpeed + elevationOffset;
         elevationOffset = Mathf.Clamp(elevationOffset, 0.0f, projectionModel.MaxElevation);
         Vector3 targetPos = new Vector3(target.transform.localPosition.x,
             elevationOffset / snapedScale,
             target.transform.localPosition.z);
         target.transform.localPosition = Vector3.Lerp(target.localPosition, targetPos, Time.deltaTime * projectionModel.TranslateSpeed * MainApp.coreDataModel.Settings.Core.TranslateSpeed);
-        MainApp.notificationComponent.Notify(string.Format("Elevacão: {0:0.00}m", elevationOffset));
+        if (notificate)
+            MainApp.notificationComponent.Notify(string.Format("Elevacão: {0:0.00}m", elevationOffset));
     }
 }

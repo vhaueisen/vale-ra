@@ -30,6 +30,11 @@ public class FooterView : ApplicationElement
         // OnSceneLoader(SceneLoaderModel.ProfileScene);
     }
 
+    public void UnsupportedAR()
+    {
+        MainApp.footerModel.ButtonArray[2].gameObject.SetActive(false);
+    }
+
     public void LoadSettingsScene()
     {
         OnSceneLoader(SceneLoaderModel.SettingsScene);

@@ -39,6 +39,8 @@ public class InventoryModel : ApplicationElement
     public event EventHandler<InventoryEventArgs> InventoryStateMachine;
     public GameObject ProjectionPrefab;
     public RectTransform loadingPanel;
+    public RectTransform loadingCircle;
+
     public struct ItemBucket
     {
         public ItemBucket(GameObject obj, ARObjectScript script)

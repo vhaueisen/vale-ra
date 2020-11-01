@@ -27,7 +27,8 @@ public class SceneLoaderModel : ApplicationElement
     public RectTransform loadingPanel;
     public Slider progressBar;
     public RectTransform locomotive;
-    public GameObject books;
+    public RectTransform books;
+    public Sprite[] bookSpriteSheet;
     public struct GameScene
     {
         public GameScene(string sceneName_, byte sceneIndex_)

@@ -13,6 +13,7 @@ public class ToolboxView : ApplicationElement
     private Camera mainCamera;
     private Transform currentTool;
     public event EventHandler<ToolBoxEventArgs> toolBoxEvent;
+    private byte m_currentState = 0;
     protected virtual void OnToolChange(byte toolKey)
     {
         toolBoxEvent(this, new ToolBoxEventArgs(toolKey));
@@ -20,7 +21,8 @@ public class ToolboxView : ApplicationElement
 
     public void ChangeObject(ARObejctModel script)
     {
-        ChangeTool(model.moveTool);
+        if (m_currentState != ToolBoxEventArgs.moveKey)
+            ChangeTool(model.moveTool);
         Toolbox tools = new Toolbox(script.toolbox);
         Transform[] btns = new Transform[]
         {
@@ -53,6 +55,11 @@ public class ToolboxView : ApplicationElement
             ChangeTool(toolToChange);
     }
 
+    public void OnSceneLoad()
+    {
+        if (m_currentState != ToolBoxEventArgs.moveKey)
+            ChangeTool(model.moveTool);
+    }
     private void Show()
     {
         ToggleConteinerBtn(true);
@@ -114,17 +121,15 @@ public class ToolboxView : ApplicationElement
     private void DecodeName(string name)
     {
         name = name.ToLower();
-        byte newState = 0;
         if (name.Contains("animation"))
-            newState = ToolBoxEventArgs.animationKey;
+            m_currentState = ToolBoxEventArgs.animationKey;
         else if (name.Contains("hierarchy"))
-            newState = ToolBoxEventArgs.hierarchyKey;
+            m_currentState = ToolBoxEventArgs.hierarchyKey;
         else if (name.Contains("slice"))
-            newState = ToolBoxEventArgs.sliceKey;
+            m_currentState = ToolBoxEventArgs.sliceKey;
         else
-            newState = ToolBoxEventArgs.moveKey;
-
-        toolBoxEvent(this, new ToolBoxEventArgs(newState));
+            m_currentState = ToolBoxEventArgs.moveKey;
+        toolBoxEvent(this, new ToolBoxEventArgs(m_currentState));
     }
 
     private void Outsider()

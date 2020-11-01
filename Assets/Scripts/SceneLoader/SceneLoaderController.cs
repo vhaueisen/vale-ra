@@ -1,38 +1,32 @@
 ﻿using System.Collections;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.Android;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class SceneLoaderController : ApplicationElement
 {
-    private Graphic[] graphics;
-    private float[] alphas;
     private void Start()
     {
-        graphics = MainApp.sceneLoaderModel.loadingPanel.GetComponentsInChildren<Graphic>(true);
-        alphas = graphics.Select(o => o.color.a).ToArray();
+        LeanTween.play(MainApp.sceneLoaderModel.books, MainApp.sceneLoaderModel.bookSpriteSheet).setFrameRate(30);
         MainApp.footerView.SceneLoaderEvent += OnSceneLoader;
         StartCoroutine(LoadScene(SceneLoaderModel.HomeScene));
     }
 
     private void TweenAlpha(bool reverse)
     {
-        for (int i = 0; i < graphics.Length; i++)
-            LeanTween.alpha(graphics[i].rectTransform, reverse ? alphas[i] : 0.0f, reverse ? 0.0f : 0.2f)
-                .setRecursive(false)
-                    .setOnComplete
-                    (() =>
+        LeanTween.alpha(MainApp.sceneLoaderModel.loadingPanel, reverse ? 1.0f : 0.0f, 0.3f)
+            .setOnComplete
+                (() =>
+                    {
+                        MainApp.sceneLoaderModel.loadingPanel.gameObject.SetActive(reverse);
+                        if (!reverse)
                         {
-                            MainApp.sceneLoaderModel.loadingPanel.gameObject.SetActive(reverse);
-                            if (!reverse)
-                            {
-                                MainApp.sceneLoaderModel.locomotive.LeanCancel();
-                                MainApp.sceneLoaderModel.locomotive.anchoredPosition = new Vector2(400.0f, 0.0f);
-                            }
+                            MainApp.sceneLoaderModel.locomotive.LeanCancel();
+                            MainApp.sceneLoaderModel.books.LeanCancel();
+                            MainApp.sceneLoaderModel.locomotive.anchoredPosition = new Vector2(400.0f, 0.0f);
                         }
-                    );
+                    }
+                );
     }
 
     public void OnSceneLoader(object sender, SceneLoaderEventArgs sceneLoaderEvent)
@@ -40,7 +34,7 @@ public class SceneLoaderController : ApplicationElement
         StopAllCoroutines();
         CloseWindows();
         MainApp.sceneLoaderModel.loadingPanel.gameObject.SetActive(true);
-        MainApp.sceneLoaderModel.books.SetActive(true);
+        LeanTween.play(MainApp.sceneLoaderModel.books, MainApp.sceneLoaderModel.bookSpriteSheet).setFrameRate(30);
         TweenAlpha(true);
         StartCoroutine(LoadScene(sceneLoaderEvent.Scene));
     }
@@ -61,6 +55,8 @@ public class SceneLoaderController : ApplicationElement
         MainApp.sceneLoaderModel.headerText.text = scene.sceneName;
         AsyncOperation sceneLoaderOperation = SceneManager.LoadSceneAsync(scene.sceneIndex);
         MainApp.sceneLoaderModel.locomotive.LeanMoveLocalX(2500.0f, 10.0f);
+        MainApp.toolBoxView.OnSceneLoad();
+        MainApp.arSessionController.OnSceneLoad(scene.sceneIndex == SceneLoaderModel.ARScene.sceneIndex);
         while (!sceneLoaderOperation.isDone)
         {
             float progress = Mathf.Clamp01(sceneLoaderOperation.progress);
@@ -70,8 +66,6 @@ public class SceneLoaderController : ApplicationElement
         MainApp.sceneLoaderModel.progressBar.value = 1.0f;
         if (cameraScene)
             yield return new WaitForSeconds(1.0f);
-
-        MainApp.sceneLoaderModel.books.SetActive(false);
         TweenAlpha(false);
         yield break;
     }

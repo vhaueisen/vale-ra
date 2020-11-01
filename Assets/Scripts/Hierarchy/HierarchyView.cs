@@ -36,12 +36,21 @@ public class HierarchyView : MonoBehaviour
         {
             node.viewTransform.SetParent(model.targetPage);
         }
-
         model.targetPage.LeanMoveX(0.0f, model.animDuration)
             .setEase(LeanTweenType.easeInCubic);
         model.mainPage.LeanMoveX(back ? model.width : -model.width, model.animDuration)
             .setEase(LeanTweenType.easeInCubic)
-            .setOnComplete(ResetPositions);
+            .setOnComplete(() =>
+            {
+                ResetPositions();
+                // if (back)
+                // {
+                //     foreach (HierarchyNodeController node in targets)
+                //     {
+                //         node.viewTransform.SetParent(model.targetPage);
+                //     }
+                // }
+            });
         model.scrollRect.content = model.targetPage;
     }
 
