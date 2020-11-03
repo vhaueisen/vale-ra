@@ -26,7 +26,6 @@ public class SceneLoaderModel : ApplicationElement
     public GameObject inventoryPanel;
     public RectTransform loadingPanel;
     public Slider progressBar;
-    public RectTransform locomotive;
     public RectTransform books;
     public Sprite[] bookSpriteSheet;
     public struct GameScene

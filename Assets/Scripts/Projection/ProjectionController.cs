@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections;
-using System.IO;
-using UnityEngine;
-using UnityEngine.XR.ARFoundation;
-
-public class ProjectionController : ProjectionManipulator
+﻿public class ProjectionController : ProjectionManipulator
 {
     private byte currentState = 0;
     public bool Enabled = true;
+    public float Scale
+    {
+        get => snapedScale;
+    }
     private void Start()
     {
         MainApp.touchView.TouchStateMachine += OnTouchStateChange;
@@ -17,15 +15,15 @@ public class ProjectionController : ProjectionManipulator
             MainApp.bundleManager.LoadObject(null);
     }
 
+    void OnDestroy()
+    {
+        MainApp.touchView.TouchStateMachine -= OnTouchStateChange;
+        MainApp.inventoryModel.InventoryStateMachine -= OnProjectionStateChange;
+    }
+
     public void OnTouchStateChange(object sender, TouchEventArgs eventArgs)
     {
         currentState = eventArgs.currentState;
-#if (UNITY_ANDROID || UNITY_IOS)
-        if (currentState == TouchModel.LongPressing &&
-        (SceneLoaderModel.CurrentScene.sceneIndex == SceneLoaderModel.HomeScene.sceneIndex ||
-        SceneLoaderModel.CurrentScene.sceneIndex == SceneLoaderModel.ARScene.sceneIndex))
-            Handheld.Vibrate();
-#endif
     }
 
     public void OnProjectionStateChange(object sender, InventoryEventArgs eventArgs)
@@ -37,16 +35,16 @@ public class ProjectionController : ProjectionManipulator
 
     private void Update()
     {
-        if (!Enabled)
+        if (!Enabled || MainApp.toolboxModel.CurrentTool != ToolBoxEventArgs.scaleRotKey && MainApp.toolboxModel.CurrentTool != ToolBoxEventArgs.anchorKey || MainApp.inventoryModel.inventoryWindow.state)
             return;
 
         if (currentState > 0)
         {
-            if (currentState == TouchModel.Pinching)
+            if (currentState == TouchModel.Pinching && MainApp.toolboxModel.CurrentTool == ToolBoxEventArgs.scaleRotKey)
                 UpdateScale(MainApp.touchModel.PinchAmount, projectionModel.ModelContainer, projectionModel.ARMode);
-            else if (currentState == TouchModel.Swiping)
+            else if (currentState == TouchModel.Swiping && MainApp.toolboxModel.CurrentTool == ToolBoxEventArgs.scaleRotKey)
                 UpdateRotation(-MainApp.touchModel.SwipeAmount.x, projectionModel.RotateComponent, projectionModel.ARMode);
-            else if (currentState == TouchModel.LongPressing)
+            else if (currentState == TouchModel.Swiping && MainApp.toolboxModel.CurrentTool == ToolBoxEventArgs.anchorKey)
             {
                 FlexibleRaycast raycast;
                 if (projectionModel.ARMode)
@@ -62,14 +60,17 @@ public class ProjectionController : ProjectionManipulator
                 else
                 {
                     if (!(MainApp.inventoryModel.CurrentModel.ARImage && SceneLoaderModel.CurrentScene.sceneIndex == SceneLoaderModel.ARScene.sceneIndex))
+                    {
                         projectionModel.CurrentInstance = InstantiateProjection(
                             raycast, MainApp.inventoryModel.ProjectionPrefab,
                             projectionModel.RotateComponent,
                             projectionModel.ModelContainer);
+                    }
                 }
             }
-            else if (currentState == TouchModel.Elevating && projectionModel.ARMode)
+            else if (currentState == TouchModel.Elevating && MainApp.toolboxModel.CurrentTool == ToolBoxEventArgs.anchorKey)
             {
+                MainApp.anchorController.Elevate();
                 Elevate(projectionModel.RotateComponent, MainApp.touchModel.SwipeAmount.y);
             }
         }

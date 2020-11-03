@@ -57,15 +57,7 @@ public class TouchView : RawTouch
             Touch touch = Input.GetTouch(0);
             MainApp.touchModel.TouchPosition = touch.position;
             MainApp.touchModel.SwipeAmount = touch.deltaPosition;
-
-            if (touch.deltaTime >= 0.2f)
-            {
-                MainApp.touchModel.CurrentState = TouchModel.LongPressing;
-            }
-            else if (previousState != TouchModel.LongPressing)
-            {
-                MainApp.touchModel.CurrentState = TouchModel.Swiping;
-            }
+            MainApp.touchModel.CurrentState = TouchModel.Swiping;
         }
         else if (Input.touchCount == 2)
         {
@@ -137,12 +129,15 @@ public class TouchView : RawTouch
                 MainApp.touchModel.PinchAmount =
                     multiplier * MainApp.touchModel.SwipeAmount.magnitude;
             }
+            else if (Input.GetKey(KeyCode.RightAlt))
+            {
+                MainApp.touchModel.CurrentState = TouchModel.Elevating;
+                MainApp.touchModel.SwipeAmount = 100.0f * (
+                    Input.GetAxis("Mouse X") * Vector2.right +
+                    Input.GetAxis("Mouse Y") * Vector2.up);
+            }
             else
                 MainApp.touchModel.CurrentState = TouchModel.Swiping;
-        }
-        else if (Input.GetMouseButton(1))
-        {
-            MainApp.touchModel.CurrentState = TouchModel.LongPressing;
         }
         else
             MainApp.touchModel.CurrentState = TouchModel.Idle;

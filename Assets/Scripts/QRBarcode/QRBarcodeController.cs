@@ -3,7 +3,6 @@ using ZXing;
 using System.Collections.Generic;
 using System;
 using System.Threading;
-using UnityEngine.UI;
 
 public class QRBarcodeController : ApplicationElement
 {
@@ -29,6 +28,7 @@ public class QRBarcodeController : ApplicationElement
     private Vector3 defaultScale = new Vector3(1f, 1f, 1f);
     private Vector3 fixedScale = new Vector3(-1f, 1f, 1f);
     private QRBarcodeModel model;
+    private volatile bool m_enabled;
 
     void OnDisable()
     {
@@ -39,15 +39,17 @@ public class QRBarcodeController : ApplicationElement
     void OnApplicationQuit()
     {
         camAvailable = false;
-        qrThread.Abort();
-        camTexture.Stop();
+        m_enabled = false;
+        if (camTexture != null)
+            camTexture.Stop();
     }
 
     void OnDestroy()
     {
         camAvailable = false;
-        qrThread.Abort();
-        camTexture.Stop();
+        m_enabled = false;
+        if (camTexture != null)
+            camTexture.Stop();
     }
 
     void Start()
@@ -59,7 +61,8 @@ public class QRBarcodeController : ApplicationElement
         camDevice = WebCamTexture.devices[0];
 
         camTexture = new WebCamTexture(camDevice.name, 1280, 720, 30);
-
+        if (camTexture == null)
+            return;
         // Set camera filter modes for a smoother looking image
         camTexture.filterMode = FilterMode.Trilinear;
 
@@ -83,11 +86,12 @@ public class QRBarcodeController : ApplicationElement
                     }
             }
         };
+        m_enabled = true;
     }
 
     private void QRThread()
     {
-        while (true)
+        while (m_enabled)
         {
             if (decodeEnabled && c != null)
             {
@@ -110,35 +114,38 @@ public class QRBarcodeController : ApplicationElement
 
     void Update()
     {
-        if (camTexture.width < 100 || !camAvailable)
-            return;
-
-        if (!cameraAligned)
+        if (m_enabled)
         {
-            rotationVector.z = -camTexture.videoRotationAngle;
-            model.cameraBuffer.rectTransform.localEulerAngles = rotationVector;
-            float videoRatio =
-                (float)camTexture.width / (float)camTexture.height;
-            model.cameraBufferFitter.aspectRatio = videoRatio;
-            model.cameraBuffer.uvRect =
-                camTexture.videoVerticallyMirrored ? fixedRect : defaultRect;
-            cameraAligned = true;
-            videoWidth = camTexture.width;
-            _width = Mathf.CeilToInt((camTexture.width * (model.qrFrameRect.rect.size.x / model.cameraFrameRect.rect.size.x)));
-            _height = Mathf.CeilToInt((camTexture.height * (model.qrFrameRect.rect.size.y / model.cameraFrameRect.rect.size.y)));
-            offset_X = (camTexture.width - _width) / 2;
-            offset_Y = (camTexture.height - _height) / 2;
-            buffer = new Color32[_width * _height];
-            qrThread = new Thread(QRThread);
-            qrThread.Start();
-        }
+            if (camTexture.width < 100 || !camAvailable)
+                return;
 
-        if (c == null && decodeEnabled)
-            c = camTexture.GetPixels32();
-        if (dialogEvent)
-        {
-            QRApp.downloaderController.DownloadRequestGUID = decoded.Text;
-            dialogEvent = false;
+            if (!cameraAligned)
+            {
+                rotationVector.z = -camTexture.videoRotationAngle;
+                model.cameraBuffer.rectTransform.localEulerAngles = rotationVector;
+                float videoRatio =
+                    (float)camTexture.width / (float)camTexture.height;
+                model.cameraBufferFitter.aspectRatio = videoRatio;
+                model.cameraBuffer.uvRect =
+                    camTexture.videoVerticallyMirrored ? fixedRect : defaultRect;
+                cameraAligned = true;
+                videoWidth = camTexture.width;
+                _width = Mathf.CeilToInt((camTexture.width * (model.qrFrameRect.rect.size.x / model.cameraFrameRect.rect.size.x)));
+                _height = Mathf.CeilToInt((camTexture.height * (model.qrFrameRect.rect.size.y / model.cameraFrameRect.rect.size.y)));
+                offset_X = (camTexture.width - _width) / 2;
+                offset_Y = (camTexture.height - _height) / 2;
+                buffer = new Color32[_width * _height];
+                qrThread = new Thread(QRThread);
+                qrThread.Start();
+            }
+
+            if (c == null && decodeEnabled)
+                c = camTexture.GetPixels32();
+            if (dialogEvent)
+            {
+                QRApp.downloaderController.DownloadRequestGUID = decoded.Text;
+                dialogEvent = false;
+            }
         }
     }
 }

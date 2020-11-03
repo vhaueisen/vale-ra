@@ -249,6 +249,10 @@ public class InventoryController : ApplicationElement
         MainApp.inventoryModel.ARObjectThumbnails.Add(model.Image);
         Digest();
     }
+    public void ToggleWindow()
+    {
+        MainApp.inventoryModel.inventoryWindow.Toggle();
+    }
 
     private void Digest()
     {

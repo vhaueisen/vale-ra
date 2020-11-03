@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿#pragma warning disable 0618
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
@@ -89,10 +90,7 @@ public class ProjectionManipulator : ApplicationElement
     {
         if (!raycast.isValid || prefab == null)
             return null;
-
-        if (m_elevateTarget != null)
-            Elevate(m_elevateTarget, -1e8f, false);
-
+        FixElevation(true);
         SetScale(1.0f);
         posTarget.position = raycast.position;
         GameObject instance = Instantiate(prefab, rotTarget.position, raycast.rotation);
@@ -102,6 +100,8 @@ public class ProjectionManipulator : ApplicationElement
         instance.transform.localScale = Vector3.one;
         SetScale(MainApp.inventoryModel.CurrentModel.InitialScaleFactor);
         ReAnchor(raycast.pose);
+        MainApp.anchorController.SetScale(MainApp.inventoryModel.CurrentModel.InitialScaleFactor);
+        MainApp.anchorController.Reload();
         return instance;
     }
 
@@ -157,10 +157,9 @@ public class ProjectionManipulator : ApplicationElement
         }
         else
             target.localScale = new Vector3(snapedScale, snapedScale, snapedScale);
+        FixElevation(false);
+        MainApp.anchorController.SetScale(snapedScale);
         MainApp.notificationComponent.Notify(string.Format("Escala: {0}%", Mathf.RoundToInt(snapedScale * 100)));
-
-        if (m_elevateTarget != null)
-            Elevate(m_elevateTarget, 0.0f, false);
     }
 
     private float Snap(float f, float proximity)
@@ -173,14 +172,29 @@ public class ProjectionManipulator : ApplicationElement
 
     public void UpdateRotation(float desiredRotation, Transform target, bool isAR)
     {
-        if (isAR)
-            projectionModel.HomeOrigin.transform.Rotate(-Vector3.up * desiredRotation * Time.deltaTime * projectionModel.RotateSpeed * MainApp.coreDataModel.Settings.Core.RotateSpeed);
-        else
-            target.Rotate(Vector3.up * desiredRotation * Time.deltaTime * projectionModel.RotateSpeed * MainApp.coreDataModel.Settings.Core.RotateSpeed);
+        target.Rotate(Vector3.up * desiredRotation * Time.deltaTime * projectionModel.RotateSpeed * MainApp.coreDataModel.Settings.Core.RotateSpeed);
     }
 
     private float elevationOffset = 0.0f;
     private Transform m_elevateTarget;
+
+    public void FixElevation(bool zero)
+    {
+
+        if (m_elevateTarget != null)
+        {
+            Vector3 targetPos = Vector3.zero;
+            if (!zero)
+            {
+                targetPos = new Vector3(
+                                m_elevateTarget.transform.localPosition.x,
+                                elevationOffset / snapedScale,
+                                m_elevateTarget.transform.localPosition.z
+                            );
+            }
+            m_elevateTarget.localPosition = targetPos;
+        }
+    }
 
     public void Elevate(Transform target, float amount, bool notificate = true)
     {
@@ -190,7 +204,7 @@ public class ProjectionManipulator : ApplicationElement
         Vector3 targetPos = new Vector3(target.transform.localPosition.x,
             elevationOffset / snapedScale,
             target.transform.localPosition.z);
-        target.transform.localPosition = Vector3.Lerp(target.localPosition, targetPos, Time.deltaTime * projectionModel.TranslateSpeed * MainApp.coreDataModel.Settings.Core.TranslateSpeed);
+        target.localPosition = Vector3.Lerp(target.localPosition, targetPos, Time.deltaTime * projectionModel.TranslateSpeed * MainApp.coreDataModel.Settings.Core.TranslateSpeed);
         if (notificate)
             MainApp.notificationComponent.Notify(string.Format("Elevacão: {0:0.00}m", elevationOffset));
     }

@@ -40,6 +40,7 @@ public class InventoryModel : ApplicationElement
     public GameObject ProjectionPrefab;
     public RectTransform loadingPanel;
     public RectTransform loadingCircle;
+    public WindowComponent inventoryWindow;
 
     public struct ItemBucket
     {

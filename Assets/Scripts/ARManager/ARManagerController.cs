@@ -1,7 +1,5 @@
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
-using UnityEngine.XR.ARSubsystems;
-
 
 public class ARManagerController : ApplicationElement
 {
@@ -9,12 +7,15 @@ public class ARManagerController : ApplicationElement
     public AROcclusionManager occlusionManager;
     public GameObject occlusionPlane;
     public GameObject transparentPlane;
-
+    public LightEstimationComponent LightEstimationComponent;
     private void Start()
     {
         occlusionManager.enabled = false;
+        LightEstimationComponent.enabled = false;
         if (MainApp.coreDataModel.Settings.IsLoaded)
-            if (MainApp.coreDataModel.Settings.Core.IsOcclusion)
-                occlusionManager.enabled = true;
+        {
+            occlusionManager.enabled = MainApp.coreDataModel.Settings.Core.IsOcclusion;
+            LightEstimationComponent.enabled = MainApp.coreDataModel.Settings.Core.EstimatingLight;
+        }
     }
 }

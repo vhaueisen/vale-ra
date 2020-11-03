@@ -111,10 +111,10 @@ public class SlicerController : ApplicationElement
 
     public void UpadateSlice(float pct)
     {
-        model.sliderPos = pct;
+        pct = 1.0f - pct;
         float t = (pct * 2.0f - 1.0f) * 1.05f;
         model.sliderLabel.text = Mathf.RoundToInt(model.sliderPos * 100.0f) + "%";
-        Vector3 direction = model.normals[model.planeIndex] * (model.invertedNormals ? 1 : -1);
+        Vector3 direction = model.normals[model.planeIndex] * (model.invertedNormals ? -1 : 1);
         float distance = t * Vector3.Distance(model.center, model.lerpingPoints[model.planeIndex]);
 
         foreach (Material m in model.materialList)
@@ -124,5 +124,11 @@ public class SlicerController : ApplicationElement
             model.Fresnel.SetVector("_PlanePosition", model.center + model.normals[model.planeIndex] * distance);
             model.Fresnel.SetVector("_PlaneNormal", direction);
         }
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.M))
+            Reload();
     }
 }

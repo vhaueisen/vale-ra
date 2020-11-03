@@ -12,18 +12,22 @@ public class SceneLoaderController : ApplicationElement
         StartCoroutine(LoadScene(SceneLoaderModel.HomeScene));
     }
 
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.P))
+            OnSceneLoader(this, new SceneLoaderEventArgs(SceneLoaderModel.ARScene));
+    }
+
     private void TweenAlpha(bool reverse)
     {
-        LeanTween.alpha(MainApp.sceneLoaderModel.loadingPanel, reverse ? 1.0f : 0.0f, 0.3f)
+        LeanTween.alpha(MainApp.sceneLoaderModel.loadingPanel, reverse ? 1.0f : 0.0f, reverse ? 0.0f : 0.3f)
             .setOnComplete
                 (() =>
                     {
                         MainApp.sceneLoaderModel.loadingPanel.gameObject.SetActive(reverse);
                         if (!reverse)
                         {
-                            MainApp.sceneLoaderModel.locomotive.LeanCancel();
                             MainApp.sceneLoaderModel.books.LeanCancel();
-                            MainApp.sceneLoaderModel.locomotive.anchoredPosition = new Vector2(400.0f, 0.0f);
                         }
                     }
                 );
@@ -33,6 +37,7 @@ public class SceneLoaderController : ApplicationElement
     {
         StopAllCoroutines();
         CloseWindows();
+        MainApp.anchorController.Destroy();
         MainApp.sceneLoaderModel.loadingPanel.gameObject.SetActive(true);
         LeanTween.play(MainApp.sceneLoaderModel.books, MainApp.sceneLoaderModel.bookSpriteSheet).setFrameRate(30);
         TweenAlpha(true);
@@ -54,7 +59,6 @@ public class SceneLoaderController : ApplicationElement
 
         MainApp.sceneLoaderModel.headerText.text = scene.sceneName;
         AsyncOperation sceneLoaderOperation = SceneManager.LoadSceneAsync(scene.sceneIndex);
-        MainApp.sceneLoaderModel.locomotive.LeanMoveLocalX(2500.0f, 10.0f);
         MainApp.toolBoxView.OnSceneLoad();
         MainApp.arSessionController.OnSceneLoad(scene.sceneIndex == SceneLoaderModel.ARScene.sceneIndex);
         while (!sceneLoaderOperation.isDone)

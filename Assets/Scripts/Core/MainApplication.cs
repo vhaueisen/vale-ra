@@ -20,7 +20,7 @@ public class MainApplication : MonoBehaviour
     public HierarchyModel hierarchyModel;
     public ARSessionController arSessionController;
     public AnimationPanelView animationPanelView;
-
+    public AnchorController anchorController;
     void Start()
     {
         DontDestroyOnLoad(this);

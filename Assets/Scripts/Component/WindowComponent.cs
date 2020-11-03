@@ -46,6 +46,15 @@ public class WindowComponent : MonoBehaviour
         ExitTween();
     }
 
+    public void Toggle()
+    {
+        state = !state;
+        if (state)
+            Enter();
+        else
+            Exit();
+    }
+
     private void EnterTween()
     {
         if (animationType == AnimationType.SlideFade)

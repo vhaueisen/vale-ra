@@ -25,6 +25,8 @@ public class ToolPanelView : ApplicationElement
     public void OnToolBoxEvent(object sender, ToolBoxEventArgs eventArgs)
     {
         ProjectionController projectionController = FindObjectOfType<ProjectionController>();
+        MainApp.toolboxModel.CurrentTool = eventArgs.ToolKey;
+        MainApp.touchView.enabled = false;
         if (projectionController != null)
             projectionController.Enabled = false;
 
@@ -33,9 +35,10 @@ public class ToolPanelView : ApplicationElement
             ChangePanel(0);
             MainApp.slicerModel.controller.Reload();
         }
-        else if (eventArgs.ToolKey == ToolBoxEventArgs.moveKey)
+        else if (eventArgs.ToolKey == ToolBoxEventArgs.scaleRotKey)
         {
             ToggleState(false);
+            MainApp.touchView.enabled = true;
             if (projectionController != null)
                 projectionController.Enabled = true;
         }
@@ -44,11 +47,31 @@ public class ToolPanelView : ApplicationElement
             ChangePanel(1);
             MainApp.hierarchyModel.ModelXml = MainApp.hierarchyModel.socariaXml.text;
         }
-        else
+        else if (eventArgs.ToolKey == ToolBoxEventArgs.animationKey)
         {
             MainApp.animationPanelView.initializePlayer();
             ChangePanel(2);
         }
+        else if (eventArgs.ToolKey == ToolBoxEventArgs.visualizeKey)
+        {
+            ToggleState(false);
+            MainApp.touchView.enabled = true;
+        }
+
+
+        if (eventArgs.ToolKey == ToolBoxEventArgs.anchorKey)
+        {
+            ToggleState(false);
+            MainApp.touchView.enabled = true;
+            MainApp.anchorController.Select();
+            if (projectionController != null)
+                projectionController.Enabled = true;
+        }
+        else
+        {
+            MainApp.anchorController.Exit();
+        }
+
     }
 
     private float animationTime = 0.75f;

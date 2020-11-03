@@ -11,6 +11,7 @@ public class SettingsView : ApplicationElement
     public Slider TranslationSlider;
     public Slider ElevationSlider;
     public Slider OcclusionSlider;
+    public Slider LightEstimationSlider;
     public Text ScaleValue;
     public Text TranslationValue;
     public Text RotationValue;
@@ -25,6 +26,7 @@ public class SettingsView : ApplicationElement
         core.RotateSpeed = RotationSlider.value;
         core.ElevateSpeed = ElevationSlider.value;
         core.IsOcclusion = (OcclusionSlider.value > 0);
+        core.EstimatingLight = (LightEstimationSlider.value > 0);
         DataEventArgs eventArgs = new DataEventArgs(DataEventArgs.UpdateEvent, core);
         MainApp.coreDataModel.Settings.OnSettingsEvent(this, eventArgs);
     }
@@ -39,6 +41,7 @@ public class SettingsView : ApplicationElement
             RotationSlider.value = core.RotateSpeed;
             ElevationSlider.value = core.ElevateSpeed;
             OcclusionSlider.value = core.IsOcclusion ? 1.0f : -1.0f;
+            LightEstimationSlider.value = core.EstimatingLight ? 1.0f : -1.0f;
             UpdateSlider();
         }
     }
@@ -58,11 +61,17 @@ public class SettingsView : ApplicationElement
         UpdateVars();
     }
 
+    public void UpdateLightEstimation()
+    {
+        LightEstimationSlider.value = LightEstimationSlider.value * -1;
+        UpdateVars();
+    }
+
     private void Start()
     {
         LoadVars();
-        if (Debug.isDebugBuild)
-            OcclusionContainer.SetActive(true);
+        // if (Debug.isDebugBuild)
+        //     OcclusionContainer.SetActive(true);
     }
 
     public void Disconnect()

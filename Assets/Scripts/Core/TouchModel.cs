@@ -11,7 +11,6 @@ public class TouchModel : ApplicationElement
     public static byte Idle = 0;
     public static byte Swiping = 1;
     public static byte Pinching = 2;
-    public static byte LongPressing = 3;
     public static byte Elevating = 4;
 
     // By how much?

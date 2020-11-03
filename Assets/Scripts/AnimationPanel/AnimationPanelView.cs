@@ -11,13 +11,11 @@ public class AnimationPanelView : ApplicationElement
     private Animator m_assetAnimator;
     public static bool pause = true;
     private string currentPlaying;
-
     public void initializePlayer()
     {
         m_assetAnimator = FindObjectOfType<ProjectionModel>().CurrentInstance.GetComponent<Animator>();
         if (m_assetAnimator == null)
             return;
-
         animationList.AddOptions(m_assetAnimator.runtimeAnimatorController.animationClips.Select(o => o.name).ToList());
     }
 
@@ -32,7 +30,6 @@ public class AnimationPanelView : ApplicationElement
     public Image pauseButtonImage;
     public Button forwardButton;
     public Button backwardButton;
-
     public Sprite pausedSprite;
     public Sprite playSprite;
     private void updateFowardButtons()
@@ -88,7 +85,6 @@ public class AnimationPanelView : ApplicationElement
 
     public Transform animationCameraTransform;
     public Transform targetCameraTransform;
-    private bool hasExited = true;
 
     private void PlayAnimation()
     {
@@ -121,7 +117,6 @@ public class AnimationPanelView : ApplicationElement
 
     private void ExitPlayMode(bool smooth = true)
     {
-        hasExited = true;
         StopAllCoroutines();
         if (smooth)
         {

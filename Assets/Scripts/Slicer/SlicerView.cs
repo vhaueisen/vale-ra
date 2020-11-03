@@ -10,7 +10,7 @@
     public void ToggleNormal()
     {
         model.invertedNormals = !model.invertedNormals;
-        model.normalsSlider.value = model.invertedNormals ? 1 : -1;
+        model.normalsSlider.value = model.invertedNormals ? -1 : 1;
         model.controller.UpadateSlice();
     }
 

@@ -11,9 +11,10 @@ public class ToolboxView : ApplicationElement
     private float t;
     private float target;
     private Camera mainCamera;
-    private Transform currentTool;
+    private RectTransform currentTool;
     public event EventHandler<ToolBoxEventArgs> toolBoxEvent;
-    private byte m_currentState = 0;
+    private byte m_currentState = ToolBoxEventArgs.anchorKey;
+    private float m_offset;
     protected virtual void OnToolChange(byte toolKey)
     {
         toolBoxEvent(this, new ToolBoxEventArgs(toolKey));
@@ -21,29 +22,35 @@ public class ToolboxView : ApplicationElement
 
     public void ChangeObject(ARObejctModel script)
     {
-        if (m_currentState != ToolBoxEventArgs.moveKey)
-            ChangeTool(model.moveTool);
+        if (m_currentState != ToolBoxEventArgs.anchorKey)
+            ChangeTool(model.anchorBtn);
         Toolbox tools = new Toolbox(script.toolbox);
-        Transform[] btns = new Transform[]
-        {
-            model.sliceBtn.transform,
-            model.hierarchyBtn.transform,
-            model.animationBtn.transform
-        };
+        ReArangeBtns(tools);
+    }
 
+    private void ReArangeBtns(Toolbox tools)
+    {
+        GameObject[] btns = new GameObject[]
+        {
+            model.sliceBtn.gameObject,
+            model.hierarchyBtn.gameObject,
+            model.animationBtn.gameObject
+        };
+        m_offset = 600;
         for (int i = 0; i < btns.Length; i++)
+        {
+            btns[i].SetActive(tools.btnStates[i]);
             if (tools.btnStates[i])
-                btns[i].SetParent(model.containerTransform);
-            else
-                btns[i].SetParent(model.hiddenTools);
+                m_offset = m_offset + 200;
+        }
+        Vector2 offset = new Vector2(m_offset, 175);
+        model.btnPanel.sizeDelta = offset;
+        model.btnContainer.sizeDelta = offset;
     }
 
     private void Start()
     {
         model = MainApp.toolboxModel;
-        containerBackground = model.containerTransform.GetComponent<Image>();
-        currentTool = model.currentToolTransform.GetChild(0).transform;
-        model.containerTransform = model.container.GetComponent<RectTransform>();
     }
 
     public void ToggleView(RectTransform toolToChange)
@@ -57,64 +64,64 @@ public class ToolboxView : ApplicationElement
 
     public void OnSceneLoad()
     {
-        if (m_currentState != ToolBoxEventArgs.moveKey)
-            ChangeTool(model.moveTool);
+        if (m_currentState != ToolBoxEventArgs.anchorKey)
+            ChangeTool(model.anchorBtn);
+    }
+    private float m_animationSpeed = 0.3f;
+
+    private void CancelTweens()
+    {
+        model.toolRectangle.LeanCancel();
+        model.btnPanel.LeanCancel();
+        model.btnContainer.LeanCancel();
+        if (currentTool != null)
+            currentTool.LeanCancel();
     }
     private void Show()
     {
-        ToggleConteinerBtn(true);
-        target = model.openSize;
-        StopAllCoroutines();
-        StartCoroutine(LerpToTarget());
-    }
-
-    private IEnumerator LerpToTarget()
-    {
-        t = 0.0f;
-        while (t <= 1.0f)
-        {
-            t += Time.deltaTime * ToolboxModel.speed;
-            model.containerTransform.sizeDelta =
-                new Vector2(Mathf.Lerp(model.containerTransform.sizeDelta.x,
-                    target, t), model.containerTransform.sizeDelta.y);
-            model.tooboxPanel.color = model.panelColor +
-                new Color(0, 0, 0, (target > 0) ? (1.0f - t) : t * 0.5f);
-            yield return new WaitForEndOfFrame();
-        }
-        yield break;
+        CancelTweens();
+        model.toolRectangle.LeanAlpha(0.0f, m_animationSpeed);
+        model.toolboxMask.enabled = false;
+        model.btnPanel.LeanAlpha(
+            0.5f, 1.3f * m_animationSpeed
+        ).setRecursive(false);
+        model.btnPanel.LeanMoveX(
+            0.0f, m_animationSpeed
+        );
+        model.btnContainer.LeanAlpha(
+            1.0f, m_animationSpeed
+        );
     }
 
     private void Hide()
     {
-        target = 0.0f;
-        StopAllCoroutines();
-        StartCoroutine(LerpToTarget());
-        ToggleConteinerBtn(false);
-    }
-
-    private void ToggleConteinerBtn(bool b)
-    {
-        foreach (GameObject obj in model.containerBtnList)
-            obj.SetActive(b);
-        currentTool.gameObject.SetActive(true);
-        if (!b)
-            model.containerImgList[
-                Array.IndexOf(model.containerBtnList,
-                    currentTool.gameObject)].color =
-                        new Color(1.0f, 1.0f, 1.0f, 0.5f);
-        else
-            foreach (Image i in model.containerImgList)
-                i.color = Color.white;
+        CancelTweens();
+        model.toolRectangle.LeanAlpha(0.5f, m_animationSpeed);
+        model.btnPanel.LeanAlpha(
+            0.0f, 1.3f * m_animationSpeed
+        ).setRecursive(false).setOnComplete(
+            () =>
+            {
+                model.toolboxMask.enabled = true;
+                model.toolRectangle.gameObject.SetActive(true);
+            }
+        );
+        model.btnPanel.LeanMoveX(
+            m_offset - 150 - currentTool.anchoredPosition.x, m_animationSpeed
+        );
+        model.btnContainer.LeanAlpha(
+            0.0f, m_animationSpeed
+        );
+        currentTool.LeanCancel();
+        currentTool.LeanAlpha(
+            0.75f, m_animationSpeed
+        );
     }
 
     private void ChangeTool(RectTransform toolToChange)
     {
         DecodeName(toolToChange.name);
-        currentTool = model.currentToolTransform.GetChild(0);
-        currentTool.SetParent(model.containerTransform);
-        toolToChange.SetParent(model.currentToolTransform);
-        toolToChange.anchoredPosition = Vector2.zero;
-        currentTool = toolToChange.transform;
+        currentTool = toolToChange;
         Hide();
     }
 
@@ -127,8 +134,12 @@ public class ToolboxView : ApplicationElement
             m_currentState = ToolBoxEventArgs.hierarchyKey;
         else if (name.Contains("slice"))
             m_currentState = ToolBoxEventArgs.sliceKey;
-        else
-            m_currentState = ToolBoxEventArgs.moveKey;
+        else if (name.Contains("size"))
+            m_currentState = ToolBoxEventArgs.scaleRotKey;
+        else if (name.Contains("anchor"))
+            m_currentState = ToolBoxEventArgs.anchorKey;
+        else if (name.Contains("visualize"))
+            m_currentState = ToolBoxEventArgs.visualizeKey;
         toolBoxEvent(this, new ToolBoxEventArgs(m_currentState));
     }
 
@@ -154,8 +165,7 @@ public class ToolboxView : ApplicationElement
         }
 
         if (click && !RectTransformUtility.RectangleContainsScreenPoint(
-             model.containerTransform,
-             position))
+             model.btnContainer, position))
         {
             model.state = !model.state;
             Hide();

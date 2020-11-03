@@ -14,6 +14,11 @@ public class HierarchyPopupView : MonoBehaviour
         HierarchyNodeView.NodeEvent += OnNodeViewEvent;
     }
 
+    void OnDestroy()
+    {
+        HierarchyNodeView.NodeEvent -= OnNodeViewEvent;
+    }
+
     private void OnNodeViewEvent(object sender, NodeViewEventArgs eventArgs)
     {
         content.SetActive(true);

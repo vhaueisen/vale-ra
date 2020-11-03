@@ -22,4 +22,5 @@ public class ProjectionModel : ApplicationElement
     public readonly float MaxElevation = 10.0f;
     public readonly float ScaleSnapProximity = 0.02f;
     public Quaternion instanceRotation = Quaternion.identity;
+    public AnchorController anchorController;
 }

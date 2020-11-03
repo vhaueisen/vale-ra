@@ -16,10 +16,12 @@ public class ToolBoxEventArgs : EventArgs
     }
 
     public byte ToolKey;
-    public const byte moveKey = 0;
+    public const byte scaleRotKey = 0;
     public const byte animationKey = 1;
     public const byte hierarchyKey = 2;
     public const byte sliceKey = 3;
+    public const byte anchorKey = 4;
+    public const byte visualizeKey = 5;
     public byte Mode;
     public const byte Update = 0;
     public const byte Deactivate = 1;
@@ -27,23 +29,8 @@ public class ToolBoxEventArgs : EventArgs
 
 public class ToolboxModel : ApplicationElement
 {
-    public GameObject container;
     public GameObject[] containerBtnList;
-    public Image[] containerImgList;
-    public RectTransform containerTransform;
-    public RectTransform currentToolTransform;
     public bool state = false;
-    public float openSize
-    {
-        get
-        {
-            return containerTransform.childCount > 0 ?
-                75.0f + 150.0f * (containerTransform.childCount + 1) : 0.0f;
-        }
-    }
-    public const float speed = 7.5f;
-    public Image tooboxPanel;
-    public Color panelColor;
     public struct Toolbox
     {
         public Toolbox(string toolbox)
@@ -83,11 +70,13 @@ public class ToolboxModel : ApplicationElement
                     continue;
                 }
             }
-#if UNITY_EDITOR
-            slice = true;
-            hierarchy = true;
-            animation = true;
-#endif
+            animation = false;
+            hierarchy = false;
+            // #if UNITY_EDITOR
+            //             slice = true;
+            //             hierarchy = true;
+            //             animation = true;
+            // #endif
             btnStates = new bool[] { slice, hierarchy, animation };
         }
         public bool slice;
@@ -95,9 +84,15 @@ public class ToolboxModel : ApplicationElement
         public bool animation;
         public bool[] btnStates;
     }
-    public GameObject sliceBtn;
-    public GameObject hierarchyBtn;
-    public GameObject animationBtn;
-    public RectTransform moveTool;
-    public Transform hiddenTools;
+    public RectTransform moveBtn;
+    public RectTransform sliceBtn;
+    public RectTransform hierarchyBtn;
+    public RectTransform animationBtn;
+    public RectTransform anchorBtn;
+    public byte CurrentTool = ToolBoxEventArgs.anchorKey;
+    public RectTransform btnContainer;
+    public RectTransform btnPanel;
+    public Mask toolboxMask;
+    public RectTransform toolRectangle;
+
 }
