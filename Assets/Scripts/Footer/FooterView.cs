@@ -39,4 +39,9 @@ public class FooterView : ApplicationElement
     {
         OnSceneLoader(SceneLoaderModel.SettingsScene);
     }
+
+    public void LoadQuickStartScene()
+    {
+        OnSceneLoader(SceneLoaderModel.QuickStartScene);
+    }
 }

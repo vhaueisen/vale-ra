@@ -21,6 +21,7 @@ public class MainApplication : MonoBehaviour
     public ARSessionController arSessionController;
     public AnimationPanelView animationPanelView;
     public AnchorController anchorController;
+    public QuickStartController quickStartController;
     void Start()
     {
         DontDestroyOnLoad(this);

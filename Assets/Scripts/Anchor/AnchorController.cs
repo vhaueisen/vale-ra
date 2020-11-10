@@ -14,7 +14,7 @@ public class AnchorController : ApplicationElement
             model.screenCamera = m_projectionController.projectionModel.MainCamera;
             model.elevationTarget = m_projectionController.projectionModel.RotateComponent;
             GameObject instance = Instantiate(model.AnchorPrefab, Vector3.zero, Quaternion.identity, model.elevationTarget.parent);
-            instance.transform.localPosition = Vector3.zero + 0.05f * Vector3.up;
+            instance.transform.localPosition = Vector3.zero + 0.1f * Vector3.up;
             model.anchorTransform = instance.transform;
             model.elevationRenderer = instance.GetComponent<LineRenderer>();
             model.selectionRenderer = instance.GetComponent<MeshRenderer>();
@@ -100,7 +100,7 @@ public class AnchorController : ApplicationElement
                 model.anchorImage.position = model.screenCamera.WorldToScreenPoint(model.anchorTransform.GetChild(0).position);
 
             ARPlane[] planes = FindObjectsOfType<ARPlane>();
-            
+
         }
     }
 }

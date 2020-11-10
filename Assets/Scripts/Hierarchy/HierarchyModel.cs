@@ -55,11 +55,8 @@ public class HierarchyModel : ApplicationElement
             HierarchyNodeController.hierarchyModel = this;
             return true;
         }
-        catch (System.Exception e)
+        catch (Exception)
         {
-#if UNITY_EDITOR
-            Debug.Log(e.ToString());
-#endif
             return false;
         }
     }

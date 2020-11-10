@@ -6,7 +6,6 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading;
 using System;
-using UnityEngine;
 
 [System.Serializable]
 public class DataModel

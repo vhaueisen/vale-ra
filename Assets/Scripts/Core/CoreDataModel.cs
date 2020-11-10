@@ -16,6 +16,7 @@ public class UserSettings : DataModel
         public float ElevateSpeed;
         public bool IsOcclusion;
         public bool EstimatingLight;
+        public bool quickStartCompleted;
 
         public UserData(bool initialize)
         {
@@ -25,6 +26,7 @@ public class UserSettings : DataModel
             ElevateSpeed = 1.0f;
             IsOcclusion = false;
             EstimatingLight = false;
+            quickStartCompleted = false;
         }
     }
     public UserData Core = new UserData(true);

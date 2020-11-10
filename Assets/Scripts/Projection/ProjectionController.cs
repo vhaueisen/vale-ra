@@ -6,6 +6,7 @@
     {
         get => snapedScale;
     }
+
     private void Start()
     {
         MainApp.touchView.TouchStateMachine += OnTouchStateChange;
@@ -57,7 +58,7 @@
                 {
                     UpdatePosition(raycast, projectionModel.ModelContainer, projectionModel.ARMode);
                 }
-                else
+                else if (MainApp.inventoryModel.CurrentModel != null)
                 {
                     if (!(MainApp.inventoryModel.CurrentModel.ARImage && SceneLoaderModel.CurrentScene.sceneIndex == SceneLoaderModel.ARScene.sceneIndex))
                     {

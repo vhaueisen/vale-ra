@@ -2,13 +2,28 @@ using UnityEngine;
 
 public class VisualizeController : ApplicationElement
 {
-    private Transform m_target;
-    private Transform m_lookAt;
-    private float[] m_clampedRot = new float[] { -40.0f, 40.0f };
-    private float m_horizontalVelocity = 2.0f;
-    private float m_verticalVelocity = 2.0f;
-    private float m_xRotation = 20.0f;
+    private Transform m_originTransform;
+    private Transform m_cameraTransform;
+    private Camera m_camera;
+    private float m_velocity = 0.225f;
     private byte m_touchState = 0;
+    private float maxAngle = 28.0f;
+    private Vector3 center = new Vector3(0f, 0.1f, 1f);
+
+    Vector3 ClampVector(Vector3 direction, Vector3 center, float maxAngle)
+    {
+        float angle = Vector3.Angle(center, direction);
+        if (angle > maxAngle)
+        {
+            direction.Normalize();
+            center.Normalize();
+            Vector3 rotation = (direction - center) / angle;
+            m_rigidBodies[1].angularVelocity = Vector3.zero;
+            m_rigidBodies[1].velocity = Vector3.zero;
+            return (rotation * maxAngle) + center;
+        }
+        return direction;
+    }
 
     void Start()
     {
@@ -33,26 +48,53 @@ public class VisualizeController : ApplicationElement
         m_touchState = eventArgs.currentState;
     }
 
+    private Rigidbody[] m_rigidBodies;
     private void Reload()
     {
-        ProjectionModel model = FindObjectOfType<ProjectionModel>();
-        m_lookAt = model.HomeOrigin.transform;
-        m_target = model.MainCamera.transform;
+        if (SceneLoaderModel.CurrentScene.sceneIndex == SceneLoaderModel.HomeScene.sceneIndex)
+        {
+            ProjectionModel model = FindObjectOfType<ProjectionModel>();
+            m_camera = model.MainCamera;
+            m_cameraTransform = model.MainCamera.transform;
+            m_originTransform = model.MainCamera.transform.parent.parent;
+            m_rigidBodies = m_originTransform.parent.GetComponentsInChildren<Rigidbody>();
+        }
     }
 
-    private void Update()
+    private void LateUpdate()
     {
-        if (
-            SceneLoaderModel.CurrentScene.sceneIndex == SceneLoaderModel.HomeScene.sceneIndex &&
-            m_touchState > 0 &&
-            m_touchState == TouchModel.Swiping &&
-            MainApp.toolboxModel.CurrentTool == ToolBoxEventArgs.visualizeKey &&
-            !MainApp.inventoryModel.inventoryWindow.state
-        )
+        if (m_cameraTransform && MainApp.toolboxModel.CurrentTool == ToolBoxEventArgs.visualizeKey)
         {
-            m_xRotation = Mathf.Clamp(m_xRotation + MainApp.touchModel.SwipeAmount.y * m_verticalVelocity * Time.deltaTime, m_clampedRot[0], m_clampedRot[1]);
-            m_target.eulerAngles = new Vector3(m_xRotation, m_target.eulerAngles.y, m_target.eulerAngles.z);
-            m_target.RotateAround(m_lookAt.transform.position, Vector3.up, MainApp.touchModel.SwipeAmount.x * m_horizontalVelocity * Time.deltaTime);
+            m_rigidBodies[1].transform.forward = ClampVector(m_rigidBodies[1].transform.forward, center, maxAngle);
+            m_originTransform.localRotation = m_rigidBodies[0].rotation;
+            m_cameraTransform.localRotation = m_rigidBodies[1].rotation;
+            if (SceneLoaderModel.CurrentScene.sceneIndex == SceneLoaderModel.HomeScene.sceneIndex &&
+                m_touchState == TouchModel.Pinching &&
+                !MainApp.inventoryModel.inventoryWindow.state)
+            {
+                m_camera.fieldOfView = Mathf.Clamp(m_camera.fieldOfView - MainApp.touchModel.PinchAmount * m_velocity * 0.1f, 30f, 105f);
+            }
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (m_cameraTransform && MainApp.toolboxModel.CurrentTool == ToolBoxEventArgs.visualizeKey)
+        {
+            if (
+                SceneLoaderModel.CurrentScene.sceneIndex == SceneLoaderModel.HomeScene.sceneIndex &&
+                m_touchState == TouchModel.Swiping &&
+                !MainApp.inventoryModel.inventoryWindow.state
+            )
+            {
+                m_rigidBodies[0].AddTorque(
+                    Vector3.up * MainApp.touchModel.SwipeAmount.x * m_velocity
+                );
+                m_rigidBodies[1].AddTorque(
+                    transform.right * MainApp.touchModel.SwipeAmount.y * m_velocity * 0.5f
+                );
+            }
+            LateUpdate();
         }
     }
 }

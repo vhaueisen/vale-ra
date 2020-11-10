@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.39198115, g: 0.40182015, b: 0.382721, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311956, g: 0.3807402, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -99,7 +99,7 @@ LightmapSettings:
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 112000000, guid: 8e7daa1b78cc11f49a8102a64747527b,
     type: 2}
-  m_LightingSettings: {fileID: 4890085278179872738, guid: 07be15a46123a6e41b15061e0b70114f,
+  m_LightingSettings: {fileID: 4890085278179872738, guid: 7f4bde6a44a8c3c4b9837ed5b9e63878,
     type: 2}
 --- !u!196 &4
 NavMeshSettings:
@@ -3981,7 +3981,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 400, y: 175}
+  m_SizeDelta: {x: 600, y: 175}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &1099924410
 MonoBehaviour:
@@ -4593,7 +4593,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -80, y: 0}
+  m_AnchoredPosition: {x: -80.00012, y: 0}
   m_SizeDelta: {x: -60, y: 0}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1419033211
@@ -10607,6 +10607,7 @@ MonoBehaviour:
   arSessionController: {fileID: 2157525857673189813}
   animationPanelView: {fileID: 2157525858165373264}
   anchorController: {fileID: 2157525857673189814}
+  quickStartController: {fileID: 2157525857673189816}
 --- !u!114 &2157525857673189794
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10650,6 +10651,7 @@ GameObject:
   - component: {fileID: 2157525857673189813}
   - component: {fileID: 2157525857673189814}
   - component: {fileID: 2157525857673189815}
+  - component: {fileID: 2157525857673189816}
   m_Layer: 0
   m_Name: Controller
   m_TagString: Untagged
@@ -10777,6 +10779,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1da19e025b308784a8b6e94e0406b323, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2157525857673189816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2157525857673189806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bdbd346193c00343a77eff9b85b0955, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  model: {fileID: 0}
 --- !u!114 &2157525857894418032
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11100,6 +11115,7 @@ GameObject:
   - component: {fileID: 2157525858165373259}
   - component: {fileID: 2157525858165373261}
   - component: {fileID: 2157525858165373264}
+  - component: {fileID: 2157525858165373265}
   m_Layer: 0
   m_Name: View
   m_TagString: Untagged
@@ -11213,6 +11229,19 @@ MonoBehaviour:
   animationCameraTransform: {fileID: 0}
   targetCameraTransform: {fileID: 0}
   timeline: {fileID: 7766771485105540720}
+--- !u!114 &2157525858165373265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2157525858165373257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c90a3d61e2f50df4e895d74399773d1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  model: {fileID: 0}
 --- !u!1 &2190808259191001805
 GameObject:
   m_ObjectHideFlags: 0
@@ -12887,6 +12916,7 @@ MonoBehaviour:
       ElevateSpeed: 0
       IsOcclusion: 0
       EstimatingLight: 0
+      quickStartCompleted: 0
   Inventory:
     IsLoaded: 0
     DataName: 
@@ -14536,7 +14566,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 400, y: 175}
+  m_SizeDelta: {x: 600, y: 175}
   m_Pivot: {x: 1, y: 0}
 --- !u!222 &6027152317398747311
 CanvasRenderer:

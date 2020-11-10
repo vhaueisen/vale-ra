@@ -14,8 +14,8 @@ public class ARSessionController : ApplicationElement
 
         if (ARSession.state == ARSessionState.Unsupported)
         {
-            MainApp.footerView.UnsupportedAR();
-            session.enabled = false;
+            // MainApp.footerView.UnsupportedAR();
+            // session.enabled = false;
         }
     }
 

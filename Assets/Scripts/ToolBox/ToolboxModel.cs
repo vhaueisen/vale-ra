@@ -35,7 +35,6 @@ public class ToolboxModel : ApplicationElement
     {
         public Toolbox(string toolbox)
         {
-            Debug.Log(toolbox);
             slice = false;
             hierarchy = false;
             animation = false;

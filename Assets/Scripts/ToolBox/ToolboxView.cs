@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections;
 using UnityEngine.UI;
 using System;
 using static ToolboxModel;
@@ -14,7 +13,7 @@ public class ToolboxView : ApplicationElement
     private RectTransform currentTool;
     public event EventHandler<ToolBoxEventArgs> toolBoxEvent;
     private byte m_currentState = ToolBoxEventArgs.anchorKey;
-    private float m_offset;
+    private float m_offset = 600.0f;
     protected virtual void OnToolChange(byte toolKey)
     {
         toolBoxEvent(this, new ToolBoxEventArgs(toolKey));

@@ -20,6 +20,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Settings.unity
     guid: 86687888707b3be4b949292fdf24e2c7
+  - enabled: 1
+    path: Assets/Scenes/QuickStart.unity
+    guid: 7619b1c630f499143bb9cd52f08cffca
   m_configObjects:
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 02677700090269a46b767a78a7b53c44,
       type: 2}

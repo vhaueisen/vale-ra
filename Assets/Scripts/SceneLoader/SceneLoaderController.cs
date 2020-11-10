@@ -9,7 +9,10 @@ public class SceneLoaderController : ApplicationElement
     {
         LeanTween.play(MainApp.sceneLoaderModel.books, MainApp.sceneLoaderModel.bookSpriteSheet).setFrameRate(30);
         MainApp.footerView.SceneLoaderEvent += OnSceneLoader;
-        StartCoroutine(LoadScene(SceneLoaderModel.HomeScene));
+        if (MainApp.quickStartController.IsCompleted())
+            StartCoroutine(LoadScene(SceneLoaderModel.HomeScene));
+        else
+            StartCoroutine(LoadScene(SceneLoaderModel.QuickStartScene));
     }
 
     public void Update()
@@ -71,6 +74,8 @@ public class SceneLoaderController : ApplicationElement
         if (cameraScene)
             yield return new WaitForSeconds(1.0f);
         TweenAlpha(false);
+        if (scene.sceneIndex == SceneLoaderModel.QuickStartScene.sceneIndex)
+            MainApp.quickStartController.Initialize();
         yield break;
     }
 
