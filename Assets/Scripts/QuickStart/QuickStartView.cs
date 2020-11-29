@@ -46,6 +46,10 @@
 
     public void SwitchPanel(int i)
     {
+        if (model.currentIdx == 2)
+            if (!model.controller.RequestCamera())
+                return;
+
         float width = model.container.rect.width;
         int previousIdx = model.currentIdx;
         model.currentIdx = i;
@@ -57,6 +61,8 @@
                 model.controller.Done();
             return;
         }
+
+
         PlayBookAnim(model.currentIdx == 0);
         CurrentGuideLabel();
         model.panelList[previousIdx].LeanAlpha(0f, m_animationTime).setEase(LeanTweenType.easeOutExpo);

@@ -5,9 +5,9 @@ public class VisualizeController : ApplicationElement
     private Transform m_originTransform;
     private Transform m_cameraTransform;
     private Camera m_camera;
-    private float m_velocity = 0.225f;
+    private float m_velocity = 0.005f;
     private byte m_touchState = 0;
-    private float maxAngle = 28.0f;
+    private float maxAngle = 27.0f;
     private Vector3 center = new Vector3(0f, 0.1f, 1f);
 
     Vector3 ClampVector(Vector3 direction, Vector3 center, float maxAngle)
@@ -72,7 +72,7 @@ public class VisualizeController : ApplicationElement
                 m_touchState == TouchModel.Pinching &&
                 !MainApp.inventoryModel.inventoryWindow.state)
             {
-                m_camera.fieldOfView = Mathf.Clamp(m_camera.fieldOfView - MainApp.touchModel.PinchAmount * m_velocity * 0.1f, 30f, 105f);
+                m_camera.fieldOfView = Mathf.Clamp(m_camera.fieldOfView - MainApp.touchModel.PinchAmount * m_velocity * 200f * Time.deltaTime, 30f, 105f);
             }
         }
     }
@@ -88,13 +88,12 @@ public class VisualizeController : ApplicationElement
             )
             {
                 m_rigidBodies[0].AddTorque(
-                    Vector3.up * MainApp.touchModel.SwipeAmount.x * m_velocity
+                    Vector3.up * MainApp.touchModel.SwipeAmount.x * (m_velocity / Time.fixedDeltaTime)
                 );
                 m_rigidBodies[1].AddTorque(
-                    transform.right * MainApp.touchModel.SwipeAmount.y * m_velocity * 0.5f
+                    transform.right * MainApp.touchModel.SwipeAmount.y * m_velocity * (0.5f / Time.fixedDeltaTime)
                 );
             }
-            LateUpdate();
         }
     }
 }

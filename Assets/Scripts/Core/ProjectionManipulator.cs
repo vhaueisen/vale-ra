@@ -94,6 +94,7 @@ public class ProjectionManipulator : ApplicationElement
         SetScale(1.0f);
         posTarget.position = raycast.position;
         GameObject instance = Instantiate(prefab, rotTarget.position, raycast.rotation);
+        instance.layer = 10;
         projectionModel.instanceRotation = raycast.rotation;
         instance.transform.position = instance.transform.position + Vector3.down * MainApp.inventoryModel.CurrentModel.YOffset;
         instance.transform.SetParent(rotTarget);

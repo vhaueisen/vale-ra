@@ -137,7 +137,7 @@ public class BundleManagerController : ApplicationElement
             if (SceneLoaderModel.CurrentScene.sceneIndex == SceneLoaderModel.ARScene.sceneIndex)
             {
                 MainApp.notificationComponent.Notify(
-                    loadModel.ARImage ? "Aproxime câmera do seu dispositivo da imagem" : "Pressione e segure no local de ancoragem do objeto"
+                    loadModel.ARImage ? "Aproxime câmera do seu dispositivo da imagem" : "Pressione no local de ancoragem do objeto"
                 );
             }
             else

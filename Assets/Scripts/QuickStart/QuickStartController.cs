@@ -1,4 +1,5 @@
 using static DataModel;
+using UnityEngine.Android;
 
 public class QuickStartController : ApplicationElement
 {
@@ -30,5 +31,16 @@ public class QuickStartController : ApplicationElement
         DataEventArgs eventArgs = new DataEventArgs(DataEventArgs.UpdateEvent, MainApp.coreDataModel.Settings.Core);
         MainApp.coreDataModel.Settings.OnSettingsEvent(this, eventArgs);
         MainApp.footerView.LoadHomeScene();
+    }
+
+    public bool RequestCamera()
+    {
+#if UNITY_ANDROID
+        if (!Permission.HasUserAuthorizedPermission(Permission.Camera))
+            Permission.RequestUserPermission(Permission.Camera);
+        return Permission.HasUserAuthorizedPermission(Permission.Camera);
+#else
+        return true;
+#endif
     }
 }

@@ -4,6 +4,7 @@ using UnityEngine.XR.ARFoundation;
 public class AnchorController : ApplicationElement
 {
     public AnchorModel model;
+    private bool hasInstance = true;
     private ProjectionController m_projectionController;
     public void Reload()
     {
@@ -18,6 +19,7 @@ public class AnchorController : ApplicationElement
             model.anchorTransform = instance.transform;
             model.elevationRenderer = instance.GetComponent<LineRenderer>();
             model.selectionRenderer = instance.GetComponent<MeshRenderer>();
+            model.elevationRenderer.material.mainTextureScale = new Vector2(SceneLoaderModel.CurrentScene.sceneIndex == SceneLoaderModel.ARScene.sceneIndex ? 9f : 5.5f, 1f);
             m_destroyed = false;
             Select();
         }
@@ -98,9 +100,24 @@ public class AnchorController : ApplicationElement
             }
             if (model.selected)
                 model.anchorImage.position = model.screenCamera.WorldToScreenPoint(model.anchorTransform.GetChild(0).position);
+            if (SceneLoaderModel.CurrentScene.sceneIndex == SceneLoaderModel.ARScene.sceneIndex)
+                CheckForInstance();
+        }
+    }
 
-            ARPlane[] planes = FindObjectsOfType<ARPlane>();
-
+    private void CheckForInstance()
+    {
+        if (m_projectionController.projectionModel.CurrentInstance == null && hasInstance)
+        {
+            hasInstance = false;
+            model.selectionRenderer.gameObject.SetActive(hasInstance);
+            model.anchorImage.gameObject.SetActive(hasInstance);
+        }
+        else if (m_projectionController.projectionModel.CurrentInstance != null && !hasInstance)
+        {
+            hasInstance = true;
+            model.selectionRenderer.gameObject.SetActive(hasInstance);
+            model.anchorImage.gameObject.SetActive(hasInstance);
         }
     }
 }

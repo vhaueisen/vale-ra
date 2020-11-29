@@ -3,24 +3,20 @@ using UnityEngine.XR.ARFoundation;
 
 public class ARSessionController : ApplicationElement
 {
-    public ARSession session;
+    private static bool m_enabled = false;
+    public static bool IsSessionEnabled
+    {
+        get => m_enabled;
+    }
     IEnumerator Start()
     {
         if ((ARSession.state == ARSessionState.None) ||
             (ARSession.state == ARSessionState.CheckingAvailability))
-        {
             yield return ARSession.CheckAvailability();
-        }
 
         if (ARSession.state == ARSessionState.Unsupported)
-        {
-            // MainApp.footerView.UnsupportedAR();
-            // session.enabled = false;
-        }
-    }
-
-    public void OnSceneLoad(bool arScene)
-    {
-        session.enabled = arScene;
+            MainApp.footerView.UnsupportedAR();
+        else
+            m_enabled = true;
     }
 }

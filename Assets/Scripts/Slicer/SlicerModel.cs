@@ -16,7 +16,6 @@ public class SlicerModel : ApplicationElement
     public Text sliderLabel;
     public Vector3 offset;
     public Vector3 boxSize;
-    public float sliderPos;
     public Slider holoSlider;
     public Vector3[] lerpingPoints = new Vector3[3];
     public Vector3[] normals;

@@ -1,10 +1,11 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class SlicerController : ApplicationElement
 {
+    private float m_currentPos;
+    public GameObject hitPoint;
     private SlicerModel model;
     private void Start()
     {
@@ -32,7 +33,7 @@ public class SlicerController : ApplicationElement
         StopAllCoroutines();
 
         Transform modelTransform = model.rotateComponent.GetChild(0).transform;
-        BoxCollider bc = model.rotateComponent.GetChild(0).GetComponent<BoxCollider>();
+        BoxCollider bc = modelTransform.GetComponent<BoxCollider>();
         model.center = modelTransform.TransformPoint(bc.center);
 
         model.normals = new Vector3[] {
@@ -53,19 +54,8 @@ public class SlicerController : ApplicationElement
     private IEnumerator LoadShaders()
     {
         yield return new WaitForEndOfFrame();
-        UpadateSlice();
+        UpdateSlice();
         yield break;
-    }
-
-    private void PositionPlanes()
-    {
-        List<Renderer> renderList = new List<Renderer>(model.rotateComponent.GetComponentsInChildren<Renderer>());
-        Bounds boundingBox = new Bounds(model.rotateComponent.transform.position, Vector3.zero);
-        foreach (Renderer r in renderList)
-            boundingBox.Encapsulate(r.bounds);
-
-        model.boxSize = boundingBox.size;
-        model.offset = boundingBox.center - model.rotateComponent.transform.position;
     }
 
     private Material[] GetMaterials(Transform parent)
@@ -104,16 +94,17 @@ public class SlicerController : ApplicationElement
         model.holoSlider.value = model.holoSlider.value * -1;
     }
 
-    public void UpadateSlice()
+    public void UpdateSlice()
     {
-        UpadateSlice(model.sliderPos);
+        UpdateSlice(m_currentPos);
     }
 
-    public void UpadateSlice(float pct)
+    public void UpdateSlice(float pct)
     {
+        m_currentPos = pct;
+        model.sliderLabel.text = string.Format("{0:0.0} %", m_currentPos * 100.0f);
         pct = 1.0f - pct;
-        float t = (pct * 2.0f - 1.0f) * 1.05f;
-        model.sliderLabel.text = Mathf.RoundToInt(model.sliderPos * 100.0f) + "%";
+        float t = (pct * 2.0f - 1.0f) * 1.1f;
         Vector3 direction = model.normals[model.planeIndex] * (model.invertedNormals ? -1 : 1);
         float distance = t * Vector3.Distance(model.center, model.lerpingPoints[model.planeIndex]);
 
@@ -124,11 +115,5 @@ public class SlicerController : ApplicationElement
             model.Fresnel.SetVector("_PlanePosition", model.center + model.normals[model.planeIndex] * distance);
             model.Fresnel.SetVector("_PlaneNormal", direction);
         }
-    }
-
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.M))
-            Reload();
     }
 }

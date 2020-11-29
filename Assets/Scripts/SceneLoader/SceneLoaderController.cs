@@ -63,7 +63,6 @@ public class SceneLoaderController : ApplicationElement
         MainApp.sceneLoaderModel.headerText.text = scene.sceneName;
         AsyncOperation sceneLoaderOperation = SceneManager.LoadSceneAsync(scene.sceneIndex);
         MainApp.toolBoxView.OnSceneLoad();
-        MainApp.arSessionController.OnSceneLoad(scene.sceneIndex == SceneLoaderModel.ARScene.sceneIndex);
         while (!sceneLoaderOperation.isDone)
         {
             float progress = Mathf.Clamp01(sceneLoaderOperation.progress);

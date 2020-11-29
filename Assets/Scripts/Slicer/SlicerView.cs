@@ -11,19 +11,19 @@
     {
         model.invertedNormals = !model.invertedNormals;
         model.normalsSlider.value = model.invertedNormals ? -1 : 1;
-        model.controller.UpadateSlice();
+        model.controller.UpdateSlice();
     }
 
     public void ChangePlane(int i)
     {
         model.sliderTitle.text = "Plano " + model.planeNames[i];
         model.planeIndex = i;
-        model.controller.UpadateSlice();
+        model.controller.UpdateSlice();
     }
 
     public void UpdateVectors(float _sliderPos)
     {
-        model.controller.UpadateSlice(_sliderPos);
+        model.controller.UpdateSlice(_sliderPos);
     }
 
     public void ToggleHologram()
