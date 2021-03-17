@@ -22,6 +22,7 @@ public class MainApplication : MonoBehaviour
     public AnimationPanelView animationPanelView;
     public AnchorController anchorController;
     public QuickStartController quickStartController;
+    public InspectionController inspectionController;
     void Start()
     {
         DontDestroyOnLoad(this);

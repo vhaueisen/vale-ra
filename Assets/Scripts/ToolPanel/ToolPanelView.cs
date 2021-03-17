@@ -57,7 +57,12 @@ public class ToolPanelView : ApplicationElement
             ToggleState(false);
             MainApp.touchView.enabled = true;
         }
-
+        else if (eventArgs.Key == ToolBoxEventArgs.ToolKey.inspection)
+        {
+            ChangePanel(3);
+            MainApp.inspectionController.OnInspection();
+            MainApp.touchView.enabled = true;
+        }
 
         if (eventArgs.Key == ToolBoxEventArgs.ToolKey.anchor)
         {

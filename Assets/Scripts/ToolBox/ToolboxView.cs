@@ -14,7 +14,6 @@ public class ToolboxView : ApplicationElement
     public event EventHandler<ToolBoxEventArgs> toolBoxEvent;
     private ToolBoxEventArgs.ToolKey m_currentState = ToolBoxEventArgs.ToolKey.anchor;
     private float m_offset = 600.0f;
-    private int objChangeCount = 0;
     protected virtual void OnToolChange(byte toolKey)
     {
         toolBoxEvent(this, new ToolBoxEventArgs(ToolBoxEventArgs.ToolKey.anchor));
@@ -22,10 +21,7 @@ public class ToolboxView : ApplicationElement
 
     public void ChangeObject(ARObejctModel script)
     {
-        /*         if (MainApp.toolboxModel.holoToggle.value == 1 && objChangeCount != 0)
-                    MainApp.toolboxModel.holoToggle.value = -1;
-                objChangeCount++;
-         */
+
         if (m_currentState != ToolBoxEventArgs.ToolKey.anchor)
             ChangeTool(model.anchorBtn);
         Toolbox tools = new Toolbox(script.toolbox);
@@ -38,7 +34,8 @@ public class ToolboxView : ApplicationElement
         {
             model.sliceBtn.gameObject,
             model.hierarchyBtn.gameObject,
-            model.animationBtn.gameObject
+            model.animationBtn.gameObject,
+            model.inspectionBtn.gameObject
         };
         m_offset = 600;
         for (int i = 0; i < btns.Length; i++)
@@ -144,6 +141,8 @@ public class ToolboxView : ApplicationElement
             m_currentState = ToolBoxEventArgs.ToolKey.anchor;
         else if (name.Contains("visualize"))
             m_currentState = ToolBoxEventArgs.ToolKey.visualize;
+        else if (name.Contains("inspection"))
+            m_currentState = ToolBoxEventArgs.ToolKey.inspection;
         toolBoxEvent(this, new ToolBoxEventArgs(m_currentState));
     }
 

@@ -32,8 +32,11 @@ public class ToolboxModel : ApplicationElement
             slice = false;
             hierarchy = false;
             animation = false;
-            btnStates = new bool[] { slice, hierarchy, animation };
-
+            inspection = false;
+            btnStates = new bool[] { slice, hierarchy, animation, inspection };
+#if UNITY_EDITOR
+            btnStates = new bool[] { true, false, false, true };
+#endif
             if (toolbox == null || toolbox.Length < 2)
                 return;
 
@@ -56,6 +59,9 @@ public class ToolboxModel : ApplicationElement
                         case "animation":
                             animation = value > 0;
                             break;
+                        case "inspection":
+                            inspection = value > 0;
+                            break;
                     }
                 }
                 catch
@@ -65,15 +71,14 @@ public class ToolboxModel : ApplicationElement
             }
             animation = false;
             hierarchy = false;
-            // #if UNITY_EDITOR
-            //             slice = true;
-            //             hierarchy = true;
-            //             animation = true;
-            // #endif
-            btnStates = new bool[] { slice, hierarchy, animation };
+            btnStates = new bool[] { slice, hierarchy, animation, inspection };
+#if UNITY_EDITOR
+            btnStates = new bool[] { true, false, false, true };
+#endif
         }
         public bool slice;
         public bool hierarchy;
+        public bool inspection;
         public bool animation;
         public bool[] btnStates;
     }
@@ -83,6 +88,7 @@ public class ToolboxModel : ApplicationElement
     public RectTransform hierarchyBtn;
     public RectTransform animationBtn;
     public RectTransform anchorBtn;
+    public RectTransform inspectionBtn;
     public ToolBoxEventArgs.ToolKey CurrentTool = ToolBoxEventArgs.ToolKey.anchor;
     public RectTransform btnContainer;
     public RectTransform btnPanel;
