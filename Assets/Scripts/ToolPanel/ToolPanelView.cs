@@ -25,41 +25,41 @@ public class ToolPanelView : ApplicationElement
     public void OnToolBoxEvent(object sender, ToolBoxEventArgs eventArgs)
     {
         ProjectionController projectionController = FindObjectOfType<ProjectionController>();
-        MainApp.toolboxModel.CurrentTool = eventArgs.ToolKey;
+        MainApp.toolboxModel.CurrentTool = eventArgs.Key;
         MainApp.touchView.enabled = false;
         if (projectionController != null)
             projectionController.Enabled = false;
 
-        if (eventArgs.ToolKey == ToolBoxEventArgs.sliceKey)
+        if (eventArgs.Key == ToolBoxEventArgs.ToolKey.slice)
         {
             ChangePanel(0);
             MainApp.slicerModel.controller.Reload();
         }
-        else if (eventArgs.ToolKey == ToolBoxEventArgs.scaleRotKey)
+        else if (eventArgs.Key == ToolBoxEventArgs.ToolKey.scaleRot)
         {
             ToggleState(false);
             MainApp.touchView.enabled = true;
             if (projectionController != null)
                 projectionController.Enabled = true;
         }
-        else if (eventArgs.ToolKey == ToolBoxEventArgs.hierarchyKey)
+        else if (eventArgs.Key == ToolBoxEventArgs.ToolKey.hierarchy)
         {
             ChangePanel(1);
             MainApp.hierarchyModel.ModelXml = MainApp.hierarchyModel.socariaXml.text;
         }
-        else if (eventArgs.ToolKey == ToolBoxEventArgs.animationKey)
+        else if (eventArgs.Key == ToolBoxEventArgs.ToolKey.animation)
         {
             MainApp.animationPanelView.initializePlayer();
             ChangePanel(2);
         }
-        else if (eventArgs.ToolKey == ToolBoxEventArgs.visualizeKey)
+        else if (eventArgs.Key == ToolBoxEventArgs.ToolKey.visualize)
         {
             ToggleState(false);
             MainApp.touchView.enabled = true;
         }
 
 
-        if (eventArgs.ToolKey == ToolBoxEventArgs.anchorKey)
+        if (eventArgs.Key == ToolBoxEventArgs.ToolKey.anchor)
         {
             ToggleState(false);
             MainApp.touchView.enabled = true;

@@ -15,7 +15,7 @@ public class AnchorView : ApplicationElement
 
     public void OnToolBoxEvent(object sender, ToolBoxEventArgs eventArgs)
     {
-        if (eventArgs.ToolKey == ToolBoxEventArgs.anchorKey)
+        if (eventArgs.Key == ToolBoxEventArgs.ToolKey.anchor)
             TogglePlaneDetection(true);
         else
             TogglePlaneDetection(false);

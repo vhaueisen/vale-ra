@@ -28,7 +28,6 @@ public class SlicerController : ApplicationElement
             Destroy(model.fresnel);
 
         model.materialList = GetMaterials(model.rotateComponent);
-        InstantiateFresnel();
         ApplyShader(model.crossShader);
         StopAllCoroutines();
 
@@ -53,7 +52,9 @@ public class SlicerController : ApplicationElement
 
     private IEnumerator LoadShaders()
     {
-        yield return new WaitForEndOfFrame();
+        yield return null;
+        InstantiateFresnel();
+        yield return null;
         UpdateSlice();
         yield break;
     }
@@ -71,6 +72,8 @@ public class SlicerController : ApplicationElement
 
     private void InstantiateFresnel()
     {
+        if (model.holoSlider.value == -1)
+            return;
         Material[] fresnelMaterials = { model.Fresnel };
         model.fresnel = Instantiate(model.rotateComponent.GetChild(0).gameObject,
             model.rotateComponent.GetChild(0).transform.position,

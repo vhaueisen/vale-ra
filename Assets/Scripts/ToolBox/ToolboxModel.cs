@@ -4,27 +4,21 @@ using UnityEngine.UI;
 
 public class ToolBoxEventArgs : EventArgs
 {
-    public ToolBoxEventArgs(byte toolKey)
+    public ToolBoxEventArgs(ToolKey key)
     {
-        ToolKey = toolKey;
+        Key = key;
     }
-
-    public ToolBoxEventArgs(byte toolKey, byte mode)
+    public enum ToolKey
     {
-        ToolKey = toolKey;
-        Mode = mode;
+        scaleRot,
+        animation,
+        hierarchy,
+        slice,
+        anchor,
+        visualize,
+        inspection
     }
-
-    public byte ToolKey;
-    public const byte scaleRotKey = 0;
-    public const byte animationKey = 1;
-    public const byte hierarchyKey = 2;
-    public const byte sliceKey = 3;
-    public const byte anchorKey = 4;
-    public const byte visualizeKey = 5;
-    public byte Mode;
-    public const byte Update = 0;
-    public const byte Deactivate = 1;
+    public ToolKey Key;
 }
 
 public class ToolboxModel : ApplicationElement
@@ -83,15 +77,16 @@ public class ToolboxModel : ApplicationElement
         public bool animation;
         public bool[] btnStates;
     }
+
     public RectTransform moveBtn;
     public RectTransform sliceBtn;
     public RectTransform hierarchyBtn;
     public RectTransform animationBtn;
     public RectTransform anchorBtn;
-    public byte CurrentTool = ToolBoxEventArgs.anchorKey;
+    public ToolBoxEventArgs.ToolKey CurrentTool = ToolBoxEventArgs.ToolKey.anchor;
     public RectTransform btnContainer;
     public RectTransform btnPanel;
     public Mask toolboxMask;
     public RectTransform toolRectangle;
-
+    public Slider holoToggle;
 }

@@ -39,7 +39,7 @@ public class VisualizeController : ApplicationElement
 
     public void OnToolBoxEvent(object sender, ToolBoxEventArgs eventArgs)
     {
-        if (eventArgs.ToolKey == ToolBoxEventArgs.visualizeKey)
+        if (eventArgs.Key == ToolBoxEventArgs.ToolKey.visualize)
             Reload();
     }
 
@@ -63,7 +63,7 @@ public class VisualizeController : ApplicationElement
 
     private void LateUpdate()
     {
-        if (m_cameraTransform && MainApp.toolboxModel.CurrentTool == ToolBoxEventArgs.visualizeKey)
+        if (m_cameraTransform && MainApp.toolboxModel.CurrentTool == ToolBoxEventArgs.ToolKey.visualize)
         {
             m_rigidBodies[1].transform.forward = ClampVector(m_rigidBodies[1].transform.forward, center, maxAngle);
             m_originTransform.localRotation = m_rigidBodies[0].rotation;
@@ -79,7 +79,7 @@ public class VisualizeController : ApplicationElement
 
     private void FixedUpdate()
     {
-        if (m_cameraTransform && MainApp.toolboxModel.CurrentTool == ToolBoxEventArgs.visualizeKey)
+        if (m_cameraTransform && MainApp.toolboxModel.CurrentTool == ToolBoxEventArgs.ToolKey.visualize)
         {
             if (
                 SceneLoaderModel.CurrentScene.sceneIndex == SceneLoaderModel.HomeScene.sceneIndex &&

@@ -36,16 +36,16 @@
 
     private void Update()
     {
-        if (!Enabled || MainApp.toolboxModel.CurrentTool != ToolBoxEventArgs.scaleRotKey && MainApp.toolboxModel.CurrentTool != ToolBoxEventArgs.anchorKey || MainApp.inventoryModel.inventoryWindow.state)
+        if (!Enabled || MainApp.toolboxModel.CurrentTool != ToolBoxEventArgs.ToolKey.scaleRot && MainApp.toolboxModel.CurrentTool != ToolBoxEventArgs.ToolKey.anchor || MainApp.inventoryModel.inventoryWindow.state)
             return;
 
         if (currentState > 0)
         {
-            if (currentState == TouchModel.Pinching && MainApp.toolboxModel.CurrentTool == ToolBoxEventArgs.scaleRotKey)
+            if (currentState == TouchModel.Pinching && MainApp.toolboxModel.CurrentTool == ToolBoxEventArgs.ToolKey.scaleRot)
                 UpdateScale(MainApp.touchModel.PinchAmount, projectionModel.ModelContainer, projectionModel.ARMode);
-            else if (currentState == TouchModel.Swiping && MainApp.toolboxModel.CurrentTool == ToolBoxEventArgs.scaleRotKey)
+            else if (currentState == TouchModel.Swiping && MainApp.toolboxModel.CurrentTool == ToolBoxEventArgs.ToolKey.scaleRot)
                 UpdateRotation(-MainApp.touchModel.SwipeAmount.x, projectionModel.RotateComponent, projectionModel.ARMode);
-            else if (currentState == TouchModel.Swiping && MainApp.toolboxModel.CurrentTool == ToolBoxEventArgs.anchorKey)
+            else if (currentState == TouchModel.Swiping && MainApp.toolboxModel.CurrentTool == ToolBoxEventArgs.ToolKey.anchor)
             {
                 FlexibleRaycast raycast;
                 if (projectionModel.ARMode)
@@ -69,7 +69,7 @@
                     }
                 }
             }
-            else if (currentState == TouchModel.Elevating && MainApp.toolboxModel.CurrentTool == ToolBoxEventArgs.anchorKey)
+            else if (currentState == TouchModel.Elevating && MainApp.toolboxModel.CurrentTool == ToolBoxEventArgs.ToolKey.anchor)
             {
                 MainApp.anchorController.Elevate();
                 Elevate(projectionModel.RotateComponent, MainApp.touchModel.SwipeAmount.y);

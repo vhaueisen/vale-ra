@@ -12,16 +12,21 @@ public class ToolboxView : ApplicationElement
     private Camera mainCamera;
     private RectTransform currentTool;
     public event EventHandler<ToolBoxEventArgs> toolBoxEvent;
-    private byte m_currentState = ToolBoxEventArgs.anchorKey;
+    private ToolBoxEventArgs.ToolKey m_currentState = ToolBoxEventArgs.ToolKey.anchor;
     private float m_offset = 600.0f;
+    private int objChangeCount = 0;
     protected virtual void OnToolChange(byte toolKey)
     {
-        toolBoxEvent(this, new ToolBoxEventArgs(toolKey));
+        toolBoxEvent(this, new ToolBoxEventArgs(ToolBoxEventArgs.ToolKey.anchor));
     }
 
     public void ChangeObject(ARObejctModel script)
     {
-        if (m_currentState != ToolBoxEventArgs.anchorKey)
+        /*         if (MainApp.toolboxModel.holoToggle.value == 1 && objChangeCount != 0)
+                    MainApp.toolboxModel.holoToggle.value = -1;
+                objChangeCount++;
+         */
+        if (m_currentState != ToolBoxEventArgs.ToolKey.anchor)
             ChangeTool(model.anchorBtn);
         Toolbox tools = new Toolbox(script.toolbox);
         ReArangeBtns(tools);
@@ -63,7 +68,7 @@ public class ToolboxView : ApplicationElement
 
     public void OnSceneLoad()
     {
-        if (m_currentState != ToolBoxEventArgs.anchorKey)
+        if (m_currentState != ToolBoxEventArgs.ToolKey.anchor)
             ChangeTool(model.anchorBtn);
     }
     private float m_animationSpeed = 0.3f;
@@ -128,17 +133,17 @@ public class ToolboxView : ApplicationElement
     {
         name = name.ToLower();
         if (name.Contains("animation"))
-            m_currentState = ToolBoxEventArgs.animationKey;
+            m_currentState = ToolBoxEventArgs.ToolKey.animation;
         else if (name.Contains("hierarchy"))
-            m_currentState = ToolBoxEventArgs.hierarchyKey;
+            m_currentState = ToolBoxEventArgs.ToolKey.hierarchy;
         else if (name.Contains("slice"))
-            m_currentState = ToolBoxEventArgs.sliceKey;
+            m_currentState = ToolBoxEventArgs.ToolKey.slice;
         else if (name.Contains("size"))
-            m_currentState = ToolBoxEventArgs.scaleRotKey;
+            m_currentState = ToolBoxEventArgs.ToolKey.scaleRot;
         else if (name.Contains("anchor"))
-            m_currentState = ToolBoxEventArgs.anchorKey;
+            m_currentState = ToolBoxEventArgs.ToolKey.anchor;
         else if (name.Contains("visualize"))
-            m_currentState = ToolBoxEventArgs.visualizeKey;
+            m_currentState = ToolBoxEventArgs.ToolKey.visualize;
         toolBoxEvent(this, new ToolBoxEventArgs(m_currentState));
     }
 
