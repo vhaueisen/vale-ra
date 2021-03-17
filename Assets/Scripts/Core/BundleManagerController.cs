@@ -123,7 +123,7 @@ public class BundleManagerController : ApplicationElement
                 }
                 catch
                 {
-
+                    
                 }
             }
             else
