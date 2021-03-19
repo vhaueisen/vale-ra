@@ -1,4 +1,8 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using ARInspection;
+using UnityEngine;
 
 public class InspectionController : ApplicationElement
 {
@@ -6,12 +10,38 @@ public class InspectionController : ApplicationElement
     public TextAsset textXML;
     private TextAsset previousTextXML = null;
     public RectTransform parent;
-    public GameObject InspectionItem;
-    private InspectionCheck check;
+    public GameObject InspectionItemPrefab;
+    private InspectionChecklist check;
+    public GlowingController glowController;
+    private IEnumerable<string> validGroups;
+    public void Awake()
+    {
+        InspectionItem.InspectionEvent += OnInspection;
+    }
+
+    private void OnInspection(object sender, InspectionEventArgs eventArgs)
+    {
+        if (eventArgs.Type == InspectionEventArgs.EventType.Highlight)
+        {
+            foreach (string s in validGroups)
+                if (s == eventArgs.item.Grupo)
+                {
+                    glowController.ChangeState(GlowingController.State.Active, eventArgs.item.Grupo);
+                    eventArgs.OnSuccess();
+                }
+        }
+
+        if (eventArgs.Type == InspectionEventArgs.EventType.Unhighlight)
+        {
+            glowController.ChangeState(GlowingController.State.Disable);
+            eventArgs.OnSuccess();
+        }
+    }
     public void OnInspection()
     {
         DestroyItems();
         check = ReadXML();
+        validGroups = glowController.Initialize(check.Item.Select(o => o.Grupo).Where(g => g != ""));
         InstantiateItens();
     }
 
@@ -25,17 +55,17 @@ public class InspectionController : ApplicationElement
         previousTextXML = textXML;
     }
 
-    private InspectionCheck ReadXML()
+    private InspectionChecklist ReadXML()
     {
-        return XMLReader.FromXml<InspectionCheck>(textXML.text);
+        return XMLReader.FromXml<InspectionChecklist>(textXML.text);
     }
 
     private void InstantiateItens()
     {
-        foreach (string name in check.Item)
+        foreach (Item item in check.Item)
         {
-            GameObject item = Instantiate(InspectionItem, parent);
-            item.GetComponent<InspectionItem>().Initialize(name);
+            GameObject instance = Instantiate(InspectionItemPrefab, parent);
+            instance.GetComponent<InspectionItem>().Initialize(item);
         }
     }
 }

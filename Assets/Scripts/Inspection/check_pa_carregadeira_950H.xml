@@ -1,0 +1,113 @@
+<checklist>
+    <tipo>Pá carregadeira</tipo>
+    <modelo>CAT 950H</modelo>
+    <tag>-</tag>
+    <item>
+        <descricao>Nível de óleo motor abaixo do mínimo?</descricao>
+        <grupo></grupo>
+    </item>
+    <item>
+        <descricao>Nível do líquido de arrefecimento abaixo do mínimo?</descricao>
+        <grupo></grupo>
+    </item>
+    <item>
+        <descricao>Nível do óleo de freio abaixo do mínimo?</descricao>
+        <grupo></grupo>
+    </item>
+    <item>
+        <descricao>Nível do óleo hidráulico abaixo do mínimo (inclusive para implementos)?</descricao>
+        <grupo></grupo>
+    </item>
+    <item>
+        <descricao>Nível do óleo de direção abaixo do mínimo?</descricao>
+        <grupo></grupo>
+    </item>
+    <item>
+        <descricao>Pneu com bolha/desagregado/cortado/furado?</descricao>
+        <grupo>Roda</grupo>
+    </item>
+    <item>
+        <descricao>Faltam porcas/parafusos nas rodas?</descricao>
+        <grupo>Parafuso</grupo>
+    </item>
+    <item>
+        <descricao>Falta parafuso no eixo cardam?</descricao>
+        <grupo></grupo>
+    </item>
+    <item>
+        <descricao>Mola quebrada?</descricao>
+        <grupo></grupo>
+    </item>
+    <item>
+        <descricao>Mal funcionamento dos freios (de serviço e/ou estacionamento)?</descricao>
+        <grupo>Mangueira</grupo>
+    </item>
+    <item>
+        <descricao>Sistema retardador de velocidade do tipo primário (freio motor) e secundário (elétrico ou hidráulico) apresentam falhas?</descricao>
+        <grupo></grupo>
+    </item>
+    <item>
+        <descricao>Mal funcionamento ou inexistência do sistemas de monitoramento de localização e velocidade (telemetria)?</descricao>
+        <grupo></grupo>
+    </item>
+    <item>
+        <descricao>Falta ou avaria relevante dos retrovisores, parabrisa ou janelas?</descricao>
+        <grupo>Vidraria</grupo>
+    </item>
+    <item>
+        <descricao>Falha seta indicativa direção?</descricao>
+        <grupo>Farol</grupo>
+    </item>
+    <item>
+        <descricao>Mal funcionamento dos limpadores de pára brisa?</descricao>
+        <grupo>Vidraria</grupo>
+    </item>
+    <item>
+        <descricao>Falta cinto de segurança de 3 pontos para todos os ocupantes, ou apresentam falha no funcionamento?</descricao>
+        <grupo>Assento</grupo>
+    </item>
+    <item>
+        <descricao>Falta de encosto de cabeça nos assentos?</descricao>
+        <grupo>Assento</grupo>
+    </item>
+    <item>
+        <descricao>Mal funcionamento da buzina?</descricao>
+        <grupo></grupo>
+    </item>
+    <item>
+        <descricao>Luz de alerta de marcha à ré inexistente ou defeituosa?</descricao>
+        <grupo>Farol</grupo>
+    </item>
+    <item>
+        <descricao>Mal funcionamento alarme sonoro de ré?</descricao>
+        <grupo></grupo>
+    </item>
+    <item>
+        <descricao>Falha farol dianteiro/traseiro?</descricao>
+        <grupo>Farol</grupo>
+    </item>
+    <item>
+        <descricao>Mal funcionamento do ar condicionado?</descricao>
+        <grupo></grupo>
+    </item>
+    <item>
+        <descricao>Mal funcionamento luz giroscópica/piscoflex?</descricao>
+        <grupo></grupo>
+    </item>
+    <item>
+        <descricao>Falta de dispositivos para sinalização (triângulos refletivos, cones, bombonas ou pontaletes)?</descricao>
+        <grupo></grupo>
+    </item>
+    <item>
+        <descricao>Inexistência ou adesivos refletivos apagados nas laterais e traseira?</descricao>
+        <grupo></grupo>
+    </item>
+    <item>
+        <descricao>Falta sinalização de capacidade máxima de carga e tara, ou encontra-se apagada/ilegível?</descricao>
+        <grupo></grupo>
+    </item>
+    <item>
+        <descricao>Extintor de incêndio vencido, vazio ou depressurizado?</descricao>
+        <grupo></grupo>
+    </item>
+</checklist>
