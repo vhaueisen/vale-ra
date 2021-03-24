@@ -1,71 +1,63 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using ARInspection;
+﻿using System.Collections;
 using UnityEngine;
 
+[RequireComponent(typeof(InspectionManipulator))]
 public class InspectionController : ApplicationElement
 {
-    private InspectionModel model;
-    public TextAsset textXML;
-    private TextAsset previousTextXML = null;
-    public RectTransform parent;
-    public GameObject InspectionItemPrefab;
-    private InspectionChecklist check;
-    public GlowingController glowController;
-    private IEnumerable<string> validGroups;
-    public void Awake()
-    {
-        InspectionItem.InspectionEvent += OnInspection;
-    }
+    [SerializeField]
+    private InspectionModel m_model;
 
-    private void OnInspection(object sender, InspectionEventArgs eventArgs)
-    {
-        if (eventArgs.Type == InspectionEventArgs.EventType.Highlight)
-        {
-            foreach (string s in validGroups)
-                if (s == eventArgs.item.Grupo)
-                {
-                    glowController.ChangeState(GlowingController.State.Active, eventArgs.item.Grupo);
-                    eventArgs.OnSuccess();
-                }
-        }
+    [SerializeField]
+    private InspectionManipulator m_manipulator;
 
-        if (eventArgs.Type == InspectionEventArgs.EventType.Unhighlight)
-        {
-            glowController.ChangeState(GlowingController.State.Disable);
-            eventArgs.OnSuccess();
-        }
-    }
-    public void OnInspection()
-    {
-        DestroyItems();
-        check = ReadXML();
-        validGroups = glowController.Initialize(check.Item.Select(o => o.Grupo).Where(g => g != ""));
-        InstantiateItens();
-    }
+    private bool[] m_states;
+    private GameObject m_instance;
+    private InspectionBundle m_bundle;
 
     private void DestroyItems()
     {
-        if (previousTextXML != textXML)
-            for (int i = 0; i < 0; i++)
-            {
-                Destroy(parent.GetChild(i));
-            }
-        previousTextXML = textXML;
-    }
-
-    private InspectionChecklist ReadXML()
-    {
-        return XMLReader.FromXml<InspectionChecklist>(textXML.text);
-    }
-
-    private void InstantiateItens()
-    {
-        foreach (Item item in check.Item)
+        for (int i = 0; i < 0; i++)
         {
-            GameObject instance = Instantiate(InspectionItemPrefab, parent);
-            instance.GetComponent<InspectionItem>().Initialize(item);
+            Destroy(m_model.UINodesParent.GetChild(i));
         }
     }
+
+    public void OnInspection()
+    {
+        Initialize();
+    }
+
+    private void Initialize()
+    {
+        m_instance = Instantiate(m_model.InspectionPrefab, Vector3.zero, Quaternion.identity);
+        m_bundle = m_instance.GetComponent<InspectionBundle>();
+        m_manipulator.Initialize(m_bundle);
+        GenerateAnormalies();
+    }
+
+    private void GenerateAnormalies()
+    {
+        m_states = new bool[m_bundle.Inspections.Length];
+        for (int i = 0; i < m_bundle.Inspections.Length; i++)
+        {
+            float dice = Random.Range(0f, 1f) + 1e-6f;
+            m_states[i] = (dice > m_model.AnomalyThreshold);
+            if (m_states[i])
+                m_manipulator.SetAnomaly(m_bundle.Inspections[i], m_bundle);
+        }
+    }
+
+    /*     private IEnumerator InspectionDemo()
+        {
+
+            for (int i = 0; i < m_bundle.Inspections.Length; i++)
+            {
+                yield return new WaitForSeconds(5f);
+                if (i > 0)
+                    m_manipulator.Hint(bundle.Inspections[i - 1], true);
+                m_manipulator.Hint(bundle.Inspections[i]);
+                Debug.Log(bundle.Inspections[i].Name);
+            }
+            yield break;
+        } */
 }

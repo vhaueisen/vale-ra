@@ -1,5 +1,4 @@
 using System;
-using ARInspection;
 
 public class InspectionEventArgs : EventArgs
 {
@@ -9,11 +8,10 @@ public class InspectionEventArgs : EventArgs
         Unhighlight,
     }
 
-    public InspectionEventArgs(EventType e, Item item, Action onSucces = null)
+    public InspectionEventArgs(EventType e, Action onSucces = null)
     {
         m_type = e;
         m_onSucces = onSucces;
-        m_item = item;
     }
 
     private EventType m_type;
@@ -28,11 +26,5 @@ public class InspectionEventArgs : EventArgs
     {
         get => m_onSucces;
         set => m_onSucces = value;
-    }
-    private Item m_item;
-    public Item item
-    {
-        get => m_item;
-        set => m_item = value;
     }
 }

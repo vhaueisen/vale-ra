@@ -165,7 +165,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7533533062809542129}
   - component: {fileID: 7533533062809542128}
-  - component: {fileID: 2161721375540871395}
   - component: {fileID: 6510284492201169603}
   - component: {fileID: 7230952956743681201}
   m_Layer: 5
@@ -218,23 +217,6 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
---- !u!114 &2161721375540871395
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7533533062809542130}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0e7ef16da88c48498318500fee69957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  title: {fileID: 7533533063753455008}
-  conformityImg: {fileID: 7255584469985600846}
-  conformityLabel: {fileID: 1375472402869722644}
-  itemBackground: {fileID: 7230952956743681201}
-  durationThreshold: 1
 --- !u!222 &6510284492201169603
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -626,9 +608,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2161721375540871395}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: InspectionItem, Assembly-CSharp
-        m_MethodName: OnConformityBtn
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -11606,8 +11606,8 @@ GameObject:
   - component: {fileID: 2157525857673189814}
   - component: {fileID: 2157525857673189815}
   - component: {fileID: 2157525857673189816}
-  - component: {fileID: 2157525857673189817}
   - component: {fileID: 2157525857673189818}
+  - component: {fileID: 2157525857673189817}
   m_Layer: 0
   m_Name: Controller
   m_TagString: Untagged
@@ -11761,11 +11761,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96e728d65ea089c47a30d3f36413d585, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textXML: {fileID: 4900000, guid: c8246067c01d2ac41849750f39981385, type: 3}
-  parent: {fileID: 455970579}
-  InspectionItemPrefab: {fileID: 7533533062809542130, guid: ddfa2b85710078b42b8850b63b334b9b,
-    type: 3}
-  glowController: {fileID: 2157525857673189818}
+  m_model: {fileID: 2157525857894418049}
+  m_manipulator: {fileID: 2157525857673189818}
 --- !u!114 &2157525857673189818
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11775,10 +11772,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2157525857673189806}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c09cced9c63b9474dbc7762db4bff90a, type: 3}
+  m_Script: {fileID: 11500000, guid: 65e660ac9e0258143bba98cb1d6f9deb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  glowingMaterial: {fileID: 2100000, guid: 11571dc16ec1d6640bf5cd1053b0b3f8, type: 2}
+  GlowingMaterial: {fileID: 2100000, guid: 11571dc16ec1d6640bf5cd1053b0b3f8, type: 2}
 --- !u!114 &2157525857894418032
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11988,6 +11985,7 @@ GameObject:
   - component: {fileID: 2157525857894418046}
   - component: {fileID: 2157525857894418047}
   - component: {fileID: 2157525857894418048}
+  - component: {fileID: 2157525857894418049}
   m_Layer: 0
   m_Name: Model
   m_TagString: Untagged
@@ -12085,6 +12083,23 @@ MonoBehaviour:
     type: 3}
   anchorTransform: {fileID: 0}
   Enabled: 0
+--- !u!114 &2157525857894418049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2157525857894418045}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 822d40e5394d76847be394a606b3f907, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UINodesParent: {fileID: 455970579}
+  InspectionItemPrefab: {fileID: 7533533062809542130, guid: ddfa2b85710078b42b8850b63b334b9b,
+    type: 3}
+  InspectionPrefab: {fileID: 5236567146247873072, guid: dd4a83d348c87634e824c4a7ef0e59f6,
+    type: 3}
 --- !u!1 &2157525858165373257
 GameObject:
   m_ObjectHideFlags: 0

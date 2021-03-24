@@ -307,13 +307,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26f51e9169006cf49ae809ccd4c18a10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  glowingMaterial: {fileID: 2100000, guid: 11571dc16ec1d6640bf5cd1053b0b3f8, type: 2}
-  GroupNames:
-  - Rodas
-  - Parafusos
-  - Vidraria
-  - Farol
-  - Mangueiras
 --- !u!1 &1138878552
 GameObject:
   m_ObjectHideFlags: 0
@@ -559,13 +552,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1207971607}
-  m_LocalRotation: {x: -0, y: 0.2588191, z: -0, w: 0.9659258}
-  m_LocalPosition: {x: -3.3030744, y: 1.0345776, z: -5.771981}
+  m_LocalRotation: {x: 0.06144823, y: 0.60871935, z: -0.047372784, w: 0.78958267}
+  m_LocalPosition: {x: -4.33, y: 1.51, z: -0.29}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 608769238}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 30, z: 0}
+  m_LocalEulerAnglesHint: {x: 8.9, y: 75.26, z: 0}
 --- !u!114 &1207971611
 MonoBehaviour:
   m_ObjectHideFlags: 0
