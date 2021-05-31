@@ -220,12 +220,21 @@ Transform:
   m_Father: {fileID: 608769238}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!4 &602992818 stripped
+--- !u!4 &602992818
 Transform:
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 5045854824541564982, guid: e5498cac2d9a2ad4f98d29a831f5e45a,
     type: 3}
   m_PrefabInstance: {fileID: 5045854825113010308}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1144005060}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 940543674}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &608769237
 GameObject:
   m_ObjectHideFlags: 0
@@ -260,6 +269,100 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &667713691
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 228245751827988147, guid: 89ad62ec594d8a343bc648e0703c5f64,
+    type: 3}
+  m_PrefabInstance: {fileID: 228245750823212804}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1551739320}
+  - component: {fileID: 667713692}
+  m_Layer: 0
+  m_Name: ARObjectModel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &667713692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 228245751827988157, guid: 89ad62ec594d8a343bc648e0703c5f64,
+    type: 3}
+  m_PrefabInstance: {fileID: 228245750823212804}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 667713691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80e093de61c7ba840ba240c16e477a1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Britador
+  Description: Conjunto de modelos inseridos como piloto para usina.
+  Area: Usina
+  GUID: 769016
+  Bucket: 'Piloto: Usina'
+  Image: {fileID: 21300000, guid: 4d9e0da4fdbf8e043849a11f9b020b6a, type: 3}
+  ARImage: 0
+  referenceImageLibrary: {fileID: 0}
+  ARPrefab: {fileID: 7978967394988308120, guid: d48650ccc84957b44b56a0bc1572e960,
+    type: 3}
+  bundlePath: 
+  InitialScaleFactor: 0.1
+  MaxScaleFactor: 1.02
+  MinScaleFactor: 0.1
+  YOffset: -0.0056762695
+  toolbox: slicer:1;
+--- !u!1 &729467163
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 127826534314835382, guid: 657f63712e7d9e44ea6847acf2c57355,
+    type: 3}
+  m_PrefabInstance: {fileID: 127826534263496424}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2098291551}
+  - component: {fileID: 729467164}
+  m_Layer: 0
+  m_Name: ARObjectModel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &729467164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 127826534314835336, guid: 657f63712e7d9e44ea6847acf2c57355,
+    type: 3}
+  m_PrefabInstance: {fileID: 127826534263496424}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 729467163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80e093de61c7ba840ba240c16e477a1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Ciclone
+  Description: Conjunto de modelos inseridos como piloto para usina.
+  Area: Usina
+  GUID: 769016
+  Bucket: 'Piloto: Usina'
+  Image: {fileID: 21300000, guid: 71982425b9a50d84da433ed2aef1f581, type: 3}
+  ARImage: 0
+  referenceImageLibrary: {fileID: 0}
+  ARPrefab: {fileID: 8631748029691486427, guid: 12707fba9106a4f4cb7b8a759e02a806,
+    type: 3}
+  bundlePath: 
+  InitialScaleFactor: 0.12
+  MaxScaleFactor: 1.47
+  MinScaleFactor: 0.1
+  YOffset: 0
+  toolbox: slicer:1;
 --- !u!1 &940543673
 GameObject:
   m_ObjectHideFlags: 0
@@ -399,81 +502,68 @@ Transform:
   m_Father: {fileID: 608769238}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 45, y: 30, z: 0}
---- !u!4 &1163402741 stripped
+--- !u!1 &1144005060
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 5045854824541564981, guid: e5498cac2d9a2ad4f98d29a831f5e45a,
+    type: 3}
+  m_PrefabInstance: {fileID: 5045854825113010308}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 602992818}
+  - component: {fileID: 1144005061}
+  m_Layer: 0
+  m_Name: ARObjectModel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1144005061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 5045854824541564983, guid: e5498cac2d9a2ad4f98d29a831f5e45a,
+    type: 3}
+  m_PrefabInstance: {fileID: 5045854825113010308}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1144005060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80e093de61c7ba840ba240c16e477a1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: "Peneira Vibrat\xF3ria"
+  Description: Conjunto de modelos inseridos como piloto para usina.
+  Area: Usina
+  GUID: 769016
+  Bucket: 'Piloto: Usina'
+  Image: {fileID: 21300000, guid: 6558f9e85326531408b1fd6cec603e2d, type: 3}
+  ARImage: 0
+  referenceImageLibrary: {fileID: 0}
+  ARPrefab: {fileID: 2346069853353056069, guid: 75c5732cbdadfd24f85ae669109d0688,
+    type: 3}
+  bundlePath: 
+  InitialScaleFactor: 0.1
+  MaxScaleFactor: 1.21
+  MinScaleFactor: 0.1
+  YOffset: 0
+  toolbox: slicer:1;
+--- !u!4 &1163402741
 Transform:
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 7634237892689409689, guid: 22b419eba2a30c1478ff7871096a8475,
     type: 3}
   m_PrefabInstance: {fileID: 7634237891569003372}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &1184714305
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4893115638809475210, guid: dd4a83d348c87634e824c4a7ef0e59f6,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4893115638809475210, guid: dd4a83d348c87634e824c4a7ef0e59f6,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4893115638809475210, guid: dd4a83d348c87634e824c4a7ef0e59f6,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4893115638809475210, guid: dd4a83d348c87634e824c4a7ef0e59f6,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4893115638809475210, guid: dd4a83d348c87634e824c4a7ef0e59f6,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4893115638809475210, guid: dd4a83d348c87634e824c4a7ef0e59f6,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4893115638809475210, guid: dd4a83d348c87634e824c4a7ef0e59f6,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4893115638809475210, guid: dd4a83d348c87634e824c4a7ef0e59f6,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4893115638809475210, guid: dd4a83d348c87634e824c4a7ef0e59f6,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4893115638809475210, guid: dd4a83d348c87634e824c4a7ef0e59f6,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4893115638809475210, guid: dd4a83d348c87634e824c4a7ef0e59f6,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5236567146247873072, guid: dd4a83d348c87634e824c4a7ef0e59f6,
-        type: 3}
-      propertyPath: m_Name
-      value: 950H
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: dd4a83d348c87634e824c4a7ef0e59f6, type: 3}
+  m_GameObject: {fileID: 1304258921}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 940543674}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1207971607
 GameObject:
   m_ObjectHideFlags: 0
@@ -602,18 +692,83 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f757513e3753774cb797ca22dce68e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &1551739320 stripped
+--- !u!1 &1304258921
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 7634237892689409688, guid: 22b419eba2a30c1478ff7871096a8475,
+    type: 3}
+  m_PrefabInstance: {fileID: 7634237891569003372}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1163402741}
+  - component: {fileID: 1304258922}
+  m_Layer: 0
+  m_Name: ARObjectModel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1304258922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 7634237892689409690, guid: 22b419eba2a30c1478ff7871096a8475,
+    type: 3}
+  m_PrefabInstance: {fileID: 7634237891569003372}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1304258921}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80e093de61c7ba840ba240c16e477a1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: "C\xE9lula de Flota\xE7\xE3o"
+  Description: Conjunto de modelos inseridos como piloto para usina.
+  Area: Usina
+  GUID: 769016
+  Bucket: 'Piloto: Usina'
+  Image: {fileID: 21300000, guid: 01d103ee4b738214b867eef05ca78e9e, type: 3}
+  ARImage: 0
+  referenceImageLibrary: {fileID: 0}
+  ARPrefab: {fileID: 5802491114975597377, guid: f00c44a208c1def47bb7b6ed6a7109cc,
+    type: 3}
+  bundlePath: 
+  InitialScaleFactor: 0.1
+  MaxScaleFactor: 1.07
+  MinScaleFactor: 0.1
+  YOffset: 0
+  toolbox: slicer:1;
+--- !u!4 &1551739320
 Transform:
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 228245751827988156, guid: 89ad62ec594d8a343bc648e0703c5f64,
     type: 3}
   m_PrefabInstance: {fileID: 228245750823212804}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &2098291551 stripped
+  m_GameObject: {fileID: 667713691}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 940543674}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &2098291551
 Transform:
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 127826534314835383, guid: 657f63712e7d9e44ea6847acf2c57355,
     type: 3}
   m_PrefabInstance: {fileID: 127826534263496424}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 729467163}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 940543674}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &127826534263496424
 PrefabInstance:
   m_ObjectHideFlags: 0

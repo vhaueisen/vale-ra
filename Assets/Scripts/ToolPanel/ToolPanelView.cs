@@ -80,19 +80,14 @@ public class ToolPanelView : ApplicationElement
     }
 
     private float animationTime = 0.75f;
-    private void ShowPanel()
+    private void ShowPanel(int height = 400)
     {
-        toolPanel.LeanMoveY(700, animationTime).setEase(LeanTweenType.easeSpring);
-    }
-
-    private void HidePanel()
-    {
-        toolPanel.LeanMoveY(50, animationTime).setEase(LeanTweenType.easeSpring);
+        toolPanel.LeanMoveY(height, animationTime).setEase(LeanTweenType.easeSpring);
     }
 
     private void ShowToolBar()
     {
-        HidePanel();
+        toolPanel.LeanMoveY(50, animationTime).setEase(LeanTweenType.easeSpring);
     }
 
     private void HideToolBar()
@@ -106,7 +101,7 @@ public class ToolPanelView : ApplicationElement
         if (state)
             ShowPanel();
         else
-            HidePanel();
+            ShowToolBar();
     }
 
     public void ChangePanel(int i)

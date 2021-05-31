@@ -1,3 +1,5 @@
+#pragma warning disable 0219
+
 using System.Collections;
 using UnityEngine.XR.ARFoundation;
 
@@ -8,6 +10,7 @@ public class ARSessionController : ApplicationElement
     {
         get => m_enabled;
     }
+
     IEnumerator Start()
     {
         if ((ARSession.state == ARSessionState.None) ||
@@ -18,5 +21,19 @@ public class ARSessionController : ApplicationElement
             MainApp.footerView.UnsupportedAR();
         else
             m_enabled = true;
+
+        UpdateCollabState();
+    }
+
+    private void UpdateCollabState()
+    {
+        bool collab = false;
+#if UNITY_IOS
+        collab = m_enabled;
+#endif
+#if UNITY_EDITOR
+        collab = true;
+#endif
+        MainApp.footerModel.ButtonArray[3].gameObject.SetActive(collab);
     }
 }

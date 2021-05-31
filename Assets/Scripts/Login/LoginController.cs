@@ -35,7 +35,9 @@ public class LoginController : ApplicationElement
         UnityWebRequest www = UnityWebRequest.Post("https://dsjwtssoauth.api.valeglobal.net/v2/.auth/token", content);
         yield return www.SendWebRequest();
 
-        if (!www.isNetworkError)
+        if (!(www.result == UnityWebRequest.Result.ConnectionError
+            || www.result == UnityWebRequest.Result.DataProcessingError
+            || www.result == UnityWebRequest.Result.ProtocolError))
         {
             int responseCode = (int)www.responseCode;
             if (responseCode == 200)

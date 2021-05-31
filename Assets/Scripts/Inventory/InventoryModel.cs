@@ -38,6 +38,7 @@ public class InventoryModel : ApplicationElement
     public List<Sprite> ARObjectThumbnails = new List<Sprite>();
     public event EventHandler<InventoryEventArgs> InventoryStateMachine;
     public GameObject ProjectionPrefab;
+    public GameObject ProjectionInstance;
     public RectTransform loadingPanel;
     public RectTransform loadingCircle;
     public WindowComponent inventoryWindow;

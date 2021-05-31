@@ -86,24 +86,28 @@ public class ProjectionManipulator : ApplicationElement
         return new FlexibleRaycast(Pose.identity, new RaycastHit(), false, false);
     }
 
-    public GameObject InstantiateProjection(FlexibleRaycast raycast, GameObject prefab, Transform rotTarget, Transform posTarget)
+    public void InstantiateProjection(FlexibleRaycast raycast, GameObject prefab, Transform rotTarget, Transform posTarget)
     {
         if (!raycast.isValid || prefab == null)
-            return null;
+            return;
         FixElevation(true);
         SetScale(1.0f);
         posTarget.position = raycast.position;
-        GameObject instance = Instantiate(prefab, rotTarget.position, raycast.rotation);
-        instance.layer = 10;
+        MainApp.inventoryModel.ProjectionInstance = Instantiate(prefab, rotTarget.position, raycast.rotation);
+        MainApp.inventoryModel.ProjectionInstance.layer = 10;
         projectionModel.instanceRotation = raycast.rotation;
-        instance.transform.position = instance.transform.position + Vector3.down * MainApp.inventoryModel.CurrentModel.YOffset;
-        instance.transform.SetParent(rotTarget);
-        instance.transform.localScale = Vector3.one;
+        MainApp.inventoryModel.ProjectionInstance.transform.position =
+        (
+            MainApp.inventoryModel.ProjectionInstance.transform.position
+            + Vector3.down * MainApp.inventoryModel.CurrentModel.YOffset
+            );
+        MainApp.inventoryModel.ProjectionInstance.transform.SetParent(rotTarget);
+        MainApp.inventoryModel.ProjectionInstance.transform.localScale = Vector3.one;
         SetScale(MainApp.inventoryModel.CurrentModel.InitialScaleFactor);
         ReAnchor(raycast.pose);
         MainApp.anchorController.SetScale(MainApp.inventoryModel.CurrentModel.InitialScaleFactor);
         MainApp.anchorController.Reload();
-        return instance;
+        projectionModel.CurrentInstance = MainApp.inventoryModel.ProjectionInstance;
     }
 
     public void UpdatePosition(FlexibleRaycast raycast, Transform target, bool isAR)

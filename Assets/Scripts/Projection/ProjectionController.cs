@@ -62,7 +62,7 @@
                 {
                     if (!(MainApp.inventoryModel.CurrentModel.ARImage && SceneLoaderModel.CurrentScene.sceneIndex == SceneLoaderModel.ARScene.sceneIndex))
                     {
-                        projectionModel.CurrentInstance = InstantiateProjection(
+                        InstantiateProjection(
                             raycast, MainApp.inventoryModel.ProjectionPrefab,
                             projectionModel.RotateComponent,
                             projectionModel.ModelContainer);
@@ -81,6 +81,6 @@
     {
         FlexibleRaycast raycast = new FlexibleRaycast(HomeApp.projectionModel.HomeOrigin.transform.position,
         HomeApp.projectionModel.HomeOrigin.transform.rotation);
-        projectionModel.CurrentInstance = InstantiateProjection(raycast, MainApp.inventoryModel.ProjectionPrefab, projectionModel.RotateComponent, projectionModel.ModelContainer);
+        InstantiateProjection(raycast, MainApp.inventoryModel.ProjectionPrefab, projectionModel.RotateComponent, projectionModel.ModelContainer);
     }
 }

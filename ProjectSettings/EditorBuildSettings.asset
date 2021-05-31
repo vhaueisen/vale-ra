@@ -18,6 +18,9 @@ EditorBuildSettings:
     path: Assets/Scenes/AR.unity
     guid: 0b96bc8220dab5c4fb881a3d5ddf73e8
   - enabled: 1
+    path: Assets/Scenes/ARCollaboration.unity
+    guid: b7dc3e252f57a754ab5c58805bd6e441
+  - enabled: 1
     path: Assets/Scenes/Settings.unity
     guid: 86687888707b3be4b949292fdf24e2c7
   - enabled: 1

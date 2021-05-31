@@ -44,4 +44,10 @@ public class FooterView : ApplicationElement
     {
         OnSceneLoader(SceneLoaderModel.QuickStartScene);
     }
+
+    public void LoadCollaborationScene()
+    {
+        OnSceneLoader(SceneLoaderModel.CollaborationScene);
+    }
+
 }

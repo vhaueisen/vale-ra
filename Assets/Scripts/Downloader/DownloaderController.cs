@@ -93,7 +93,9 @@ public class DownloaderController : ApplicationElement
         using (UnityWebRequest JSONRequest = UnityWebRequest.Get(JsonUrl))
         {
             yield return JSONRequest.SendWebRequest();
-            if (JSONRequest.isNetworkError || JSONRequest.isHttpError)
+            if (JSONRequest.result == UnityWebRequest.Result.ConnectionError
+            || JSONRequest.result == UnityWebRequest.Result.DataProcessingError
+            || JSONRequest.result == UnityWebRequest.Result.ProtocolError)
             {
                 OnRequestError();
                 yield break;
@@ -104,7 +106,9 @@ public class DownloaderController : ApplicationElement
         using (UnityWebRequest thumbRequest = UnityWebRequestTexture.GetTexture(ThumbUrl))
         {
             yield return thumbRequest.SendWebRequest();
-            if (thumbRequest.isNetworkError || thumbRequest.isHttpError)
+            if (thumbRequest.result == UnityWebRequest.Result.ConnectionError
+            || thumbRequest.result == UnityWebRequest.Result.DataProcessingError
+            || thumbRequest.result == UnityWebRequest.Result.ProtocolError)
             {
                 OnRequestError();
                 yield break;
@@ -180,7 +184,9 @@ public class DownloaderController : ApplicationElement
                 yield return null;
             }
 
-            if (bundleRequest.isNetworkError || bundleRequest.isHttpError)
+            if (bundleRequest.result == UnityWebRequest.Result.ConnectionError
+            || bundleRequest.result == UnityWebRequest.Result.DataProcessingError
+            || bundleRequest.result == UnityWebRequest.Result.ProtocolError)
             {
                 OnRequestError();
                 yield break;
