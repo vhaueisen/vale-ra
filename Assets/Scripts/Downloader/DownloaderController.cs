@@ -16,7 +16,7 @@ public class DownloaderController : ApplicationElement
     {
         get => "c5b0d566ee14c06429d4bd8e30260836a399977d5b693034db73662347d3d9d3";
     }
-    private const string apiDomainURL = "https://valendo.azurewebsites.net/Vale%20RA/Models/";
+    private const string apiDomainURL = "https://gestaoconhecimento.com.br/Models/";
     private volatile bool m_downloading = false;
     private string JsonUrl
     {

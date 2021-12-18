@@ -6,6 +6,8 @@ TagManager:
   tags:
   - InventoryContent
   - RotateComponent
+  - baseSDK
+  - Interactable
   layers:
   - Default
   - TransparentFX
