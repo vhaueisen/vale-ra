@@ -12,8 +12,9 @@ public class Professor : MonoBehaviour
     public Transform dialogTransform;
     public Transform thumbsTransform;
     private float animationTime = 0.5f;
-    private float punchDuration = 1f;
+    private float punchDuration = 3f;
     public Material LoonMaterial;
+    public Material ThumbsMaterial;
     public string Content
     {
         get
@@ -93,5 +94,6 @@ public class Professor : MonoBehaviour
     void ColorBaloon(Color c)
     {
         LoonMaterial.color = c;
+        ThumbsMaterial.color = c;
     }
 }

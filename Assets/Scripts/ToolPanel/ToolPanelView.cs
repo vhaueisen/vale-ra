@@ -14,7 +14,7 @@ public class ToolPanelView : ApplicationElement
     private void Start()
     {
         MainApp.toolBoxView.toolBoxEvent += OnToolBoxEvent;
-        MainApp.footerView.SceneLoaderEvent += OnSceneEvent;
+        FooterView.SceneLoaderEvent += OnSceneEvent;
     }
 
     private void OnSceneEvent(object sender, SceneLoaderEventArgs eventArgs)

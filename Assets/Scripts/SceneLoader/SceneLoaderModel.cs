@@ -4,11 +4,13 @@ using UnityEngine.UI;
 
 public class SceneLoaderEventArgs : EventArgs
 {
-    public SceneLoaderEventArgs(SceneLoaderModel.GameScene scene)
+    public SceneLoaderEventArgs(SceneLoaderModel.GameScene scene, System.Action onComplete)
     {
         Scene = scene;
+        OnComplete = onComplete;
     }
     public SceneLoaderModel.GameScene Scene;
+    public System.Action OnComplete;
 }
 
 public class SceneLoaderModel : ApplicationElement
@@ -19,10 +21,11 @@ public class SceneLoaderModel : ApplicationElement
     public static GameScene HomeScene = new GameScene("Início", 1);
     public static GameScene QRScene = new GameScene("Leitor QR", 2);
     public static GameScene ARScene = new GameScene("Vale RA", 3);
-    public static GameScene SettingsScene = new GameScene("Configurações", 5);
-    public static GameScene QuickStartScene = new GameScene("Início Rápido", 6);
-    public static GameScene CollaborationScene = new GameScene("Aprendizado", 4);
-    public static GameScene BundleScene = new GameScene("Bundle Manager", 10);
+    public static GameScene LearningScene = new GameScene("Aprendizado", 4);
+    public static GameScene NDTScene = new GameScene("Aprendizado", 5);
+    public static GameScene SettingsScene = new GameScene("Configurações", 6);
+    public static GameScene QuickStartScene = new GameScene("Início Rápido", 7);
+    public static GameScene BundleScene = new GameScene("Bundle Manager", 8);
     public static GameScene CurrentScene = LoaderScene;
     public Text headerText;
     public GameObject inventoryPanel;

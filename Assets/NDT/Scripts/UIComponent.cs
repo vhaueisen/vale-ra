@@ -26,7 +26,13 @@ public class UIComponent : MonoBehaviour
         else if (isLooking && lookingAtStatic)
             InteractableRaycaster.LookingAt.Interact();
     }
-    public void Skip() => NDTStates.ChangeState.Invoke(NDTAction.Skip);
+    public void Skip()
+    {
+        if (hasFinished)
+            Trainer.CompleteTraining(NDTStates.CurrentTraining);
+        else
+            NDTStates.ChangeState.Invoke(NDTAction.Skip);
+    }
 
     public Button GrabBtn;
     public Button InteractBtn;
@@ -91,8 +97,8 @@ public class UIComponent : MonoBehaviour
         InteractBtnText.text = canInteract ? isGrabbing ? $"Interagir com {grabbedName}" : $"Interagir com {lookingAtName}" : "";
         InteractBtn.interactable = canInteract;
 
-        SkipBtnText.text = canSkip ? "Próximo" : "";
-        SkipBtn.interactable = canSkip;
+        SkipBtnText.text = hasFinished ? "Finalizar" : canSkip ? "Próximo" : "";
+        SkipBtn.interactable = canSkip || hasFinished;
 
         Label.text = lookingAtName;
         if (isFinished && !hasFinished) Finish();

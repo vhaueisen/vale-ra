@@ -7,14 +7,14 @@ public class InteractableRaycaster : Singleton<InteractableRaycaster>
     public static InteractableObject LookingAt;
     public static InteractableObject Grabed;
     private bool raycasting = false;
-
+    public LayerMask PlanesLayer;
     void Update()
     {
         if (Time.time / Period > current && raycasting)
         {
             current++;
             RaycastHit hit;
-            if (Physics.Raycast(transform.position, transform.forward, out hit, 10f))
+            if (Physics.Raycast(transform.position, transform.forward, out hit, 5f, ~PlanesLayer))
             {
                 InteractableObject interactable = hit.collider.GetComponent<InteractableObject>();
                 if (interactable)

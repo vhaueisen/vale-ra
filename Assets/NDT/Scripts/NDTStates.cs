@@ -36,11 +36,22 @@ public enum NDTAction
 }
 public class NDTStates : Singleton<NDTStates>
 {
+    private static NDTState[] States;
+    public static ITraining CurrentTraining
+    {
+        set
+        {
+            States = (NDTState[])value.Payload;
+            currentTraining = value;
+        }
+        get => currentTraining;
+    }
+    private static ITraining currentTraining;
     public static UnityEvent<NDTAction> ChangeState = new UnityEvent<NDTAction>();
-    private readonly NDTState[] States = {
+    public static NDTState[] VisualTest = {
         new NDTState(
             true,
-            "Olá aluno!\nBem vindo ao curso guiado de ensaios mecânicos não destrutivos.\n\nEu sou seu professor, e estarei te orientando pelo restante do treinamento.",
+            "Olá aluno!\nBem vindo ao curso guiado de ensaios mecânicos por teste visual.\nEu sou seu professor, e estarei te orientando pelo restante do treinamento.",
             NDTAction.Examine,
             ""
         ),
@@ -48,7 +59,7 @@ public class NDTStates : Singleton<NDTStates>
             false,
             "Vamos iniciar o procedimento com a análise prévia da peça.\nPor favor, aponte seu dispositivo para a peça e pressione inspecionar.",
             NDTAction.Examine,
-            "Ah não! Me parece que você pegou a {0}. Experimente inspecionar a peça de ensaio."
+            "Ah não! Me parece que você pegou '{0}'. Experimente inspecionar a peça de ensaio."
         ),
         new NDTState(
             true,
@@ -60,37 +71,37 @@ public class NDTStates : Singleton<NDTStates>
             false,
             "Vamos prosseguir com a limpeza mecânica. Por favor, pegue a escova de cerdas longas e escove a peça.",
             NDTAction.BrushLong,
-            "Hum... Isso não me parece a ferramenta correta, você pegou a {0}! Por favor, pegue a escova de cerdas longas."
+            "Hum... Isso não me parece a ferramenta correta, você pegou '{0}'! Por favor, pegue a escova de cerdas longas."
         ),
         new NDTState(
             false,
             "Muito bem! Vamos remover alguns destes riscos com a escova de cerdas curtas!",
             NDTAction.BrushShort,
-            "Hum... Isso não me parece a ferramenta correta, você pegou a {0}! Por favor, pegue a escova de cerdas curtas."
+            "Hum... Isso não me parece a ferramenta correta, você pegou '{0}'! Por favor, pegue a escova de cerdas curtas."
         ),
             new NDTState(
             false,
             "Maravilha!\nAgora, você deve lixar a peça, começando pela lixa mais grossa.",
             NDTAction.SandLong,
-            "Hum... Isso não me parece a ferramenta correta, você pegou a {0}! Por favor, pegue a lixa mais grossa."
+            "Hum... Isso não me parece a ferramenta correta, você pegou '{0}'! Por favor, pegue a lixa mais grossa."
         ),
         new NDTState(
             false,
             "Estamos quase finalizando a limpeza mecânica...\nVamos remover estes riscos com a lixa mais fina.",
             NDTAction.SandShort,
-            "Hum... Isso não me parece a ferramenta correta, você pegou a {0}! Por favor, pegue a lixa mais fina."
+            "Hum... Isso não me parece a ferramenta correta, você pegou '{0}'! Por favor, pegue a lixa mais fina."
         ),
         new NDTState(
             false,
             "Agora, devemos iniciar a limpeza química do material.\nPor favor, despeje um pouco de solvente no trapo.",
             NDTAction.Solvent,
-            "Hum... Isso não me parece a ferramenta correta, você pegou a {0}! Por favor, despeje um pouco de solvente no trapo."
+            "Hum... Isso não me parece a ferramenta correta, você pegou '{0}'! Por favor, despeje um pouco de solvente no trapo."
         ),
         new NDTState(
             false,
             "Perfeito, lembre-se de nunca despejar o solvente diretamente na peça! \nAgora, limpe a peça utilizando o trapo.",
             NDTAction.MeshClean,
-            "Hum... Isso não me parece a ferramenta correta, você pegou a {0}! Por favor, limpe a peça utilizando o trapo."
+            "Hum... Isso não me parece a ferramenta correta, você pegou '{0}'! Por favor, limpe a peça utilizando o trapo."
         ),
         new NDTState(
             false,
@@ -100,33 +111,47 @@ public class NDTStates : Singleton<NDTStates>
         ),
         new NDTState(
             true,
-            "Muito bem! Não se esqueça de anotar cuidadosamente todas as dimensões e descontinuidades observadas.\nVamos partir para o procedimento do ensaio por líquido penetrante.",
-            NDTAction.PenetratingLiquid,
+            "Muito bem! Não se esqueça de anotar cuidadosamente todas as dimensões e descontinuidades observadas.\nVocê finalizou o ensaio mecânico por teste visual.",
+            NDTAction.Finish,
+            ""
+        )
+    };
+    public static NDTState[] PenetratingLiquidTest = {
+        new NDTState(
+            true,
+            "Olá aluno!\nBem vindo ao curso guiado de ensaios mecânicos não destrutivos por líquido penetrante.\nEu sou seu professor, e estarei te orientando pelo restante do treinamento.",
+            NDTAction.Examine,
             ""
         ),
         new NDTState(
             false,
-            "Devemos iniciar o procedimento borrifando líquido penetrante na peça.",
+            "Vamos iniciar o procedimento com a análise prévia da peça.\nPor favor, aponte seu dispositivo para a peça e pressione inspecionar.",
+            NDTAction.Examine,
+            "Ah não! Me parece que você pegou '{0}'. Experimente inspecionar a peça de ensaio."
+        ),
+        new NDTState(
+            false,
+            "Maravilha! Agora, por favor, borrife líquido penetrante na peça.",
             NDTAction.PenetratingLiquid,
-            "Hum... Isso não me parece a ferramenta correta, você pegou a {0}! Por favor, borrife liquido penetrante na peça."
+            "Hum... Isso não me parece a ferramenta correta, você pegou '{0}'! Por favor, borrife liquido penetrante na peça."
         ),
         new NDTState(
             false,
             "Bacana! Vamos remover um pouco o excesso. Raspe um pouco do excesso de líquido com o papel toalha seco.",
             NDTAction.DryClean,
-            "Hum... Isso não me parece a ferramenta correta, você pegou a {0}! Por favor, borrife liquido penetrante na peça."
+            "Hum... Isso não me parece a ferramenta correta, você pegou '{0}'! Por favor, borrife liquido penetrante na peça."
         ),
         new NDTState(
             false,
             "Perfeito, retire agora, cuidadosamente, mais um pouco do líquido com o trapo...\nNão use muita força para não remover líquido demais!",
             NDTAction.MeshClean,
-            "Hum... Isso não me parece a ferramenta correta, você pegou a {0}! Por favor, retire cuidadosamente mais um pouco do líquido com o trapo."
+            "Hum... Isso não me parece a ferramenta correta, você pegou '{0}'! Por favor, retire cuidadosamente mais um pouco do líquido com o trapo."
         ),
         new NDTState(
             false,
             "Pronto! Para visualizar melhor as descontinuidades, borrife um pouco de revelador na peça",
             NDTAction.Reveal,
-            "Hum... Isso não me parece a ferramenta correta, você pegou a {0}! Por favor, borrife um pouco de revelador na peça."
+            "Hum... Isso não me parece a ferramenta correta, você pegou '{0}'! Por favor, borrife um pouco de revelador na peça."
         ),
         new NDTState(
             false,
@@ -144,17 +169,17 @@ public class NDTStates : Singleton<NDTStates>
             false,
             "Por favor, remova um pouco do excesso de material raspando a peça com o papel toalha seco.",
             NDTAction.DryClean,
-            "Hum... Isso não me parece a ferramenta correta, você pegou a {0}! Por favor, limpe a peça com o papel toalha seco."
+            "Hum... Isso não me parece a ferramenta correta, você pegou '{0}'! Por favor, limpe a peça com o papel toalha seco."
         ),
         new NDTState(
             false,
             "Vamos prosseguir com a limpeza mecânica. Por favor, pegue a escova de cerdas longas e escove a peça.",
             NDTAction.BrushLong,
-            "Hum... Isso não me parece a ferramenta correta, você pegou a {0}! Por favor, pegue a escova de cerdas longas."
+            "Hum... Isso não me parece a ferramenta correta, você pegou '{0}'! Por favor, pegue a escova de cerdas longas."
         ),
         new NDTState(
             false,
-            "Muito bem! Você finalizou seu treinamento guiado!",
+            "Muito bem! Você finalizou seu treinamento guiado de ensaios mecânicos por líquido penetrante!",
             NDTAction.Finish,
             ""
         ),
@@ -166,7 +191,6 @@ public class NDTStates : Singleton<NDTStates>
     }
 
     public NDTState Previous = null;
-
     private int currentIdx = 0;
 
     void Start()

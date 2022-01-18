@@ -6,7 +6,7 @@ public class FooterController : ApplicationElement
 {
     private void Start()
     {
-        MainApp.footerView.SceneLoaderEvent += OnSceneLoader;
+        FooterView.SceneLoaderEvent += OnSceneLoader;
     }
 
     public void OnSceneLoader(object sender, SceneLoaderEventArgs sceneLoaderEvent)

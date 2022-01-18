@@ -8,17 +8,11 @@ public class SceneLoaderController : ApplicationElement
     private void Start()
     {
         LeanTween.play(MainApp.sceneLoaderModel.books, MainApp.sceneLoaderModel.bookSpriteSheet).setFrameRate(30);
-        MainApp.footerView.SceneLoaderEvent += OnSceneLoader;
+        FooterView.SceneLoaderEvent += OnSceneLoader;
         if (MainApp.quickStartController.IsCompleted())
-            StartCoroutine(LoadScene(SceneLoaderModel.HomeScene));
+            OnSceneLoader(this, (new SceneLoaderEventArgs(SceneLoaderModel.HomeScene, null)));
         else
-            StartCoroutine(LoadScene(SceneLoaderModel.QuickStartScene));
-    }
-
-    public void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.P))
-            OnSceneLoader(this, new SceneLoaderEventArgs(SceneLoaderModel.ARScene));
+            OnSceneLoader(this, (new SceneLoaderEventArgs(SceneLoaderModel.QuickStartScene, null)));
     }
 
     private void TweenAlpha(bool reverse)
@@ -44,11 +38,12 @@ public class SceneLoaderController : ApplicationElement
         MainApp.sceneLoaderModel.loadingPanel.gameObject.SetActive(true);
         LeanTween.play(MainApp.sceneLoaderModel.books, MainApp.sceneLoaderModel.bookSpriteSheet).setFrameRate(30);
         TweenAlpha(true);
-        StartCoroutine(LoadScene(sceneLoaderEvent.Scene));
+        StartCoroutine(LoadScene(sceneLoaderEvent));
     }
 
-    private IEnumerator LoadScene(SceneLoaderModel.GameScene scene)
+    private IEnumerator LoadScene(SceneLoaderEventArgs sceneLoaderEvent)
     {
+        var scene = sceneLoaderEvent.Scene;
         SceneLoaderModel.CurrentScene = scene;
         bool cameraScene = scene.sceneIndex == SceneLoaderModel.ARScene.sceneIndex || scene.sceneIndex == SceneLoaderModel.QRScene.sceneIndex;
 #if UNITY_ANDROID
@@ -75,6 +70,8 @@ public class SceneLoaderController : ApplicationElement
         TweenAlpha(false);
         if (scene.sceneIndex == SceneLoaderModel.QuickStartScene.sceneIndex)
             MainApp.quickStartController.Initialize();
+        if (sceneLoaderEvent.OnComplete != null)
+            sceneLoaderEvent.OnComplete();
         yield break;
     }
 

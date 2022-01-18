@@ -6,29 +6,21 @@ using UnityEngine.XR.ARFoundation;
 public class NDTBehaviour : ApplicationElement
 {
     public Button backBtn;
-    const float d = 2f;
-    private bool _anchor = false;
+    public Button anchorBtn;
+    const float d = 1f;
     CanvasGroup staticUI;
-    CanvasGroup tutorialUI;
-
-    private bool anchor
-    {
-        set
-        {
-            if (value && !_anchor)
-                Initialize();
-            _anchor = value;
-        }
-    }
-
+    public CanvasGroup tutorialUI;
+    public static NDTBehaviour Instance;
     void Start()
     {
-        PlaceOnPlane.OnAnchor.AddListener((b) => anchor = b);
+        Instance = this;
+        tutorialUI.LeanAlpha(1f, 0.5f).setEase(LeanTweenType.easeInExpo);
         staticUI = GameObject.FindWithTag("StaticUI").GetComponent<CanvasGroup>();
         VideoPlayer.enabled = true;
         VideoPlayer.Play();
         _rawImageTexture = RawImage.texture;
         VideoPlayer.prepareCompleted += PrepareCompleted;
+        Initialize();
     }
 
     public void Initialize()
@@ -41,10 +33,10 @@ public class NDTBehaviour : ApplicationElement
         backBtn.onClick.AddListener(Back);
     }
 
-    void Back()
+    public void Back()
     {
         staticUI.gameObject.SetActive(true);
-        MainApp.footerView.LoadHomeScene();
+        FooterView.OnSceneLoader(SceneLoaderModel.LearningScene);
         staticUI.LeanAlpha(1f, 0.5f).setEase(LeanTweenType.easeInExpo);
         backBtn.gameObject.LeanScale(Vector3.zero, 0.5f).setEase(LeanTweenType.easeSpring).setOnComplete(
             () => backBtn.gameObject.SetActive(false)
@@ -54,6 +46,9 @@ public class NDTBehaviour : ApplicationElement
     public void OnPlanes()
     {
         placeOnPlane.enabled = true;
+        anchorBtn.onClick.AddListener(placeOnPlane.ToggleAnchor);
+        anchorBtn.gameObject.LeanScale(Vector3.one, 0.5f).setEase(LeanTweenType.easeSpring);
+        tutorialUI.LeanAlpha(0f, 0.5f).setEase(LeanTweenType.easeOutExpo).setOnComplete(() => tutorialUI.gameObject.SetActive(false));
     }
 
     public PlaceOnPlane placeOnPlane;
@@ -61,17 +56,18 @@ public class NDTBehaviour : ApplicationElement
     public VideoPlayer VideoPlayer;
     private Texture _rawImageTexture;
     public ARPlaneManager manager;
-    public int targetPlanes = 3;
+    public int targetPlanes = 5;
     private bool foundPlanes { get => manager.trackables.count >= targetPlanes; }
     public void Update()
     {
+        anchorBtn.interactable = !InteractableObject.IsInretacting;
         if (RawImage.enabled && foundPlanes)
         {
             VideoPlayer.Stop();
             RawImage.texture = _rawImageTexture;
             VideoPlayer.enabled = false;
             RawImage.enabled = false;
-            tutorialUI.LeanAlpha(0f, 0.3f).setEase(LeanTweenType.easeOutExpo);
+            OnPlanes();
         }
     }
 

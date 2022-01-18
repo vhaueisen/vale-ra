@@ -3,22 +3,7 @@ guid: 7dde9e71de65f0845b0dfd4d3b4646e7
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: trophy_base
-    second: {fileID: 2100000, guid: 5ac5da5afd0991a4888b2f0a1c881377, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: trophy_main
-    second: {fileID: 2100000, guid: 962a9024e65892b4b82c8d3180012c65, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: trophy_plate
-    second: {fileID: 2100000, guid: 75892082b27348844868b6c7d3f77b9e, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0

@@ -2,12 +2,12 @@
 
 public class FooterView : ApplicationElement
 {
-    public event EventHandler<SceneLoaderEventArgs> SceneLoaderEvent;
+    public static event EventHandler<SceneLoaderEventArgs> SceneLoaderEvent;
 
-    protected virtual void OnSceneLoader(SceneLoaderModel.GameScene scene)
+    public static void OnSceneLoader(SceneLoaderModel.GameScene scene, System.Action onComplete = null, object sender = null)
     {
         if (SceneLoaderEvent != null)
-            SceneLoaderEvent(this, new SceneLoaderEventArgs(scene));
+            SceneLoaderEvent(sender, new SceneLoaderEventArgs(scene, onComplete));
     }
 
     public void LoadHomeScene()
@@ -47,7 +47,7 @@ public class FooterView : ApplicationElement
 
     public void LoadCollaborationScene()
     {
-        OnSceneLoader(SceneLoaderModel.CollaborationScene);
+        OnSceneLoader(SceneLoaderModel.LearningScene);
     }
 
 }
