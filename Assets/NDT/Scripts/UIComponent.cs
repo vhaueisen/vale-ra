@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -34,6 +35,7 @@ public class UIComponent : MonoBehaviour
     public Text InteractBtnText;
     public Text SkipBtnText;
     public NDTStates State;
+    public TextMeshProUGUI Label;
 
     private bool isLooking { get => InteractableRaycaster.LookingAt != null; }
     private bool isGrabbing { get => InteractableRaycaster.Grabed != null; }
@@ -41,6 +43,8 @@ public class UIComponent : MonoBehaviour
     private bool canGrab { get => (isGrabbing || (isLooking && !lookingAtStatic)) && !InteractableObject.IsInretacting && !State.Current.Skipable; }
     private bool canInteract { get => (isGrabbing || (isLooking && lookingAtStatic)) && !InteractableObject.IsInretacting && !State.Current.Skipable; }
     private bool canSkip { get => State.Current.Skipable && !InteractableObject.IsInretacting; }
+    private bool isFinished { get => State.Current.Action == NDTAction.Finish; }
+    private bool hasFinished = false;
     private string grabbedName
     {
         get
@@ -89,5 +93,19 @@ public class UIComponent : MonoBehaviour
 
         SkipBtnText.text = canSkip ? "Próximo" : "";
         SkipBtn.interactable = canSkip;
+
+        Label.text = lookingAtName;
+        if (isFinished && !hasFinished) Finish();
+
+    }
+    public GameObject TrophyObject;
+    public Transform TrophyTransform;
+    void Finish()
+    {
+        hasFinished = true;
+        TrophyObject.SetActive(true);
+        TrophyObject.LeanScale(Vector3.one, 1f).setEase(LeanTweenType.easeSpring);
+        LeanTween.rotateAroundLocal(TrophyTransform.gameObject, Vector3.up, 360f, 5f).setFrom(0).setEase(LeanTweenType.linear).setRepeat(-1);
+        TrophyTransform.LeanMoveLocalY(0.1f, 2.5f).setLoopPingPong().setEase(LeanTweenType.easeInBounce);
     }
 }

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class InteractableRaycaster : Singleton<InteractableRaycaster>
@@ -8,10 +6,11 @@ public class InteractableRaycaster : Singleton<InteractableRaycaster>
     private int current = 0;
     public static InteractableObject LookingAt;
     public static InteractableObject Grabed;
+    private bool raycasting = false;
 
     void Update()
     {
-        if (Time.time / Period > current)
+        if (Time.time / Period > current && raycasting)
         {
             current++;
             RaycastHit hit;
@@ -25,5 +24,15 @@ public class InteractableRaycaster : Singleton<InteractableRaycaster>
                 }
             }
         }
+    }
+
+    void Start()
+    {
+        PlaceOnPlane.OnAnchor.AddListener(onAnchor);
+    }
+
+    void onAnchor(bool b)
+    {
+        raycasting = b;
     }
 }

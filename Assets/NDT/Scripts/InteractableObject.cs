@@ -8,7 +8,7 @@ public class InteractableObject : MonoBehaviour
     private float debounce;
     public bool hover = false;
     public ToastLabel Label;
-    private Vector3 startPosition;
+    private Vector3 startPosition = Vector3.zero;
     private IInteraction interaction;
     public static InteractableObject LastInteractedWith;
 
@@ -34,7 +34,6 @@ public class InteractableObject : MonoBehaviour
         {
             hover = value;
             debounce = Time.time;
-            Label.label.SetActive(Hover && state == InteractableState.idle);
             if (InteractableRaycaster.LookingAt == this && !hover)
                 InteractableRaycaster.LookingAt = null;
         }
@@ -50,18 +49,28 @@ public class InteractableObject : MonoBehaviour
     void Awake()
     {
         Label = GetComponent<ToastLabel>();
-        startPosition = transform.position;
+        PlaceOnPlane.OnAnchor.AddListener(onAnchor);
         interaction = GetComponent<IInteraction>();
         NDTStates.ChangeState.AddListener(OnAnimationComplete);
     }
 
+    void onAnchor(bool b)
+    {
+        isAnchor = b;
+        if (b)
+            startPosition = transform.position;
+        else
+            startPosition = Vector3.zero;
+    }
+
+    bool isAnchor = false;
 
     void Update()
     {
         if (Time.time - debounce > debounceTime)
             Hover = false;
 
-        if (!Static)
+        if (!Static && isAnchor)
             transform.position = Vector3.Lerp(transform.position, target, Time.deltaTime * speed);
 
         Highlight();
@@ -119,7 +128,7 @@ public class InteractableObject : MonoBehaviour
         if (newState != previousState)
         {
             previousState = newState;
-            foreach (Transform t in gameObject.GetComponentsInChildren<Transform>(true))
+            foreach (Transform t in transform.GetChild(0).GetComponentsInChildren<Transform>(true))
             {
                 t.gameObject.layer = newState ? 6 : 0;
             }

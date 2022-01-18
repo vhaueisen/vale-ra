@@ -76,7 +76,7 @@ public class NDTStates : Singleton<NDTStates>
         ),
         new NDTState(
             false,
-            "Estamos quase finalizando a limpeza mecânica...\n Vamos remover estes riscos com a lixa mais fina.",
+            "Estamos quase finalizando a limpeza mecânica...\nVamos remover estes riscos com a lixa mais fina.",
             NDTAction.SandShort,
             "Hum... Isso não me parece a ferramenta correta, você pegou a {0}! Por favor, pegue a lixa mais fina."
         ),
@@ -100,7 +100,7 @@ public class NDTStates : Singleton<NDTStates>
         ),
         new NDTState(
             true,
-            "Muito bem! Não se esqueça de anotar cuidadosamente todas as dimensões e descontinuidades observadas.\n Vamos partir para o procedimento do ensaio por líquido penetrante.",
+            "Muito bem! Não se esqueça de anotar cuidadosamente todas as dimensões e descontinuidades observadas.\nVamos partir para o procedimento do ensaio por líquido penetrante.",
             NDTAction.PenetratingLiquid,
             ""
         ),
@@ -118,7 +118,7 @@ public class NDTStates : Singleton<NDTStates>
         ),
         new NDTState(
             false,
-            "Perfeito, retire agora, cuidadosamente, mais um pouco do líquido com o trapo...\nNão utiliza muita força para não remover líquido demais!",
+            "Perfeito, retire agora, cuidadosamente, mais um pouco do líquido com o trapo...\nNão use muita força para não remover líquido demais!",
             NDTAction.MeshClean,
             "Hum... Isso não me parece a ferramenta correta, você pegou a {0}! Por favor, retire cuidadosamente mais um pouco do líquido com o trapo."
         ),
@@ -136,7 +136,7 @@ public class NDTStates : Singleton<NDTStates>
         ),
         new NDTState(
             true,
-            "Muito bem! Não se esqueça de anotar cuidadosamente todas as dimensões e descontinuidades observadas.\n Vamos partir para a limpeza final da peça... não devemos guardá-la suja de penetrante e revelador!",
+            "Muito bem! Não se esqueça de anotar cuidadosamente todas as dimensões e descontinuidades observadas.\nVamos partir para a limpeza final da peça... não devemos guardá-la suja de penetrante e revelador!",
             NDTAction.DryClean,
             ""
         ),

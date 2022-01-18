@@ -27,13 +27,13 @@ public class ARSessionController : ApplicationElement
 
     private void UpdateCollabState()
     {
-        bool collab = false;
-#if UNITY_IOS
-        collab = m_enabled;
-#endif
-#if UNITY_EDITOR
-        collab = true;
-#endif
+        bool collab = true;
+        // #if UNITY_IOS
+        //         collab = m_enabled;
+        // #endif
+        // #if UNITY_EDITOR
+        //         collab = true;
+        // #endif
         MainApp.footerModel.ButtonArray[3].gameObject.SetActive(collab);
     }
 }
