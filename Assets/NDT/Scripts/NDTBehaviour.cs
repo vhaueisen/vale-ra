@@ -56,7 +56,7 @@ public class NDTBehaviour : ApplicationElement
     public VideoPlayer VideoPlayer;
     private Texture _rawImageTexture;
     public ARPlaneManager manager;
-    public int targetPlanes = 5;
+    public int targetPlanes = 3;
     private bool foundPlanes { get => manager.trackables.count >= targetPlanes; }
     public void Update()
     {

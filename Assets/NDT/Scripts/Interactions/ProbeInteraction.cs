@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class ProbeInteraction : MonoBehaviour, IInteraction
@@ -8,6 +9,10 @@ public class ProbeInteraction : MonoBehaviour, IInteraction
     public float rotSpeed;
     public float duration = 10f;
     public NDTAction OnComplete;
+    [SerializeField] private Texture2D[] m_probeTextures;
+    [SerializeField] private Renderer m_probeRenderer;
+    private NDTState.ProbeState previousState = NDTState.ProbeState.Default;
+    private NDTState.ProbeState currentState;
     private bool Active
     {
         get => active;
@@ -43,11 +48,40 @@ public class ProbeInteraction : MonoBehaviour, IInteraction
             if (Time.time > activeTime + duration)
                 Active = false;
         }
+
+        currentState = NDTStates.Instance.Current.State;
+        if (previousState != currentState)
+        {
+            StartCoroutine(FadeTexture());
+        }
     }
 
     public void Interact()
     {
         Active = true;
+    }
+
+    private IEnumerator FadeTexture()
+    {
+        // float duration = 1f;
+        float startTime = Time.time;
+        Material probeMaterial = m_probeRenderer.material;
+        Texture2D initial = m_probeTextures[(int)previousState];
+        Texture2D target = m_probeTextures[(int)currentState];
+        // probeMaterial.SetTexture("_Initial", initial);
+        // probeMaterial.SetTexture("_Target", target);
+        // while (Time.time < startTime + duration)
+        // {
+        //     float t = (Time.time - startTime) / duration;
+        //     probeMaterial.SetFloat("_Value", t);
+        //     Debug.Log(t);
+        //     yield return null;
+        // }
+        probeMaterial.SetTexture("_Initial", target);
+        probeMaterial.SetTexture("_Target", initial);
+        probeMaterial.SetFloat("_Value", 0);
+        previousState = currentState;
+        yield break;
     }
 
     private void Reset()

@@ -5,6 +5,21 @@ EditorUserSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 4
   m_ConfigSettings:
+    RecentlyUsedSceneGuid-0:
+      value: 05000404000c5f0b555e5c7a16705b44104f492e297120352b7b4e62e7b6363e
+      flags: 0
+    RecentlyUsedSceneGuid-1:
+      value: 510652525607590c0e570e2416205d444f151b2c7d2c736675784a6ae4b76160
+      flags: 0
+    RecentlyUsedSceneGuid-2:
+      value: 010503035202500e0f590e2312740d44474f4f2c282a7635797c1964bae16d39
+      flags: 0
+    RecentlyUsedSceneGuid-3:
+      value: 5202075250050b02545d5971442109444f161d2e2e7171337f7e1b61b1b2636c
+      flags: 0
+    RecentlyUsedSceneGuid-4:
+      value: 5455055f00510f0e095c0e7441775e44434f492c7f2b76657e2a4430e6e63168
+      flags: 0
     RecentlyUsedScenePath-0:
       value: 22424703114646680e0b0227036c761e02120a2b2f3c2f3f2367083debf42d
       flags: 0
@@ -42,7 +57,7 @@ EditorUserSettings:
       value: 181344140043005e1a220d3b1f364b524c0c5a27130c293326201334cee5322ca0bd30e8eb293a707b0fd0180b3d0a36fc0d3d04e649500d1002ee0b5dbd1d2c27c00ad113cb1e10e41f1addc80993b9859884a69ae6d8f0d1cda9e8fbfefaf9f9dea3fdb9ade882f0ffb0e1e380cafbf2c3adc18e9cd285a2908b87ee819c8395949c9483d38b8c97ddbd90bf
       flags: 0
     UnityEditor.ShaderGraph.InspectorWindow:
-      value: 18135939215a0a5004000b0e15254b524c1119263f2d6a722016393ce1eb3d36e5d339f9a5602b2e2c07a37e0901373ae01e0008f707250d171df81a53a54145458b488958c52034c40b15d4c213c5e2d9f9d2eccbeef39a848df0a6baa0a2baf8ce96f2b0adbe9ab1ede6f3f59197948f9afb86d5849394ee8a9f83a3ce
+      value: 18135939215a0a5004000b0e15254b524c1119263f2d6a722016393ce1eb3d36e5d339f9a560393d3511ea7046333e09f7181d02f50a06241708ee0b05bd4a435f95548717f73713d91006c1c309d0effad0d2f9ddffa5828e91f0beb6fdd1cbfceba0b9f0b3bed8e8f5ade1ff8c978883d3f59e9f929189eacfcc
       flags: 0
     UnityEditor.ShaderGraph.ToggleSettings:
       value: 18135d1527590858060c032302276919051e1a26296a7c243f3c187fa0e92708f0e220e0e22d09352a0bed30017c5b2be01f0c47b40219221f1ded0b12eb1f0127cc0bcc18c41a5e910d0edbc85193e0dadadbf8e8f9e8ced7dba5e0b6aaacdbf4e5a0fca5bae582b7
@@ -55,9 +70,13 @@ EditorUserSettings:
   m_VCDebugCmd: 0
   m_VCDebugOut: 0
   m_SemanticMergeMode: 2
+  m_DesiredImportWorkerCount: 2
+  m_StandbyImportWorkerCount: 2
+  m_IdleImportWorkerShutdownDelay: 60000
   m_VCShowFailedCheckout: 1
   m_VCOverwriteFailedCheckoutAssets: 1
   m_VCProjectOverlayIcons: 1
   m_VCHierarchyOverlayIcons: 1
   m_VCOtherOverlayIcons: 1
   m_VCAllowAsyncUpdate: 0
+  m_ArtifactGarbageCollection: 1
